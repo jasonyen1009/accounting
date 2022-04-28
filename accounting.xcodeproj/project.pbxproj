@@ -16,6 +16,8 @@
 		25D4B2A1280E981A006D2547 /* accountingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D4B2A0280E981A006D2547 /* accountingTests.swift */; };
 		25D4B2AB280E981A006D2547 /* accountingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D4B2AA280E981A006D2547 /* accountingUITests.swift */; };
 		25D4B2AD280E981A006D2547 /* accountingUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D4B2AC280E981A006D2547 /* accountingUITestsLaunchTests.swift */; };
+		25D4B2BA280E9EDC006D2547 /* accountingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D4B2B9280E9EDC006D2547 /* accountingTableViewController.swift */; };
+		25D4B2BC280EC0AF006D2547 /* Spending.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D4B2BB280EC0AF006D2547 /* Spending.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +51,8 @@
 		25D4B2A6280E981A006D2547 /* accountingUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = accountingUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		25D4B2AA280E981A006D2547 /* accountingUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = accountingUITests.swift; sourceTree = "<group>"; };
 		25D4B2AC280E981A006D2547 /* accountingUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = accountingUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		25D4B2B9280E9EDC006D2547 /* accountingTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = accountingTableViewController.swift; sourceTree = "<group>"; };
+		25D4B2BB280EC0AF006D2547 /* Spending.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spending.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +107,8 @@
 				25D4B28B280E9818006D2547 /* SceneDelegate.swift */,
 				25D4B28D280E9818006D2547 /* ViewController.swift */,
 				25D4B28F280E9818006D2547 /* Main.storyboard */,
+				25D4B2BB280EC0AF006D2547 /* Spending.swift */,
+				25D4B2B9280E9EDC006D2547 /* accountingTableViewController.swift */,
 				25D4B292280E981A006D2547 /* Assets.xcassets */,
 				25D4B294280E981A006D2547 /* LaunchScreen.storyboard */,
 				25D4B297280E981A006D2547 /* Info.plist */,
@@ -258,9 +264,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25D4B2BA280E9EDC006D2547 /* accountingTableViewController.swift in Sources */,
 				25D4B28E280E9818006D2547 /* ViewController.swift in Sources */,
 				25D4B28A280E9818006D2547 /* AppDelegate.swift in Sources */,
 				25D4B28C280E9818006D2547 /* SceneDelegate.swift in Sources */,
+				25D4B2BC280EC0AF006D2547 /* Spending.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -437,6 +445,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = FWYVY227K8;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = accounting/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -464,6 +473,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = FWYVY227K8;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = accounting/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
