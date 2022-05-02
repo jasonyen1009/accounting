@@ -9,6 +9,8 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    // Time
+    var time = Timer()
     // 支出總覽
     var myasset = Spending(personal: 0, dietary: 0, shopping: 0, traffic: 0, medical: 0, life: 0)
     // 支出種類
@@ -28,18 +30,25 @@ class ViewController: UIViewController {
         UIColor(red: 173/255, green: 82/255, blue: 186/255, alpha: 1).cgColor
     ]
     
+    @IBOutlet weak var myTableView: UITableView!
     
     var percentageLayers = [CALayer]()
+    var percentageTable = [CALayer]()
     var percentageLabel = [UILabel]()
+
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        creatcirclePath()
+        // TableView
+        myTableView.dataSource = self
+        myTableView.delegate = self
         
+        creatcirclePath()
         creatpercentageLabel()
 //        print(myasset)
-
+        
     }
     
     // 點選 cancel 返回
@@ -74,7 +83,11 @@ class ViewController: UIViewController {
             }
             percentageLabel.removeAll()
             
-            
+            // 若總額為 0 , 製作底層
+            if amount == 0 {
+                creatcirclePath()
+            }
+                        
             // 更新 圖表
             var startDegree: CGFloat = 270
             let percentages = [
@@ -111,6 +124,7 @@ class ViewController: UIViewController {
 //                textLabel.center = textPath.currentPoint
 //                view.addSubview(textLabel)
 //                percentageLabel.append(textLabel)
+                
                 // 如果將 textLabel.center = textPath.currentPoint
                 // 移動至判斷式外，回傳資料都 0 時，將造成閃退
                 if percentage > 0.0 {
@@ -119,10 +133,30 @@ class ViewController: UIViewController {
                     percentageLabel.append(textLabel)
                     
                 }
+                
                 view.layer.addSublayer(percentageLayer)
                 percentageLayers.append(percentageLayer)
                 startDegree = endDegree
+                
+                // 製作動畫
+                let animation = CABasicAnimation(keyPath: "strokeEnd")
+                var animationTime = 0.5
+                animation.fromValue = 0
+                animation.toValue = 1
+                animation.duration = 0.5
+
+                animationTime = animationTime * Double(index)
+                percentageLayer.add(animation, forKey: nil)
+                
+//                Timer.scheduledTimer(withTimeInterval: TimeInterval(animationTime), repeats: false) { _ in
+//                    percentageLayer.add(animation, forKey: nil)
+//                    self.view.layer.addSublayer(percentageLayer)
+//                }
+                
+                
             }
+            // 更新表格
+            myTableView.reloadData()
         }
     }
     
@@ -135,6 +169,7 @@ class ViewController: UIViewController {
         circleLayer.strokeColor = UIColor(red: 133/255, green: 92/255, blue: 248/255, alpha: 1).cgColor
         circleLayer.lineWidth = 40
         view.layer.addSublayer(circleLayer)
+        percentageLayers.append(circleLayer)
     }
     
     // 初始金額
@@ -171,3 +206,117 @@ class ViewController: UIViewController {
 
 }
 
+
+extension ViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    // 決定表格數量
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        assetLabel.count
+    }
+    
+    // 決定表格內容
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell()
+//        cell.textLabel?.text = "This is row \(indexPath.row)"
+        let percentages = [
+            Double(myasset.personal),
+            Double(myasset.dietary),
+            Double(myasset.shopping),
+            Double(myasset.traffic),
+            Double(myasset.medical),
+            Double(myasset.life)
+        ]
+        
+        var content = cell.defaultContentConfiguration()
+//        content.imageProperties.maximumSize = CGSize(width: 100, height: 100)
+        content.image = UIImage(systemName: "circle.fill")
+        content.imageProperties.tintColor = UIColor(cgColor: colors[indexPath.row])
+//        content.text = "\(assetLabel[indexPath.row])      \(percentages[indexPath.row])"
+        // 決定第一行字串
+        content.text = "\(assetLabel[indexPath.row])      \(moneyString(Int(percentages[indexPath.row])))"
+        
+        // 判斷 percentage 大於 0 , 才會新增第二 字串
+        if (percentages[indexPath.row] / percentages.reduce(0, +)) > 0.0 {
+            
+            content.secondaryText = "\(String(format: "%.2f", (percentages[indexPath.row] / percentages.reduce(0, +) * 100))) %"
+        }
+        
+        cell.contentConfiguration = content
+        return cell
+    }
+    
+    // 點選表格的事件
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        // 刪除前一個點選的 Layer
+//        for i in percentageTable{
+//            i.removeFromSuperlayer()
+//        }
+//        percentageTable.removeAll()
+//        creatcirclePath()
+        
+        let startDegree: CGFloat = 270
+        
+        // 製作底色
+        let circlePath = UIBezierPath(arcCenter: view.center, radius: 90, startAngle: aDegree * startDegree, endAngle: aDegree * (startDegree + 360), clockwise: true)
+        let circleLayer = CAShapeLayer()
+        circleLayer.path = circlePath.cgPath
+        circleLayer.fillColor = UIColor.clear.cgColor
+        circleLayer.strokeColor = UIColor(red: 133/255, green: 92/255, blue: 248/255, alpha: 1).cgColor
+//        circleLayer.strokeColor = UIColor.clear.cgColor
+        circleLayer.lineWidth = 40
+        view.layer.addSublayer(circleLayer)
+        percentageTable.append(circleLayer)
+
+        
+        // 更新 圖表
+        let percentages = [
+            Double(myasset.personal),
+            Double(myasset.dietary),
+            Double(myasset.shopping),
+            Double(myasset.traffic),
+            Double(myasset.medical),
+            Double(myasset.life)
+        ]
+        
+        let percentagePath = UIBezierPath(arcCenter: view.center, radius: 90, startAngle: aDegree * startDegree, endAngle: aDegree * (startDegree + 360), clockwise: true)
+        
+        let percentageLayer = CAShapeLayer()
+        percentageLayer.path = percentagePath.cgPath
+        percentageLayer.fillColor = UIColor.clear.cgColor
+        percentageLayer.lineWidth = 40
+        percentageLayer.strokeColor = colors[indexPath.row]
+        
+        view.layer.addSublayer(percentageLayer)
+        percentageTable.append(percentageLayer)
+        
+        // 點選新的表格, 就更新一次 totalLabel
+        let newLabel = percentages[indexPath.row]
+        totalLabel.text = moneyString(Int(newLabel))
+        totalLabel.sizeToFit()
+        // 這邊必須再次設定 position，不然位置會跑掉
+//        totalLabel.layer.position = view.center
+        
+        // 新增點選表格時 percentage 動畫
+        let animation = CABasicAnimation(keyPath: "strokeEnd")
+        animation.fromValue = 0
+        animation.toValue = 1
+        animation.duration = 0.5
+        percentageLayer.add(animation, forKey: nil)
+        
+        // 顯示點選圖層 3 秒後刪除
+        Timer.scheduledTimer(withTimeInterval: 3, repeats: false) { [self] _ in
+            for i in self.percentageTable{
+                i.removeFromSuperlayer()
+            }
+            self.percentageTable.removeAll()
+            // 變回總額
+            self.totalLabel.text = moneyString(amount)
+            self.totalLabel.sizeToFit()
+        }
+    }
+    
+    
+    
+    
+}
