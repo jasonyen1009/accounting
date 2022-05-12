@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="330"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="jae-KT-ATM">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="330"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="iix-gr-8zm">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="66"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GfL-ri-mO1" customClass="CustomButton" customModule="accounting" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="103.5" height="66"/>
+                                    <color key="backgroundColor" red="0.16862745100000001" green="0.19215686269999999" blue="0.21960784310000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <state key="normal" title="Button"/>
+                                    <buttonConfiguration key="configuration" style="plain" image="trash" catalog="system"/>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pzg-JT-Qny" customClass="CustomButton" customModule="accounting" customModuleProvider="target">
+                                    <rect key="frame" x="103.5" y="0.0" width="103.5" height="66"/>
+                                    <color key="backgroundColor" red="0.16862745100000001" green="0.19215686269999999" blue="0.21960784310000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <state key="normal" title="Button"/>
+                                    <buttonConfiguration key="configuration" style="plain" title="AC">
+                                        <fontDescription key="titleFontDescription" type="system" weight="medium" pointSize="25"/>
+                                    </buttonConfiguration>
+                                    <connections>
+                                        <action selector="keyDeletAllWithSender:" destination="-2" eventType="touchUpInside" id="t6B-S7-GjX"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zxr-Kc-pKd" customClass="CustomButton" customModule="accounting" customModuleProvider="target">
+                                    <rect key="frame" x="207" y="0.0" width="103.5" height="66"/>
+                                    <color key="backgroundColor" red="0.16862745100000001" green="0.19215686269999999" blue="0.21960784310000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <state key="normal" title="Button"/>
+                                    <buttonConfiguration key="configuration" style="plain" title="%">
+                                        <fontDescription key="titleFontDescription" type="system" weight="medium" pointSize="25"/>
+                                    </buttonConfiguration>
+                                    <connections>
+                                        <action selector="keydivisionWithSender:" destination="-2" eventType="touchUpInside" id="EzK-aO-kFo"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="124-ij-VjB" customClass="CustomButton" customModule="accounting" customModuleProvider="target">
+                                    <rect key="frame" x="310.5" y="0.0" width="103.5" height="66"/>
+                                    <color key="backgroundColor" red="0.16862745100000001" green="0.19215686269999999" blue="0.21960784310000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <state key="normal" title="Button"/>
+                                    <buttonConfiguration key="configuration" style="plain" title="X">
+                                        <fontDescription key="titleFontDescription" type="system" weight="medium" pointSize="25"/>
+                                    </buttonConfiguration>
+                                    <connections>
+                                        <action selector="keymultiplicationWithSender:" destination="-2" eventType="touchUpInside" id="1Vn-wy-m7U"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                        </stackView>
+                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="jxt-Ud-Gmb">
+                            <rect key="frame" x="0.0" y="66" width="414" height="66"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vt1-zc-5BI" customClass="CustomButton" customModule="accounting" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="103.5" height="66"/>
+                                    <color key="backgroundColor" red="0.16862745100000001" green="0.19215686269999999" blue="0.21960784310000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <state key="normal" title="Button"/>
+                                    <buttonConfiguration key="configuration" style="plain" title="7">
+                                        <fontDescription key="titleFontDescription" type="system" weight="medium" pointSize="25"/>
+                                    </buttonConfiguration>
+                                    <connections>
+                                        <action selector="keyTappedWithSender:" destination="-2" eventType="touchUpInside" id="G7D-2U-wUw"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1eG-Bq-sBw" customClass="CustomButton" customModule="accounting" customModuleProvider="target">
+                                    <rect key="frame" x="103.5" y="0.0" width="103.5" height="66"/>
+                                    <color key="backgroundColor" red="0.16862745100000001" green="0.19215686269999999" blue="0.21960784310000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <state key="normal" title="Button"/>
+                                    <buttonConfiguration key="configuration" style="plain" title="8">
+                                        <fontDescription key="titleFontDescription" type="system" weight="medium" pointSize="25"/>
+                                    </buttonConfiguration>
+                                    <connections>
+                                        <action selector="keyTappedWithSender:" destination="-2" eventType="touchUpInside" id="pv2-2r-YiZ"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P6L-RS-RqQ" customClass="CustomButton" customModule="accounting" customModuleProvider="target">
+                                    <rect key="frame" x="207" y="0.0" width="103.5" height="66"/>
+                                    <color key="backgroundColor" red="0.16862745100000001" green="0.19215686269999999" blue="0.21960784310000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <state key="normal" title="Button"/>
+                                    <buttonConfiguration key="configuration" style="plain" title="9">
+                                        <fontDescription key="titleFontDescription" type="system" weight="medium" pointSize="25"/>
+                                    </buttonConfiguration>
+                                    <connections>
+                                        <action selector="keyTappedWithSender:" destination="-2" eventType="touchUpInside" id="EHE-AA-Tdo"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Vv-cj-t2R" customClass="CustomButton" customModule="accounting" customModuleProvider="target">
+                                    <rect key="frame" x="310.5" y="0.0" width="103.5" height="66"/>
+                                    <color key="backgroundColor" red="0.16862745100000001" green="0.19215686269999999" blue="0.21960784310000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <state key="normal" title="Button"/>
+                                    <buttonConfiguration key="configuration" style="plain" title="-">
+                                        <fontDescription key="titleFontDescription" type="system" weight="medium" pointSize="25"/>
+                                    </buttonConfiguration>
+                                    <connections>
+                                        <action selector="keydeductWithSender:" destination="-2" eventType="touchUpInside" id="D1w-jh-0aF"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                        </stackView>
+                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="yAm-lf-Own">
+                            <rect key="frame" x="0.0" y="132" width="414" height="66"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uy0-48-OB0" customClass="CustomButton" customModule="accounting" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="103.5" height="66"/>
+                                    <color key="backgroundColor" red="0.16862745100000001" green="0.19215686269999999" blue="0.21960784310000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <state key="normal" title="Button"/>
+                                    <buttonConfiguration key="configuration" style="plain" title="4">
+                                        <fontDescription key="titleFontDescription" type="system" weight="medium" pointSize="25"/>
+                                    </buttonConfiguration>
+                                    <connections>
+                                        <action selector="keyTappedWithSender:" destination="-2" eventType="touchUpInside" id="roX-QT-2M2"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LW0-V1-Ity" customClass="CustomButton" customModule="accounting" customModuleProvider="target">
+                                    <rect key="frame" x="103.5" y="0.0" width="103.5" height="66"/>
+                                    <color key="backgroundColor" red="0.16862745100000001" green="0.19215686269999999" blue="0.21960784310000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <state key="normal" title="Button"/>
+                                    <buttonConfiguration key="configuration" style="plain" title="5">
+                                        <fontDescription key="titleFontDescription" type="system" weight="medium" pointSize="25"/>
+                                    </buttonConfiguration>
+                                    <connections>
+                                        <action selector="keyTappedWithSender:" destination="-2" eventType="touchUpInside" id="O4h-Kc-6Vj"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="moj-b8-SrN" customClass="CustomButton" customModule="accounting" customModuleProvider="target">
+                                    <rect key="frame" x="207" y="0.0" width="103.5" height="66"/>
+                                    <color key="backgroundColor" red="0.16862745100000001" green="0.19215686269999999" blue="0.21960784310000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <state key="normal" title="Button"/>
+                                    <buttonConfiguration key="configuration" style="plain" title="6">
+                                        <fontDescription key="titleFontDescription" type="system" weight="medium" pointSize="25"/>
+                                    </buttonConfiguration>
+                                    <connections>
+                                        <action selector="keyTappedWithSender:" destination="-2" eventType="touchUpInside" id="XiS-Va-1UI"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jtf-dl-K1I" customClass="CustomButton" customModule="accounting" customModuleProvider="target">
+                                    <rect key="frame" x="310.5" y="0.0" width="103.5" height="66"/>
+                                    <color key="backgroundColor" red="0.16862745100000001" green="0.19215686269999999" blue="0.21960784310000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <state key="normal" title="Button"/>
+                                    <buttonConfiguration key="configuration" style="plain" title="+">
+                                        <fontDescription key="titleFontDescription" type="system" weight="medium" pointSize="25"/>
+                                    </buttonConfiguration>
+                                    <connections>
+                                        <action selector="keyplusWithSender:" destination="-2" eventType="touchUpInside" id="Buk-eu-LcI"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                        </stackView>
+                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Nud-Qj-Sk5">
+                            <rect key="frame" x="0.0" y="198" width="414" height="66"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bt0-zK-nxP" customClass="CustomButton" customModule="accounting" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="103.5" height="66"/>
+                                    <color key="backgroundColor" red="0.16862745100000001" green="0.19215686269999999" blue="0.21960784310000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <state key="normal" title="Button"/>
+                                    <buttonConfiguration key="configuration" style="plain" title="1">
+                                        <fontDescription key="titleFontDescription" type="system" weight="medium" pointSize="25"/>
+                                    </buttonConfiguration>
+                                    <connections>
+                                        <action selector="keyTappedWithSender:" destination="-2" eventType="touchUpInside" id="aIf-qs-NaI"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eou-5D-gXK" customClass="CustomButton" customModule="accounting" customModuleProvider="target">
+                                    <rect key="frame" x="103.5" y="0.0" width="103.5" height="66"/>
+                                    <color key="backgroundColor" red="0.16862745100000001" green="0.19215686269999999" blue="0.21960784310000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <state key="normal" title="Button"/>
+                                    <buttonConfiguration key="configuration" style="plain" title="2">
+                                        <fontDescription key="titleFontDescription" type="system" weight="medium" pointSize="25"/>
+                                    </buttonConfiguration>
+                                    <connections>
+                                        <action selector="keyTappedWithSender:" destination="-2" eventType="touchUpInside" id="927-fI-JX5"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AOI-DT-06o" customClass="CustomButton" customModule="accounting" customModuleProvider="target">
+                                    <rect key="frame" x="207" y="0.0" width="103.5" height="66"/>
+                                    <color key="backgroundColor" red="0.16862745100000001" green="0.19215686269999999" blue="0.21960784310000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <state key="normal" title="Button"/>
+                                    <buttonConfiguration key="configuration" style="plain" title="3">
+                                        <fontDescription key="titleFontDescription" type="system" weight="medium" pointSize="25"/>
+                                    </buttonConfiguration>
+                                    <connections>
+                                        <action selector="keyTappedWithSender:" destination="-2" eventType="touchUpInside" id="KXk-0l-aiM"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TlV-DC-fNx" customClass="CustomButton" customModule="accounting" customModuleProvider="target">
+                                    <rect key="frame" x="310.5" y="0.0" width="103.5" height="66"/>
+                                    <color key="backgroundColor" red="0.16862745100000001" green="0.19215686269999999" blue="0.21960784310000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <state key="normal" title="Button"/>
+                                    <buttonConfiguration key="configuration" style="plain" title="=">
+                                        <fontDescription key="titleFontDescription" type="system" weight="medium" pointSize="25"/>
+                                    </buttonConfiguration>
+                                    <connections>
+                                        <action selector="keycalculateWithSender:" destination="-2" eventType="touchUpInside" id="FVv-k4-Vl4"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                        </stackView>
+                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Q49-vv-nTL">
+                            <rect key="frame" x="0.0" y="264" width="414" height="66"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9b5-mc-ede" customClass="CustomButton" customModule="accounting" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="103.5" height="66"/>
+                                    <color key="backgroundColor" red="0.16862745100000001" green="0.19215686269999999" blue="0.21960784310000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <state key="normal" title="Button"/>
+                                    <buttonConfiguration key="configuration" style="plain" title=".">
+                                        <fontDescription key="titleFontDescription" type="system" weight="medium" pointSize="25"/>
+                                    </buttonConfiguration>
+                                    <connections>
+                                        <action selector="keyTappedWithSender:" destination="-2" eventType="touchUpInside" id="bXp-IS-kSk"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P8X-HI-o7q" customClass="CustomButton" customModule="accounting" customModuleProvider="target">
+                                    <rect key="frame" x="103.5" y="0.0" width="103.5" height="66"/>
+                                    <color key="backgroundColor" red="0.16862745100000001" green="0.19215686269999999" blue="0.21960784310000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <state key="normal" title="Button"/>
+                                    <buttonConfiguration key="configuration" style="plain" title="0">
+                                        <fontDescription key="titleFontDescription" type="system" weight="medium" pointSize="25"/>
+                                    </buttonConfiguration>
+                                    <connections>
+                                        <action selector="keyTappedWithSender:" destination="-2" eventType="touchUpInside" id="1Nc-Ph-Fyx"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hTW-ff-I60" customClass="CustomButton" customModule="accounting" customModuleProvider="target">
+                                    <rect key="frame" x="207" y="0.0" width="103.5" height="66"/>
+                                    <color key="backgroundColor" red="0.16862745100000001" green="0.19215686269999999" blue="0.21960784310000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <state key="normal" title="Button"/>
+                                    <buttonConfiguration key="configuration" style="plain" title="00">
+                                        <fontDescription key="titleFontDescription" type="system" weight="medium" pointSize="25"/>
+                                    </buttonConfiguration>
+                                    <connections>
+                                        <action selector="keyTappedWithSender:" destination="-2" eventType="touchUpInside" id="FI1-Pd-t6v"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PQB-3O-nnH" customClass="CustomButton" customModule="accounting" customModuleProvider="target">
+                                    <rect key="frame" x="310.5" y="0.0" width="103.5" height="66"/>
+                                    <color key="backgroundColor" red="0.16862745100000001" green="0.19215686269999999" blue="0.21960784310000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <state key="normal" title="Button"/>
+                                    <buttonConfiguration key="configuration" style="plain" image="delete.left" catalog="system"/>
+                                    <connections>
+                                        <action selector="keyDeletWithSender:" destination="-2" eventType="touchUpInside" id="btD-qM-Dn6"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                </stackView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="jae-KT-ATM" secondAttribute="trailing" id="E5w-le-JK9"/>
+                <constraint firstItem="jae-KT-ATM" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="eYw-0o-Dhz"/>
+                <constraint firstAttribute="bottom" secondItem="jae-KT-ATM" secondAttribute="bottom" id="lDW-qb-Sxw"/>
+                <constraint firstItem="jae-KT-ATM" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="sII-RI-c31"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="-54" y="110"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="delete.left" catalog="system" width="128" height="104"/>
+        <image name="trash" catalog="system" width="121" height="128"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

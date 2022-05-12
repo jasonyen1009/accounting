@@ -13,6 +13,10 @@ class ViewController: UIViewController {
     var time = Timer()
     // 支出總覽
     var myasset = Spending(personal: 0, dietary: 0, shopping: 0, traffic: 0, medical: 0, life: 0)
+    
+    // 支出
+    
+    
     // 支出種類
     var assetLabel = ["個人", "飲食", "購物", "交通", "醫療", "生活"]
     // 支出總額
@@ -48,6 +52,7 @@ class ViewController: UIViewController {
         creatcirclePath()
         creatpercentageLabel()
 //        print(myasset)
+        
         
     }
     
@@ -119,7 +124,8 @@ class ViewController: UIViewController {
                 textLabel.font = UIFont.systemFont(ofSize: 10)
 //                textLabel.backgroundColor = .yellow
                 // 取得小數點前兩位
-                textLabel.text = "\(assetLabel[index]) \(String(format: "%.2f", (percentage / percentages.reduce(0, +) * 100 ))) %"
+//                textLabel.text = "\(assetLabel[index]) \(String(format: "%.2f", (percentage / percentages.reduce(0, +) * 100 ))) %"
+                textLabel.text = "\(assetLabel[index])"
                 textLabel.sizeToFit()
 //                textLabel.center = textPath.currentPoint
 //                view.addSubview(textLabel)
@@ -247,7 +253,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     // 點選表格的事件
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        print("get")
         // 刪除前一個點選的 Layer
 //        for i in percentageTable{
 //            i.removeFromSuperlayer()
@@ -295,7 +301,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         totalLabel.text = moneyString(Int(newLabel))
         totalLabel.sizeToFit()
         // 這邊必須再次設定 position，不然位置會跑掉
-//        totalLabel.layer.position = view.center
+        totalLabel.layer.position = view.center
         
         // 新增點選表格時 percentage 動畫
         let animation = CABasicAnimation(keyPath: "strokeEnd")

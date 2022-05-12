@@ -12,21 +12,34 @@ class accountingTableViewController: UITableViewController {
     @IBOutlet var textfieldCollection: [UITextField]!
     @IBOutlet var Labelcollection: [UILabel]!
     @IBOutlet var clearButtonCollection: [UIButton]!
-    
+        
     // 總資料
     var editaccount = Spending(personal: 0, dietary: 0, shopping: 0, traffic: 0, medical: 0, life: 0)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // custom keyboard
+        let keyboardView = Keyboard(frame: CGRect(x: 0, y: 0, width: 0, height: (view.frame.height) * 2 / 6))
+        keyboardView.delegate = self
+        
+        // 設定全部的 textfield 的 inputview
+        for textfield in textfieldCollection {
+            textfield.inputView = keyboardView
+        }
+                                    
+
         updateUI()
+        // textfield tool
+        // 暫時取消
+//        addToolBarOnKeyboard()
+
 //        print(editaccount)
         
 //         self.navigationItem.rightBarButtonItem = self.editButtonItem
 
         // 禁止下拉
         self.isModalInPresentation = true
-        addToolBarOnKeyboard()
     }
     
     // 新增各種工具在 TextField 上
@@ -340,5 +353,48 @@ class accountingTableViewController: UITableViewController {
         formatter.numberStyle = .currency
         return formatter.string(from: NSNumber(value: money)) ?? ""
     }
+    
+}
+
+extension accountingTableViewController: KeyboardDelegate {
+    func keyWasTapped(character: String) {
+        print("hi")
+    }
+    
+    func deletTapped() {
+        print("hi")
+
+    }
+    
+    func deletAllTapped() {
+        print("hi")
+
+    }
+    
+    func plusTapped() {
+        print("hi")
+
+    }
+    
+    func multiplicationTapped() {
+        print("hi")
+
+    }
+    
+    func deductTapped() {
+        print("hi")
+
+    }
+    
+    func divisionTapped() {
+        print("hi")
+
+    }
+    
+    func calculateTapped() {
+        print("hi")
+
+    }
+    
     
 }

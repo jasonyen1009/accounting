@@ -17,3 +17,9 @@ struct Spending {
 }
 
 
+//var date: Date
+//var spendingtype: String
+//var spendingname: String
+//var paytype: String
+//var spending: Int
+//var note: String

@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		25AAB5E62824193A0076ECC7 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AAB5E52824193A0076ECC7 /* CustomButton.swift */; };
+		25AAB5E8282520340076ECC7 /* NewTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AAB5E7282520340076ECC7 /* NewTableViewController.swift */; };
+		25BC680B2823BCEB0051CA86 /* Keyboard.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25BC680A2823BCEB0051CA86 /* Keyboard.xib */; };
+		25BC680D2823C34B0051CA86 /* Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BC680C2823C34B0051CA86 /* Keyboard.swift */; };
 		25D4B28A280E9818006D2547 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D4B289280E9818006D2547 /* AppDelegate.swift */; };
 		25D4B28C280E9818006D2547 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D4B28B280E9818006D2547 /* SceneDelegate.swift */; };
 		25D4B28E280E9818006D2547 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D4B28D280E9818006D2547 /* ViewController.swift */; };
@@ -38,6 +42,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		25AAB5E52824193A0076ECC7 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		25AAB5E7282520340076ECC7 /* NewTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTableViewController.swift; sourceTree = "<group>"; };
+		25BC680A2823BCEB0051CA86 /* Keyboard.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Keyboard.xib; sourceTree = "<group>"; };
+		25BC680C2823C34B0051CA86 /* Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keyboard.swift; sourceTree = "<group>"; };
 		25D4B286280E9818006D2547 /* accounting.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = accounting.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		25D4B289280E9818006D2547 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		25D4B28B280E9818006D2547 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -80,6 +88,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		25063AB8282D08B4000EC4CC /* custom */ = {
+			isa = PBXGroup;
+			children = (
+				25BC680A2823BCEB0051CA86 /* Keyboard.xib */,
+				25BC680C2823C34B0051CA86 /* Keyboard.swift */,
+				25AAB5E52824193A0076ECC7 /* CustomButton.swift */,
+			);
+			path = custom;
+			sourceTree = "<group>";
+		};
 		25D4B27D280E9818006D2547 = {
 			isa = PBXGroup;
 			children = (
@@ -103,10 +121,12 @@
 		25D4B288280E9818006D2547 /* accounting */ = {
 			isa = PBXGroup;
 			children = (
+				25063AB8282D08B4000EC4CC /* custom */,
 				25D4B289280E9818006D2547 /* AppDelegate.swift */,
 				25D4B28B280E9818006D2547 /* SceneDelegate.swift */,
 				25D4B28D280E9818006D2547 /* ViewController.swift */,
 				25D4B28F280E9818006D2547 /* Main.storyboard */,
+				25AAB5E7282520340076ECC7 /* NewTableViewController.swift */,
 				25D4B2BB280EC0AF006D2547 /* Spending.swift */,
 				25D4B2B9280E9EDC006D2547 /* accountingTableViewController.swift */,
 				25D4B292280E981A006D2547 /* Assets.xcassets */,
@@ -239,6 +259,7 @@
 			files = (
 				25D4B296280E981A006D2547 /* LaunchScreen.storyboard in Resources */,
 				25D4B293280E981A006D2547 /* Assets.xcassets in Resources */,
+				25BC680B2823BCEB0051CA86 /* Keyboard.xib in Resources */,
 				25D4B291280E9818006D2547 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -264,10 +285,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25AAB5E8282520340076ECC7 /* NewTableViewController.swift in Sources */,
 				25D4B2BA280E9EDC006D2547 /* accountingTableViewController.swift in Sources */,
 				25D4B28E280E9818006D2547 /* ViewController.swift in Sources */,
 				25D4B28A280E9818006D2547 /* AppDelegate.swift in Sources */,
 				25D4B28C280E9818006D2547 /* SceneDelegate.swift in Sources */,
+				25AAB5E62824193A0076ECC7 /* CustomButton.swift in Sources */,
+				25BC680D2823C34B0051CA86 /* Keyboard.swift in Sources */,
 				25D4B2BC280EC0AF006D2547 /* Spending.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
