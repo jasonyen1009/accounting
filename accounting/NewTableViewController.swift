@@ -9,19 +9,31 @@ import UIKit
 
 class NewTableViewController: UITableViewController {
     
+    var mydata: Spending?
+    
     var number1 = 0.0
     var number2 = 0.0
     var calculatetype = ""
+    
+    // date
+    var now = Date()
+    let formatter = DateFormatter()
+    
 
+    @IBOutlet weak var DatePicker: UIDatePicker!
     @IBOutlet weak var categoryButton: UIButton!
     @IBOutlet weak var accountButton: UIButton!
     @IBOutlet weak var accountTextfield: UITextField!
     @IBOutlet weak var noteTextView: UITextView!
+    @IBOutlet weak var accountnameTextfield: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // 禁止下拉
         self.isModalInPresentation = true
+        
+        // textfield delegate
+        accountnameTextfield.delegate = self
         
         // textview delegate
         noteTextView.delegate = self
@@ -54,22 +66,16 @@ class NewTableViewController: UITableViewController {
         
         categoryButton.menu = UIMenu(children: [
             UIAction(title: "個人", handler: { action in
-                print("")
             }),
             UIAction(title: "飲食", handler: { action in
-                print("")
             }),
             UIAction(title: "購物", handler: { action in
-                print("")
             }),
             UIAction(title: "交通", handler: { action in
-                print("")
             }),
             UIAction(title: "醫療", handler: { action in
-                print("")
             }),
             UIAction(title: "生活", handler: { action in
-                print("")
             })
         
         
@@ -80,16 +86,14 @@ class NewTableViewController: UITableViewController {
         accountButton.changesSelectionAsPrimaryAction = true
         accountButton.menu = UIMenu(children: [
             UIAction(title: "帳戶", handler: { action in
-                print("")
             }),
             UIAction(title: "信用卡", handler: { action in
-                print("")
             }),
             UIAction(title: "現金", handler: { action in
-                print("")
             })
         
         ])
+                
         
         
     }
@@ -171,15 +175,26 @@ class NewTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
+    // 資料
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
+        let date = DatePicker.date
+        let sptype = categoryButton.titleLabel?.text ?? ""
+        let spname = accountnameTextfield.text ?? ""
+        let pytype = accountButton.titleLabel?.text ?? ""
+        let spending = Int(accountTextfield.text!) ?? 0
+        let note = noteTextView.text ?? ""
+        
+        mydata = Spending(date: date, spendingtype: sptype, spendingname: spname, paytype: pytype, spending: spending, note: note)
+        
+        
     }
-    */
+    
     
 
 }
@@ -248,6 +263,7 @@ extension NewTableViewController: KeyboardDelegate {
             number1 = 0.0
             number2 = 0.0
         }
+        dismissKeyBoard()
 
     }
     
@@ -270,4 +286,12 @@ extension NewTableViewController: UITextViewDelegate {
         }
     }
     
+}
+
+
+extension NewTableViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        accountTextfield.becomeFirstResponder()
+            return true
+      }
 }

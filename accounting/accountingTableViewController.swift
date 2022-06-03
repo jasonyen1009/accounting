@@ -14,7 +14,7 @@ class accountingTableViewController: UITableViewController {
     @IBOutlet var clearButtonCollection: [UIButton]!
         
     // 總資料
-    var editaccount = Spending(personal: 0, dietary: 0, shopping: 0, traffic: 0, medical: 0, life: 0)
+//    var editaccount = Spending(personal: 0, dietary: 0, shopping: 0, traffic: 0, medical: 0, life: 0)
     
     override func viewDidLoad() {
         super.viewDidLoad()
