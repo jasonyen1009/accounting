@@ -154,18 +154,59 @@
         <scene sceneID="SDU-VC-hJL">
             <objects>
                 <tableViewController id="ig1-F2-Neb" customClass="ListTableViewController" customModule="accounting" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="qAZ-my-MWx">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="50" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="qAZ-my-MWx">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="systemGray6Color"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="data" id="e4e-nA-w6q">
-                                <rect key="frame" x="0.0" y="44.666666030883789" width="390" height="43.666667938232422"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="data" rowHeight="50" id="e4e-nA-w6q" customClass="SpendingListTableViewCell" customModule="accounting" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="44.666666030883789" width="390" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="e4e-nA-w6q" id="KZy-bL-ZmF">
-                                    <rect key="frame" x="0.0" y="0.0" width="390" height="43.666667938232422"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="390" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Q1U-Bf-FAf">
+                                            <rect key="frame" x="20" y="10" width="30" height="30"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="30" id="a12-nT-vpM"/>
+                                                <constraint firstAttribute="height" constant="30" id="hlz-g3-n6i"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TWD 50.000.00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ibj-hf-6cd">
+                                            <rect key="frame" x="230" y="14.999999999999998" width="150" height="20.333333333333329"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="Cdf-pa-rd7"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="房屋稅" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ikF-QV-TtR">
+                                            <rect key="frame" x="65" y="14.333333333333334" width="100" height="21.666666666666664"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="bkA-VY-Irm"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Q1U-Bf-FAf" firstAttribute="leading" secondItem="KZy-bL-ZmF" secondAttribute="leadingMargin" id="4dM-rj-9t6"/>
+                                        <constraint firstItem="Ibj-hf-6cd" firstAttribute="trailing" secondItem="KZy-bL-ZmF" secondAttribute="trailingMargin" constant="10" id="5cg-sL-Kfi"/>
+                                        <constraint firstItem="Q1U-Bf-FAf" firstAttribute="centerY" secondItem="KZy-bL-ZmF" secondAttribute="centerY" id="706-kW-OlR"/>
+                                        <constraint firstItem="ikF-QV-TtR" firstAttribute="centerY" secondItem="Q1U-Bf-FAf" secondAttribute="centerY" id="HPa-DL-YRT"/>
+                                        <constraint firstItem="ikF-QV-TtR" firstAttribute="leading" secondItem="Q1U-Bf-FAf" secondAttribute="trailing" constant="15" id="fM2-u6-5fH"/>
+                                        <constraint firstItem="Ibj-hf-6cd" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ikF-QV-TtR" secondAttribute="trailing" constant="8" symbolic="YES" id="kbm-Yr-Nz5"/>
+                                        <constraint firstItem="Ibj-hf-6cd" firstAttribute="centerY" secondItem="KZy-bL-ZmF" secondAttribute="centerY" id="rOP-u8-OLU"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="accountimageview" destination="Q1U-Bf-FAf" id="4Ym-na-JL2"/>
+                                    <outlet property="spendingLabel" destination="Ibj-hf-6cd" id="Jig-DV-O4D"/>
+                                    <outlet property="spendingnameLabel" destination="ikF-QV-TtR" id="J7I-jc-Dch"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -184,7 +225,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e0h-GV-NhH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="Iqb-QK-igL" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1108" y="808"/>
+            <point key="canvasLocation" x="1107.6923076923076" y="807.58293838862551"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="mDh-qu-2vC">
@@ -423,9 +464,6 @@
         <image name="chevron.backward" catalog="system" width="96" height="128"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray6Color">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

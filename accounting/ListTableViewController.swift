@@ -45,7 +45,7 @@ class ListTableViewController: UITableViewController {
             renewaldata = [str: []]
         }
 
-//        print(renewaldata)
+//        print(dic)
 
 
         // Uncomment the following line to preserve selection between presentations
@@ -62,6 +62,14 @@ class ListTableViewController: UITableViewController {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    // 數字轉為金錢格式文字
+    func moneyString(_ money: Int) -> String {
+        let formatter = NumberFormatter()
+        formatter.locale = Locale(identifier: "zh_TW")
+        formatter.numberStyle = .currencyISOCode
+        return formatter.string(from: NSNumber(value: money)) ?? ""
     }
     
 
@@ -87,22 +95,24 @@ class ListTableViewController: UITableViewController {
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "data", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "data", for: indexPath) as! SpendingListTableViewCell
         let row = indexPath.row
         let section = indexPath.section
-        
-//        let dic = Dictionary(grouping: list, by: { $0.date})
-//        let dic = Dictionary(grouping: list, by: { formatter.string(from: $0.date)})
-        
-//        var keys = Array(dic.keys)
-//        keys.sort(by: <)
-//        let item = dic[keys[section]]!
-//        let transction = item[row]
-        
-// Configure the cell...
-//        cell.textLabel?.text = transction.spendingname
-        cell.textLabel?.text = dic[keys[section]]![row].spendingname
 
+        // 自定義 cell
+        cell.spendingnameLabel.text = dic[keys[section]]![row].spendingname
+        cell.spendingLabel.text = moneyString(dic[keys[section]]![row].spending)
+        
+        // 判斷 花費的方式
+        switch dic[keys[section]]![row].paytype {
+        case "帳戶" :
+            cell.accountimageview.image = UIImage(named: "bank")
+        case "信用卡" :
+            cell.accountimageview.image = UIImage(named: "credit-card")
+        default:
+            cell.accountimageview.image = UIImage(named: "money")
+        }
+        
         return cell
     }
     

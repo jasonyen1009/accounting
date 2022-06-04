@@ -368,7 +368,7 @@ class ViewController: UIViewController {
     // 初始金額
     func creatpercentageLabel() {
         totalLabel.text = moneyString(0)
-        totalLabel.font = UIFont.systemFont(ofSize: 20)
+        totalLabel.font = UIFont.systemFont(ofSize: 15)
         totalLabel.sizeToFit()
         totalLabel.layer.position = CGPoint(x: view.frame.width / 2, y: view.frame.height / 2 - 100)
         view.addSubview(totalLabel)
@@ -401,7 +401,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 //        let cell = UITableViewCell()
         let cell = tableView.dequeueReusableCell(withIdentifier: "mycell", for: indexPath) as! SpendingtypeTableViewCell
-//        cell.textLabel?.text = "This is row \(indexPath.row)"
+
         let percentages = [
             Double(myasset.personal),
             Double(myasset.dietary),
@@ -410,21 +410,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             Double(myasset.medical),
             Double(myasset.life)
         ]
-//
-//        var content = cell.defaultContentConfiguration()
-////        content.imageProperties.maximumSize = CGSize(width: 100, height: 100)
-//        content.image = UIImage(systemName: "circle.fill")
-//        content.imageProperties.tintColor = UIColor(cgColor: colors[indexPath.row])
-//
-//        // 決定第一行字串
-//        content.text = "\(assetLabel[indexPath.row])          \(moneyString(Int(percentages[indexPath.row])))"
-//
-        // 判斷 percentage 大於 0 , 才會新增第二 字串
-//        if (percentages[indexPath.row] / percentages.reduce(0, +)) > 0.0 {
-//
-//            content.secondaryText = "\(String(format: "%.2f", (percentages[indexPath.row] / percentages.reduce(0, +) * 100))) %"
-//        }
-//        cell.contentConfiguration = content
         
         // 自訂的 cell
         cell.spendingtypeLabel.text = "\(assetLabel[indexPath.row])"

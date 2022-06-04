@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2582DE8F284A5EDF00284BAB /* SpendingtypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2582DE8E284A5EDF00284BAB /* SpendingtypeTableViewCell.swift */; };
+		2582DE91284B8F4200284BAB /* SpendingListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2582DE90284B8F4200284BAB /* SpendingListTableViewCell.swift */; };
 		25877879282E34E300E685AF /* Myasset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25877878282E34E300E685AF /* Myasset.swift */; };
 		258778BF283B5CF200E685AF /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258778BE283B5CF200E685AF /* ListTableViewController.swift */; };
 		25AAB5E62824193A0076ECC7 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AAB5E52824193A0076ECC7 /* CustomButton.swift */; };
@@ -45,6 +46,7 @@
 
 /* Begin PBXFileReference section */
 		2582DE8E284A5EDF00284BAB /* SpendingtypeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpendingtypeTableViewCell.swift; sourceTree = "<group>"; };
+		2582DE90284B8F4200284BAB /* SpendingListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpendingListTableViewCell.swift; sourceTree = "<group>"; };
 		25877878282E34E300E685AF /* Myasset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Myasset.swift; sourceTree = "<group>"; };
 		258778BE283B5CF200E685AF /* ListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
 		25AAB5E52824193A0076ECC7 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
@@ -130,6 +132,7 @@
 				25D4B28B280E9818006D2547 /* SceneDelegate.swift */,
 				25D4B28D280E9818006D2547 /* ViewController.swift */,
 				25D4B28F280E9818006D2547 /* Main.storyboard */,
+				2582DE90284B8F4200284BAB /* SpendingListTableViewCell.swift */,
 				2582DE8E284A5EDF00284BAB /* SpendingtypeTableViewCell.swift */,
 				258778BE283B5CF200E685AF /* ListTableViewController.swift */,
 				25AAB5E7282520340076ECC7 /* NewTableViewController.swift */,
@@ -291,6 +294,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2582DE91284B8F4200284BAB /* SpendingListTableViewCell.swift in Sources */,
 				25AAB5E8282520340076ECC7 /* NewTableViewController.swift in Sources */,
 				25D4B28E280E9818006D2547 /* ViewController.swift in Sources */,
 				25D4B28A280E9818006D2547 /* AppDelegate.swift in Sources */,
