@@ -37,15 +37,22 @@ class ViewController: UIViewController {
     let aDegree = CGFloat.pi / 180
     // 圖表顏色
     let colors = [
-        UIColor(red: 93/255, green: 95/255, blue: 238/255, alpha: 1).cgColor,
-        UIColor(red: 124/255, green: 138/255, blue: 1, alpha: 1).cgColor,
-        UIColor(red: 226/255, green: 137/255, blue: 242/255, alpha: 1).cgColor,
-        UIColor(red: 55/255, green: 57/255, blue: 143/255, alpha: 1).cgColor,
-        UIColor(red: 49/255, green: 63/255, blue: 69/255, alpha: 1).cgColor,
-        UIColor(red: 173/255, green: 82/255, blue: 186/255, alpha: 1).cgColor
+//        UIColor(red: 93/255, green: 95/255, blue: 238/255, alpha: 1).cgColor,
+//        UIColor(red: 124/255, green: 138/255, blue: 1, alpha: 1).cgColor,
+//        UIColor(red: 226/255, green: 137/255, blue: 242/255, alpha: 1).cgColor,
+//        UIColor(red: 55/255, green: 57/255, blue: 143/255, alpha: 1).cgColor,
+//        UIColor(red: 49/255, green: 63/255, blue: 69/255, alpha: 1).cgColor,
+//        UIColor(red: 173/255, green: 82/255, blue: 186/255, alpha: 1).cgColor
+        UIColor(red: 67/255, green: 97/255, blue: 238/255, alpha: 1).cgColor,
+        UIColor(red: 63/255, green: 55/255, blue: 201/255, alpha: 1).cgColor,
+        UIColor(red: 58/255, green: 12/255, blue: 163/255, alpha: 1).cgColor,
+        UIColor(red: 114/255, green: 9/255, blue: 183/255, alpha: 1).cgColor,
+        UIColor(red: 181/255, green: 23/255, blue: 158/255, alpha: 1).cgColor,
+        UIColor(red: 247/255, green: 37/255, blue: 133/255, alpha: 1).cgColor
     ]
     
     @IBOutlet weak var myTableView: UITableView!
+    @IBOutlet weak var tableviewheightconstraint: NSLayoutConstraint!
     
     var percentageLayers = [CALayer]()
     var percentageTable = [CALayer]()
@@ -56,6 +63,9 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // tableview 高度設定為 view 的 2/5
+        tableviewheightconstraint.constant = view.frame.height * 0.4
+        
         // TableView
         myTableView.dataSource = self
         myTableView.delegate = self
@@ -63,6 +73,18 @@ class ViewController: UIViewController {
         creatcirclePath()
         creatpercentageLabel()
 //        print(myasset)
+        
+        let standardAppearance = UINavigationBarAppearance()
+
+            // Title font color
+            standardAppearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+
+            // prevent Nav Bar color change on scroll view push behind NavBar
+            standardAppearance.configureWithOpaqueBackground()
+        standardAppearance.backgroundColor = UIColor.systemGray6
+
+            self.navigationController?.navigationBar.standardAppearance = standardAppearance
+            self.navigationController?.navigationBar.scrollEdgeAppearance = standardAppearance
         
         
     }
@@ -337,7 +359,7 @@ class ViewController: UIViewController {
         let circleLayer = CAShapeLayer()
         circleLayer.path = circlePath.cgPath
         circleLayer.fillColor = UIColor.clear.cgColor
-        circleLayer.strokeColor = UIColor(red: 133/255, green: 92/255, blue: 248/255, alpha: 1).cgColor
+        circleLayer.strokeColor = UIColor(red: 233/255, green: 233/255, blue: 233/255, alpha: 1).cgColor
         circleLayer.lineWidth = 40
         view.layer.addSublayer(circleLayer)
         percentageLayers.append(circleLayer)
@@ -345,7 +367,7 @@ class ViewController: UIViewController {
     
     // 初始金額
     func creatpercentageLabel() {
-        totalLabel.text = "0"
+        totalLabel.text = moneyString(0)
         totalLabel.font = UIFont.systemFont(ofSize: 20)
         totalLabel.sizeToFit()
         totalLabel.layer.position = CGPoint(x: view.frame.width / 2, y: view.frame.height / 2 - 100)
@@ -378,7 +400,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     // 決定表格內容
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 //        let cell = UITableViewCell()
-        let cell = tableView.dequeueReusableCell(withIdentifier: "mycell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "mycell", for: indexPath) as! SpendingtypeTableViewCell
 //        cell.textLabel?.text = "This is row \(indexPath.row)"
         let percentages = [
             Double(myasset.personal),
@@ -388,21 +410,33 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             Double(myasset.medical),
             Double(myasset.life)
         ]
+//
+//        var content = cell.defaultContentConfiguration()
+////        content.imageProperties.maximumSize = CGSize(width: 100, height: 100)
+//        content.image = UIImage(systemName: "circle.fill")
+//        content.imageProperties.tintColor = UIColor(cgColor: colors[indexPath.row])
+//
+//        // 決定第一行字串
+//        content.text = "\(assetLabel[indexPath.row])          \(moneyString(Int(percentages[indexPath.row])))"
+//
+        // 判斷 percentage 大於 0 , 才會新增第二 字串
+//        if (percentages[indexPath.row] / percentages.reduce(0, +)) > 0.0 {
+//
+//            content.secondaryText = "\(String(format: "%.2f", (percentages[indexPath.row] / percentages.reduce(0, +) * 100))) %"
+//        }
+//        cell.contentConfiguration = content
         
-        var content = cell.defaultContentConfiguration()
-//        content.imageProperties.maximumSize = CGSize(width: 100, height: 100)
-        content.image = UIImage(systemName: "circle.fill")
-        content.imageProperties.tintColor = UIColor(cgColor: colors[indexPath.row])
-
-        // 決定第一行字串
-        content.text = "\(assetLabel[indexPath.row])          \(moneyString(Int(percentages[indexPath.row])))"
-        
+        // 自訂的 cell
+        cell.spendingtypeLabel.text = "\(assetLabel[indexPath.row])"
+        cell.spendingLabel.text = "\(moneyString(Int(percentages[indexPath.row])))"
+        cell.circleview.backgroundColor = UIColor(cgColor: colors[indexPath.row])
         // 判斷 percentage 大於 0 , 才會新增第二 字串
         if (percentages[indexPath.row] / percentages.reduce(0, +)) > 0.0 {
-
-            content.secondaryText = "\(String(format: "%.2f", (percentages[indexPath.row] / percentages.reduce(0, +) * 100))) %"
+            cell.percentageLabel.text = "\(String(format: "%.2f", (percentages[indexPath.row] / percentages.reduce(0, +) * 100))) %"
+        }else {
+            cell.percentageLabel.text = "0.00 %"
         }
-        cell.contentConfiguration = content
+        
         return cell
     }
     
