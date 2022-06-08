@@ -19,6 +19,7 @@ class ViewController: UIViewController {
     
     // 支出種類
     var assetLabel = ["個人", "飲食", "購物", "交通", "醫療", "生活"]
+    var assetLabel2 = ["個\n人", "飲\n食", "購\n物", "交\n通", "醫\n療", "生\n活"]
     
     // 所有支出總計
     var totaldata = [
@@ -37,12 +38,6 @@ class ViewController: UIViewController {
     let aDegree = CGFloat.pi / 180
     // 圖表顏色
     let colors = [
-//        UIColor(red: 93/255, green: 95/255, blue: 238/255, alpha: 1).cgColor,
-//        UIColor(red: 124/255, green: 138/255, blue: 1, alpha: 1).cgColor,
-//        UIColor(red: 226/255, green: 137/255, blue: 242/255, alpha: 1).cgColor,
-//        UIColor(red: 55/255, green: 57/255, blue: 143/255, alpha: 1).cgColor,
-//        UIColor(red: 49/255, green: 63/255, blue: 69/255, alpha: 1).cgColor,
-//        UIColor(red: 173/255, green: 82/255, blue: 186/255, alpha: 1).cgColor
         UIColor(red: 67/255, green: 97/255, blue: 238/255, alpha: 1).cgColor,
         UIColor(red: 63/255, green: 55/255, blue: 201/255, alpha: 1).cgColor,
         UIColor(red: 58/255, green: 12/255, blue: 163/255, alpha: 1).cgColor,
@@ -178,10 +173,9 @@ class ViewController: UIViewController {
                 // label 製作
                 let textLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
                 textLabel.font = UIFont.systemFont(ofSize: 10)
-//                textLabel.backgroundColor = .yellow
-                // 取得小數點前兩位
-//                textLabel.text = "\(assetLabel[index]) \(String(format: "%.2f", (percentage / percentages.reduce(0, +) * 100 ))) %"
-                textLabel.text = "\(assetLabel[index])"
+                // assetLabel2 垂直顯示
+                textLabel.text = "\(assetLabel2[index])"
+                textLabel.numberOfLines = 0
                 textLabel.sizeToFit()
 //                textLabel.center = textPath.currentPoint
 //                view.addSubview(textLabel)
@@ -307,7 +301,9 @@ class ViewController: UIViewController {
                 // label 製作
                 let textLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
                 textLabel.font = UIFont.systemFont(ofSize: 10)
-                textLabel.text = "\(assetLabel[index])"
+                // assetLabel2 垂直顯示
+                textLabel.text = "\(assetLabel2[index])"
+                textLabel.numberOfLines = 0
                 textLabel.sizeToFit()
 //                textLabel.center = textPath.currentPoint
 //                view.addSubview(textLabel)
