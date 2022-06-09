@@ -30,7 +30,11 @@ class ViewController: UIViewController {
         "醫療": [Spending](),
         "生活": [Spending]()
     
-    ]
+    ] {
+        didSet {
+            Spending.SaveSpending(totaldata)
+        }
+    }
     // 支出總額
     var amount = 0
     let totalLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
@@ -58,6 +62,11 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // 取得儲存的資料
+        if let spending = Spending.loadSpending() {
+            self.totaldata = spending
+        }
+        
         // tableview 高度設定為 view 的 2/5
         tableviewheightconstraint.constant = view.frame.height * 0.4
         
@@ -69,6 +78,7 @@ class ViewController: UIViewController {
         creatpercentageLabel()
 //        print(myasset)
         
+        // 設定 NavigationBar 顏色
         let standardAppearance = UINavigationBarAppearance()
 
             // Title font color
@@ -81,7 +91,87 @@ class ViewController: UIViewController {
             self.navigationController?.navigationBar.standardAppearance = standardAppearance
             self.navigationController?.navigationBar.scrollEdgeAppearance = standardAppearance
         
+        // 畫面更新
+        myasset.personal = calculate("個人")
+        myasset.dietary = calculate("飲食")
+        myasset.shopping = calculate("購物")
+        myasset.traffic = calculate("交通")
+        myasset.medical = calculate("醫療")
+        myasset.life = calculate("生活")
         
+        calculateall()
+        
+        totalLabel.text = moneyString(amount)
+        totalLabel.sizeToFit()
+        // 這邊必須再次設定 position，不然位置會跑掉
+        totalLabel.layer.position = CGPoint(x: view.frame.width / 2, y: view.frame.height / 2 - 100)
+        
+        // 刪除所有 perentageLayers
+        for deleteLayer  in percentageLayers{
+            deleteLayer.removeFromSuperlayer()
+        }
+        percentageLayers.removeAll()
+        
+        // 刪除所有 percentageLabel
+        for deleteLabel in percentageLabel {
+            deleteLabel.removeFromSuperview()
+        }
+        percentageLabel.removeAll()
+        
+        // 若總額為 0 , 製作底層
+        if amount == 0 {
+            creatcirclePath()
+        }
+                    
+        // 更新 圖表
+        var startDegree: CGFloat = 270
+        let percentages = [
+            Double(myasset.personal),
+            Double(myasset.dietary),
+            Double(myasset.shopping),
+            Double(myasset.traffic),
+            Double(myasset.medical),
+            Double(myasset.life)
+        ]
+        print("newdata \(percentages)")
+        // 繪製 各項比例圖表及文字
+        for (index, percentage) in percentages.enumerated() {
+            // percentages.reduce(0, +) 取得 percentages 總數
+            let endDegree = startDegree + (percentage / percentages.reduce(0, +)) * 360
+            let percentagePath = UIBezierPath(arcCenter: CGPoint(x: view.frame.width / 2, y: view.frame.height / 2 - 100), radius: 90, startAngle: aDegree * startDegree, endAngle: aDegree * endDegree, clockwise: true)
+
+            let percentageLayer = CAShapeLayer()
+            percentageLayer.path = percentagePath.cgPath
+            percentageLayer.fillColor = UIColor.clear.cgColor
+            percentageLayer.lineWidth = 40
+            percentageLayer.strokeColor = colors[index]
+
+            // textlabel 座標
+            let textPath = UIBezierPath(arcCenter: CGPoint(x: view.frame.width / 2, y: view.frame.height / 2 - 100), radius: 140, startAngle: aDegree * startDegree, endAngle: aDegree * (startDegree + (percentage / percentages.reduce(0, +)) * 180), clockwise: true)
+            // label 製作
+            let textLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+            textLabel.font = UIFont.systemFont(ofSize: 10)
+            // assetLabel2 垂直顯示
+            textLabel.text = "\(assetLabel2[index])"
+            textLabel.numberOfLines = 0
+            textLabel.sizeToFit()
+
+            // 如果將 textLabel.center = textPath.currentPoint
+            // 移動至判斷式外，回傳資料都 0 時，將造成閃退
+            if percentage > 0.0 {
+                textLabel.center = textPath.currentPoint
+                view.addSubview(textLabel)
+                percentageLabel.append(textLabel)
+
+            }
+
+            view.layer.addSublayer(percentageLayer)
+            percentageLayers.append(percentageLayer)
+            startDegree = endDegree
+
+        }
+        myTableView.reloadData()
+
     }
     
     // 點選 cancel 返回
@@ -96,7 +186,7 @@ class ViewController: UIViewController {
         if let source = unwindSegue.source as? NewTableViewController ,
            let data = source.mydata {
             
-            
+            // 判斷為哪種消費
             switch data.spendingtype {
             case "個人":
                 myasset.personal += data.spending
@@ -193,23 +283,6 @@ class ViewController: UIViewController {
                 view.layer.addSublayer(percentageLayer)
                 percentageLayers.append(percentageLayer)
                 startDegree = endDegree
-
-                // 製作動畫
-//                let animation = CABasicAnimation(keyPath: "strokeEnd")
-//                var animationTime = 0.5
-//                animation.fromValue = 0
-//                animation.toValue = 1
-//                animation.duration = 0.5
-//
-//                animationTime = animationTime * Double(index)
-//                percentageLayer.add(animation, forKey: nil)
-//
-//                Timer.scheduledTimer(withTimeInterval: TimeInterval(animationTime), repeats: false) { _ in
-//                    percentageLayer.add(animation, forKey: nil)
-//                    self.view.layer.addSublayer(percentageLayer)
-//                }
-
-
             }
             // 更新表格
             myTableView.reloadData()
@@ -382,6 +455,16 @@ class ViewController: UIViewController {
         formatter.numberStyle = .currencyISOCode
         return formatter.string(from: NSNumber(value: money)) ?? ""
     }
+    
+    // 計算 spending 總和
+    // 用於重新打開程式計算用
+    func calculate(_ spendingtype: String) -> Int {
+        var spending = 0
+        for i in totaldata[spendingtype]! {
+            spending += i.spending
+        }
+        return spending
+    }
 
 }
 
@@ -420,78 +503,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         
         return cell
     }
-    
-    // 點選表格的事件
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        print("get")
-//        // 刪除前一個點選的 Layer
-////        for i in percentageTable{
-////            i.removeFromSuperlayer()
-////        }
-////        percentageTable.removeAll()
-////        creatcirclePath()
-//
-//        let startDegree: CGFloat = 270
-//
-//        // 製作底色
-//        let circlePath = UIBezierPath(arcCenter: view.center, radius: 90, startAngle: aDegree * startDegree, endAngle: aDegree * (startDegree + 360), clockwise: true)
-//        let circleLayer = CAShapeLayer()
-//        circleLayer.path = circlePath.cgPath
-//        circleLayer.fillColor = UIColor.clear.cgColor
-//        circleLayer.strokeColor = UIColor(red: 133/255, green: 92/255, blue: 248/255, alpha: 1).cgColor
-////        circleLayer.strokeColor = UIColor.clear.cgColor
-//        circleLayer.lineWidth = 40
-//        view.layer.addSublayer(circleLayer)
-//        percentageTable.append(circleLayer)
-//
-//
-//        // 更新 圖表
-//        let percentages = [
-//            Double(myasset.personal),
-//            Double(myasset.dietary),
-//            Double(myasset.shopping),
-//            Double(myasset.traffic),
-//            Double(myasset.medical),
-//            Double(myasset.life)
-//        ]
-//
-//        let percentagePath = UIBezierPath(arcCenter: view.center, radius: 90, startAngle: aDegree * startDegree, endAngle: aDegree * (startDegree + 360), clockwise: true)
-//
-//        let percentageLayer = CAShapeLayer()
-//        percentageLayer.path = percentagePath.cgPath
-//        percentageLayer.fillColor = UIColor.clear.cgColor
-//        percentageLayer.lineWidth = 40
-//        percentageLayer.strokeColor = colors[indexPath.row]
-//
-//        view.layer.addSublayer(percentageLayer)
-//        percentageTable.append(percentageLayer)
-//
-//        // 點選新的表格, 就更新一次 totalLabel
-//        let newLabel = percentages[indexPath.row]
-//        totalLabel.text = moneyString(Int(newLabel))
-//        totalLabel.sizeToFit()
-//        // 這邊必須再次設定 position，不然位置會跑掉
-//        totalLabel.layer.position = view.center
-//
-//        // 新增點選表格時 percentage 動畫
-//        let animation = CABasicAnimation(keyPath: "strokeEnd")
-//        animation.fromValue = 0
-//        animation.toValue = 1
-//        animation.duration = 0.5
-//        percentageLayer.add(animation, forKey: nil)
-//
-//        // 顯示點選圖層 3 秒後刪除
-//        Timer.scheduledTimer(withTimeInterval: 3, repeats: false) { [self] _ in
-//            for i in self.percentageTable{
-//                i.removeFromSuperlayer()
-//            }
-//            self.percentageTable.removeAll()
-//            // 變回總額
-//            self.totalLabel.text = moneyString(amount)
-//            self.totalLabel.sizeToFit()
-//        }
-//    }
-    
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //        print(assetLabel[indexPath.row])
