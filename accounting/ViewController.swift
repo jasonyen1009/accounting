@@ -296,9 +296,6 @@ class ViewController: UIViewController {
         if let source = unwindSegue.source as? ListTableViewController,
            let data = source.renewaldata {
 //            print("data \(data)")
-            // 資料整理
-//            var renawal = [Spending]()
-//            let new = data.values
 
             // 將新資料與總資料一起同步
             totaldata[data.keys.first!] = data[data.keys.first!]
@@ -371,16 +368,15 @@ class ViewController: UIViewController {
 
                 // textlabel 座標
                 let textPath = UIBezierPath(arcCenter: CGPoint(x: view.frame.width / 2, y: view.frame.height / 2 - 100), radius: 140, startAngle: aDegree * startDegree, endAngle: aDegree * (startDegree + (percentage / percentages.reduce(0, +)) * 180), clockwise: true)
+                
                 // label 製作
                 let textLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
                 textLabel.font = UIFont.systemFont(ofSize: 10)
+                
                 // assetLabel2 垂直顯示
                 textLabel.text = "\(assetLabel2[index])"
                 textLabel.numberOfLines = 0
                 textLabel.sizeToFit()
-//                textLabel.center = textPath.currentPoint
-//                view.addSubview(textLabel)
-//                percentageLabel.append(textLabel)
 
                 // 如果將 textLabel.center = textPath.currentPoint
                 // 移動至判斷式外，回傳資料都 0 時，將造成閃退
@@ -390,11 +386,9 @@ class ViewController: UIViewController {
                     percentageLabel.append(textLabel)
 
                 }
-
                 view.layer.addSublayer(percentageLayer)
                 percentageLayers.append(percentageLayer)
                 startDegree = endDegree
-
             }
             myTableView.reloadData()
             

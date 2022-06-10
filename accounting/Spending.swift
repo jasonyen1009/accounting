@@ -14,18 +14,20 @@ struct Spending: Codable {
     var paytype: String
     var spending: Int
     var note: String
+    // 將資料另外寫檔儲存
+    static let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
     // 編碼
-    static func SaveSpending(_ mydata: [String: [Spending]]) {
+    static func SaveSpending(_ mydata: [String: [Self]]) {
         let encoder = JSONEncoder()
-        guard let data = try? encoder.encode(mydata) else { return }
-        let userDefaults = UserDefaults.standard
-        userDefaults.set(data, forKey: "spending")
+        let data = try? encoder.encode(mydata)
+        let url = documentsDirectory.appendingPathComponent("mydata")
+        try? data?.write(to: url)
     }
     // 解碼
     static func loadSpending() -> [String: [Spending]]? {
-        let userDefaults = UserDefaults.standard
-        guard let data = userDefaults.data(forKey: "spending") else { return nil}
         let decoder = JSONDecoder()
+        let url = documentsDirectory.appendingPathComponent("mydata")
+        guard let data = try? Data(contentsOf: url) else { return nil}
         return try? decoder.decode([String: [Spending]].self, from: data)
     }
 }
