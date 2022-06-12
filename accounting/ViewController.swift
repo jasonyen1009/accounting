@@ -133,7 +133,7 @@ class ViewController: UIViewController {
             Double(myasset.medical),
             Double(myasset.life)
         ]
-        print("newdata \(percentages)")
+        
         // 繪製 各項比例圖表及文字
         for (index, percentage) in percentages.enumerated() {
             // percentages.reduce(0, +) 取得 percentages 總數
@@ -152,7 +152,7 @@ class ViewController: UIViewController {
             let textLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
             textLabel.font = UIFont.systemFont(ofSize: 10)
             // assetLabel2 垂直顯示
-            textLabel.text = "\(assetLabel2[index])"
+            textLabel.text = "\(assetLabel[index])"
             textLabel.numberOfLines = 0
             textLabel.sizeToFit()
 
@@ -185,7 +185,7 @@ class ViewController: UIViewController {
 //        let sourceViewController = unwindSegue.source
         if let source = unwindSegue.source as? NewTableViewController ,
            let data = source.mydata {
-            
+//            print(data)
             // 判斷為哪種消費
             switch data.spendingtype {
             case "個人":
@@ -264,7 +264,7 @@ class ViewController: UIViewController {
                 let textLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
                 textLabel.font = UIFont.systemFont(ofSize: 10)
                 // assetLabel2 垂直顯示
-                textLabel.text = "\(assetLabel2[index])"
+                textLabel.text = "\(assetLabel[index])"
                 textLabel.numberOfLines = 0
                 textLabel.sizeToFit()
 //                textLabel.center = textPath.currentPoint
@@ -374,7 +374,7 @@ class ViewController: UIViewController {
                 textLabel.font = UIFont.systemFont(ofSize: 10)
                 
                 // assetLabel2 垂直顯示
-                textLabel.text = "\(assetLabel2[index])"
+                textLabel.text = "\(assetLabel[index])"
                 textLabel.numberOfLines = 0
                 textLabel.sizeToFit()
 

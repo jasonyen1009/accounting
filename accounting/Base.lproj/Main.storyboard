@@ -123,13 +123,43 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oy0-Lv-QUr">
+                                <rect key="frame" x="20" y="434" width="150" height="42"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="42" id="E3H-YW-Xae"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="bg0-BR-vaS"/>
+                                </constraints>
+                                <color key="tintColor" systemColor="labelColor"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="2022,Jun">
+                                    <backgroundConfiguration key="background" cornerRadius="40">
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    </backgroundConfiguration>
+                                    <fontDescription key="titleFontDescription" type="system" weight="heavy" pointSize="20"/>
+                                </buttonConfiguration>
+                            </button>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="MnV-gq-kTa">
+                                <rect key="frame" x="230" y="445" width="140" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="140" id="xsj-uw-sfI"/>
+                                </constraints>
+                                <segments>
+                                    <segment title="支出"/>
+                                    <segment title="收入"/>
+                                </segments>
+                            </segmentedControl>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemGray6Color"/>
                         <constraints>
+                            <constraint firstItem="Oy0-Lv-QUr" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="3fw-9q-aaI"/>
+                            <constraint firstItem="aFq-h7-uQL" firstAttribute="top" secondItem="MnV-gq-kTa" secondAttribute="bottom" constant="10" id="8xB-rn-V4q"/>
                             <constraint firstItem="aFq-h7-uQL" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="DlV-fY-aoe"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="MnV-gq-kTa" secondAttribute="trailing" constant="20" id="F2o-Bn-6YG"/>
+                            <constraint firstItem="MnV-gq-kTa" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Oy0-Lv-QUr" secondAttribute="trailing" constant="8" symbolic="YES" id="Rq1-qX-Lco"/>
                             <constraint firstItem="aFq-h7-uQL" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="bFA-wd-IEp"/>
                             <constraint firstAttribute="bottom" secondItem="aFq-h7-uQL" secondAttribute="bottom" id="dQz-up-Wzn"/>
+                            <constraint firstItem="aFq-h7-uQL" firstAttribute="top" secondItem="Oy0-Lv-QUr" secondAttribute="bottom" constant="10" id="vWV-0C-xhi"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
