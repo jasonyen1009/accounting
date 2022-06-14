@@ -11,26 +11,30 @@ class ListTableViewController: UITableViewController {
     
     // 原資料
     var list = [Spending]()
+    // 指定的日期
+    let assigneddate: Date?
     
-    // 新資料（本頁顯示資料）
+    // display 資料（本頁顯示資料）
     var dic = [String:[Spending]]()
     var keys = [String]()
     
     // 回傳的資料
-    var renewaldata :[String:[Spending]]?
+    var renewaldata: [String:[Spending]]?
     
     // date
-    var dateComponents = DateComponents()
     var now = Date()
     let formatter = DateFormatter()
     
+//    var newdate: Date?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // date 格式
+        // 進行日期分類的格式
         formatter.dateFormat = "yyyy/MM/dd"
-        // 新資料 設定
+        
+        // display 資料 設定
         dic = Dictionary(grouping: list, by: { formatter.string(from: $0.date)})
         keys = Array(dic.keys)
         keys.sort(by: <)
@@ -44,9 +48,10 @@ class ListTableViewController: UITableViewController {
         if let str = ttt.keys.first {
             renewaldata = [str: []]
         }
-
-//        print(dic)
-
+        
+        // 資料分類後，決定要顯示的月份格式判斷
+        formatter.dateFormat = "yyyy/MM"
+        
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -55,8 +60,9 @@ class ListTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
-    init?(coder: NSCoder, list: [Spending]){
+    init?(coder: NSCoder, list: [Spending], date: Date){
         self.list = list
+        self.assigneddate = date
         super.init(coder: coder)
     }
     
@@ -85,12 +91,15 @@ class ListTableViewController: UITableViewController {
         // #warning Incomplete implementation, return the number of rows
         
 //        let dic = Dictionary(grouping: list, by: { $0.date})
-        
 //        var keys = Array(dic.keys)
 //        keys.sort(by: <)
 //        let item = dic[keys[section]]!
-
-        return dic[keys[section]]!.count
+        
+        // // 判斷 是否為指定的日期，若不是將回傳 0
+        if keys[section].contains(formatter.string(from: assigneddate!)) {
+            return dic[keys[section]]!.count
+        }
+        return 0
     }
 
     
@@ -121,9 +130,14 @@ class ListTableViewController: UITableViewController {
         // 判斷 日期內是否還有資料，若沒有資料將回傳 nil
         if dic[keys[section]]!.isEmpty {
             return nil
-        }else {
-            return keys[section]
         }
+        // 判斷 是否為指定的日期，若不是將回傳 nil
+        if keys[section].contains(formatter.string(from: assigneddate!)) {
+            return keys[section]
+        }else {
+            return nil
+        }
+        
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {

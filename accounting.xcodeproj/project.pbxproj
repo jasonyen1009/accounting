@@ -104,6 +104,15 @@
 			path = custom;
 			sourceTree = "<group>";
 		};
+		2582DE9F2855EEDF00284BAB /* customtableviewcell */ = {
+			isa = PBXGroup;
+			children = (
+				2582DE90284B8F4200284BAB /* SpendingListTableViewCell.swift */,
+				2582DE8E284A5EDF00284BAB /* SpendingtypeTableViewCell.swift */,
+			);
+			path = customtableviewcell;
+			sourceTree = "<group>";
+		};
 		25D4B27D280E9818006D2547 = {
 			isa = PBXGroup;
 			children = (
@@ -128,12 +137,11 @@
 			isa = PBXGroup;
 			children = (
 				25063AB8282D08B4000EC4CC /* custom */,
-				25D4B289280E9818006D2547 /* AppDelegate.swift */,
+				2582DE9F2855EEDF00284BAB /* customtableviewcell */,
 				25D4B28B280E9818006D2547 /* SceneDelegate.swift */,
+				25D4B289280E9818006D2547 /* AppDelegate.swift */,
 				25D4B28D280E9818006D2547 /* ViewController.swift */,
 				25D4B28F280E9818006D2547 /* Main.storyboard */,
-				2582DE90284B8F4200284BAB /* SpendingListTableViewCell.swift */,
-				2582DE8E284A5EDF00284BAB /* SpendingtypeTableViewCell.swift */,
 				258778BE283B5CF200E685AF /* ListTableViewController.swift */,
 				25AAB5E7282520340076ECC7 /* NewTableViewController.swift */,
 				25D4B2BB280EC0AF006D2547 /* Spending.swift */,

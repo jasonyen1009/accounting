@@ -11,11 +11,13 @@ class ViewController: UIViewController {
 
     // Time
     var time = Timer()
-    // 支出總覽
+    
+    // date
+    let now = Date()
+    let dateformatter = DateFormatter()
+    
+    // 支出總覽 display
     var myasset = Myasset(personal: 0, dietary: 0, shopping: 0, traffic: 0, medical: 0, life: 0)
-    
-    // 支出
-    
     
     // 支出種類
     var assetLabel = ["個人", "飲食", "購物", "交通", "醫療", "生活"]
@@ -61,12 +63,14 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // 設置 dateformatter 格式
+        dateformatter.dateFormat = "yyyyMM"
         
         // 取得儲存的資料
         if let spending = Spending.loadSpending() {
             self.totaldata = spending
         }
-        
+
         // tableview 高度設定為 view 的 2/5
         tableviewheightconstraint.constant = view.frame.height * 0.4
         
@@ -92,14 +96,14 @@ class ViewController: UIViewController {
             self.navigationController?.navigationBar.scrollEdgeAppearance = standardAppearance
         
         // 畫面更新
-        myasset.personal = calculate("個人")
-        myasset.dietary = calculate("飲食")
-        myasset.shopping = calculate("購物")
-        myasset.traffic = calculate("交通")
-        myasset.medical = calculate("醫療")
-        myasset.life = calculate("生活")
+        myasset.personal = calculate("個人",date: now)
+        myasset.dietary = calculate("飲食",date: now)
+        myasset.shopping = calculate("購物",date: now)
+        myasset.traffic = calculate("交通",date: now)
+        myasset.medical = calculate("醫療",date: now)
+        myasset.life = calculate("生活",date: now)
         
-        calculateall()
+        calculateDisplay()
         
         totalLabel.text = moneyString(amount)
         totalLabel.sizeToFit()
@@ -186,30 +190,31 @@ class ViewController: UIViewController {
         if let source = unwindSegue.source as? NewTableViewController ,
            let data = source.mydata {
 //            print(data)
-            // 判斷為哪種消費
+            // 判斷為哪種消費, 並新增至該消費中
             switch data.spendingtype {
             case "個人":
-                myasset.personal += data.spending
                 totaldata["個人"]?.insert(data, at: 0)
             case "飲食":
-                myasset.dietary += data.spending
                 totaldata["飲食"]?.insert(data, at: 0)
             case "購物":
-                myasset.shopping += data.spending
                 totaldata["購物"]?.insert(data, at: 0)
             case "交通":
-                myasset.traffic += data.spending
                 totaldata["交通"]?.insert(data, at: 0)
             case "醫療":
-                myasset.medical += data.spending
                 totaldata["醫療"]?.insert(data, at: 0)
             default:
-                myasset.life += data.spending
                 totaldata["生活"]?.insert(data, at: 0)
             }
             
-            calculateall()
-//            print(amount)
+            // 畫面更新
+            myasset.personal = calculate("個人",date: now)
+            myasset.dietary = calculate("飲食",date: now)
+            myasset.shopping = calculate("購物",date: now)
+            myasset.traffic = calculate("交通",date: now)
+            myasset.medical = calculate("醫療",date: now)
+            myasset.life = calculate("生活",date: now)
+            
+            calculateDisplay()
             
             totalLabel.text = moneyString(amount)
             totalLabel.sizeToFit()
@@ -297,29 +302,18 @@ class ViewController: UIViewController {
            let data = source.renewaldata {
 //            print("data \(data)")
 
-            // 將新資料與總資料一起同步
+            // 將新資料與 totaldata 總資料一起同步
             totaldata[data.keys.first!] = data[data.keys.first!]
-            var new = 0
-            for i in totaldata[data.keys.first ?? ""]! {
-                new += i.spending
-            }
             
-            switch data.keys.first! {
-            case "個人":
-                myasset.personal = new
-            case "飲食":
-                myasset.dietary = new
-            case "購物":
-                myasset.shopping = new
-            case "交通":
-                myasset.traffic = new
-            case "醫療":
-                myasset.medical = new
-            default:
-                myasset.life = new
-            }
-            calculateall()
-//            print(amount)
+            // 畫面更新
+            myasset.personal = calculate("個人",date: now)
+            myasset.dietary = calculate("飲食",date: now)
+            myasset.shopping = calculate("購物",date: now)
+            myasset.traffic = calculate("交通",date: now)
+            myasset.medical = calculate("醫療",date: now)
+            myasset.life = calculate("生活",date: now)
+            
+            calculateDisplay()
             
             totalLabel.text = moneyString(amount)
             totalLabel.sizeToFit()
@@ -399,7 +393,7 @@ class ViewController: UIViewController {
     @IBSegueAction func Senddata(_ coder: NSCoder) -> ListTableViewController? {
         // 判斷點選哪一個 row 來傳遞點選到的 data
         if let row = myTableView.indexPathForSelectedRow?.row {
-            return ListTableViewController(coder: coder, list: totaldata["\(assetLabel[row])"] ?? [])
+            return ListTableViewController(coder: coder, list: totaldata["\(assetLabel[row])"] ?? [], date: now)
         }else {
             return nil
         }
@@ -413,6 +407,18 @@ class ViewController: UIViewController {
                 total += value.spending
             }
         }
+        amount = total
+    }
+    
+    // 頁面顯示總和
+    func calculateDisplay() {
+        var total = 0
+        total += myasset.personal
+        total += myasset.dietary
+        total += myasset.shopping
+        total += myasset.traffic
+        total += myasset.medical
+        total += myasset.life
         amount = total
     }
     
@@ -450,12 +456,15 @@ class ViewController: UIViewController {
         return formatter.string(from: NSNumber(value: money)) ?? ""
     }
     
-    // 計算 spending 總和
-    // 用於重新打開程式計算用
-    func calculate(_ spendingtype: String) -> Int {
+    // 計算各個消費 spending 總和
+    // 用於所有畫面更新
+    func calculate(_ spendingtype: String, date: Date) -> Int {
         var spending = 0
         for i in totaldata[spendingtype]! {
-            spending += i.spending
+            // 判斷是否為 本月的月份
+            if dateformatter.string(from: i.date) == dateformatter.string(from: date) {
+                spending += i.spending
+            }
         }
         return spending
     }
