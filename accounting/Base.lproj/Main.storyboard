@@ -125,18 +125,25 @@
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oy0-Lv-QUr">
                                 <rect key="frame" x="20" y="434" width="150" height="42"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="42" id="E3H-YW-Xae"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="bg0-BR-vaS"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="20"/>
                                 <color key="tintColor" systemColor="labelColor"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="2022,Jun">
-                                    <backgroundConfiguration key="background" cornerRadius="40">
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                    </backgroundConfiguration>
-                                    <fontDescription key="titleFontDescription" type="system" weight="heavy" pointSize="20"/>
-                                </buttonConfiguration>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="2022,Oct"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="20"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="showAlertController:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fji-9n-xRf"/>
+                                    <outletCollection property="gestureRecognizers" destination="xmN-xt-CdA" appends="YES" id="2os-RV-LbD"/>
+                                </connections>
                             </button>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="MnV-gq-kTa">
                                 <rect key="frame" x="230" y="445" width="140" height="32"/>
@@ -172,11 +179,17 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="changeDateButton" destination="Oy0-Lv-QUr" id="bJi-7N-ZD5"/>
                         <outlet property="myTableView" destination="aFq-h7-uQL" id="dFX-SN-Em9"/>
                         <outlet property="tableviewheightconstraint" destination="shD-pD-OaS" id="gFa-3T-ASk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="xmN-xt-CdA">
+                    <connections>
+                        <action selector="shownowdate:" destination="BYZ-38-t0r" id="K17-MK-SDj"/>
+                    </connections>
+                </pongPressGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1107.6923076923076" y="95.97156398104265"/>
         </scene>
