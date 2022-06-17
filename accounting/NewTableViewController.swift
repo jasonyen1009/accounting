@@ -10,7 +10,6 @@ import UIKit
 class NewTableViewController: UITableViewController {
     
     var mydata: Spending?
-    
     var number1 = 0.0
     var number2 = 0.0
     var calculatetype = ""
@@ -49,8 +48,10 @@ class NewTableViewController: UITableViewController {
         accountTextfield.inputView = keyboardView
 
         // tableview 收鍵盤
-        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyBoard))
-        self.view.addGestureRecognizer(tap)
+        // 如果使用以下程式碼
+        // 會造成 DatePickerview 衝突
+//        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyBoard))
+//        self.view.addGestureRecognizer(tap)
         
         
         
