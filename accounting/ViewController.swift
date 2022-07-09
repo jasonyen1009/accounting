@@ -46,6 +46,8 @@ class ViewController: UIViewController {
     let totalLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
     // 角度
     let aDegree = CGFloat.pi / 180
+    // 圖的位置
+    var position = CGPoint()
     // 圖表顏色
     let colors = [
         UIColor(red: 67/255, green: 97/255, blue: 238/255, alpha: 1).cgColor,
@@ -71,6 +73,9 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // 設定圖的位置設置
+        position = CGPoint(x: view.frame.width / 2, y: view.frame.height / 2 - 100)
         
         // 設置 dateformatter 格式
         dateformatter.dateFormat = "yyyy,MMM"
@@ -251,7 +256,7 @@ class ViewController: UIViewController {
     
     // 最底層的 percentage
     func creatcirclePath() {
-        let circlePath = UIBezierPath(arcCenter: CGPoint(x: view.frame.width / 2, y: view.frame.height / 2 - 100), radius: 90, startAngle: aDegree * 270, endAngle: aDegree * (270 + 360), clockwise: true)
+        let circlePath = UIBezierPath(arcCenter: position, radius: 90, startAngle: aDegree * 270, endAngle: aDegree * (270 + 360), clockwise: true)
         let circleLayer = CAShapeLayer()
         circleLayer.path = circlePath.cgPath
         circleLayer.fillColor = UIColor.clear.cgColor
@@ -266,7 +271,7 @@ class ViewController: UIViewController {
         totalLabel.text = moneyString(0)
         totalLabel.font = UIFont.systemFont(ofSize: 15)
         totalLabel.sizeToFit()
-        totalLabel.layer.position = CGPoint(x: view.frame.width / 2, y: view.frame.height / 2 - 100)
+        totalLabel.layer.position = position
         view.addSubview(totalLabel)
     }
     
@@ -311,7 +316,7 @@ class ViewController: UIViewController {
         totalLabel.text = moneyString(amount)
         totalLabel.sizeToFit()
         // 這邊必須再次設定 position，不然位置會跑掉
-        totalLabel.layer.position = CGPoint(x: view.frame.width / 2, y: view.frame.height / 2 - 100)
+        totalLabel.layer.position = position
         
         // 刪除所有 perentageLayers
         for deleteLayer  in percentageLayers{
@@ -345,7 +350,7 @@ class ViewController: UIViewController {
         for (index, percentage) in percentages.enumerated() {
             // percentages.reduce(0, +) 取得 percentages 總數
             let endDegree = startDegree + (percentage / percentages.reduce(0, +)) * 360
-            let percentagePath = UIBezierPath(arcCenter: CGPoint(x: view.frame.width / 2, y: view.frame.height / 2 - 100), radius: 90, startAngle: aDegree * startDegree, endAngle: aDegree * endDegree, clockwise: true)
+            let percentagePath = UIBezierPath(arcCenter: position, radius: 90, startAngle: aDegree * startDegree, endAngle: aDegree * endDegree, clockwise: true)
 
             let percentageLayer = CAShapeLayer()
             percentageLayer.path = percentagePath.cgPath
@@ -354,7 +359,7 @@ class ViewController: UIViewController {
             percentageLayer.strokeColor = colors[index]
 
             // textlabel 座標
-            let textPath = UIBezierPath(arcCenter: CGPoint(x: view.frame.width / 2, y: view.frame.height / 2 - 100), radius: 140, startAngle: aDegree * startDegree, endAngle: aDegree * (startDegree + (percentage / percentages.reduce(0, +)) * 180), clockwise: true)
+            let textPath = UIBezierPath(arcCenter: position, radius: 125, startAngle: aDegree * startDegree, endAngle: aDegree * (startDegree + (percentage / percentages.reduce(0, +)) * 180), clockwise: true)
             
             // label 製作
             let textLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
