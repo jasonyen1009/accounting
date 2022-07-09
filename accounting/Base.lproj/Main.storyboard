@@ -171,6 +171,7 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="Oxt-Vc-5o3">
+                        <barButtonItem key="backBarButtonItem" title=" " id="xnU-pQ-eHt"/>
                         <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="nhB-cR-nqG">
                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
@@ -259,17 +260,9 @@
                             <outlet property="delegate" destination="ig1-F2-Neb" id="WO6-f1-3HR"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="TND-5w-Umi">
-                        <barButtonItem key="leftBarButtonItem" title="Item" image="chevron.backward" catalog="system" id="8hx-kF-Kig">
-                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <connections>
-                                <segue destination="Iqb-QK-igL" kind="unwind" unwindAction="unwindToBlack:" id="lwl-zP-g6P"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="TND-5w-Umi"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e0h-GV-NhH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <exit id="Iqb-QK-igL" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1108" y="827"/>
         </scene>
@@ -281,6 +274,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="9AW-q6-f3J">
                         <rect key="frame" x="0.0" y="44" width="390" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -746,7 +740,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="chevron.backward" catalog="system" width="96" height="128"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

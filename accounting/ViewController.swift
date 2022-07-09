@@ -149,23 +149,14 @@ class ViewController: UIViewController {
         }
     }
     
-    // 點選 Black 返回
-    @IBAction func unwindToBlack(_ unwindSegue: UIStoryboardSegue) {
-//        let sourceViewController = unwindSegue.source
-        // Use data from the view controller which initiated the unwind segue
-        if let source = unwindSegue.source as? ListTableViewController,
-           let data = source.renewaldata {
-//            print("data \(data)")
 
-            // 將新資料與 totaldata 總資料一起同步
-            totaldata[data.keys.first!] = data[data.keys.first!]
-            
-            // 畫面更新
-            updateUI()
-            
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let controller = segue.destination as? ListTableViewController {
+            // 成為 ListTableViewControllerDelegate delegate
+            controller.delegate = self
         }
     }
-
+    
     // alertcontroller + pickerview
     @IBAction func showAlertController(_ sender: Any) {
         
@@ -226,6 +217,7 @@ class ViewController: UIViewController {
     
     // 傳資料到 ListTableViewController
     @IBSegueAction func Senddata(_ coder: NSCoder) -> ListTableViewController? {
+        
         // 判斷點選哪一個 row 來傳遞點選到的 data
         if let row = myTableView.indexPathForSelectedRow?.row {
             return ListTableViewController(coder: coder, list: totaldata["\(assetLabel[row])"] ?? [], date: now)
@@ -469,4 +461,19 @@ extension ViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         // 將所選的日期, 同步到 now
         now = dateformatter.date(from: newdate) ?? Date()
     }
+}
+
+// ListTableViewControllerDelegate
+extension ViewController: ListTableViewControllerDelegate {
+    
+    func listTableViewController(_ controller: ListTableViewController, didEdit data: [String : [Spending]]) {
+        
+        // 將新資料與 totaldata 總資料一起同步
+        totaldata[data.keys.first!] = data[data.keys.first!]
+        // 畫面更新
+        updateUI()
+    }
+    
+    
+    
 }

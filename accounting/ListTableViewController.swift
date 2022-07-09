@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol ListTableViewControllerDelegate {
+    func listTableViewController(_ controller: ListTableViewController, didEdit data: [String:[Spending]])
+}
+
 class ListTableViewController: UITableViewController {
     
     // 原資料
@@ -27,6 +31,9 @@ class ListTableViewController: UITableViewController {
     
     // 用來保存點選的 indexPath
     var selectIndexPath: IndexPath?
+    
+    // delegate
+    var delegate: ListTableViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -164,6 +171,8 @@ class ListTableViewController: UITableViewController {
 //                     self.dic.keys[indexPath.section]!.remove(at: indexPath.row)
 //                     self.imagesArray.remove(at: indexPath.row)
                      self.tableView.deleteRows(at: [indexPath], with: .fade)
+                     // 資料即時同步
+                     self.updatedata()
                 })
                 let cancelAction = UIAlertAction(title: "Cancel", style:.cancel, handler: { (alert) in
                      print("Cancel")
@@ -178,10 +187,22 @@ class ListTableViewController: UITableViewController {
             return UISwipeActionsConfiguration(actions: [modifyAction])
     }
     
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func updatedata() {
+        var data = [Spending]()
+        // 資料整理
+        for key in keys {
+            for i in dic[key]! {
+                data.append(i)
+            }
+        }
         
+        // 再次改變資料型別 ["spendingtype": [Spending]]
+//        renewaldata = Dictionary(grouping: data, by: { $0.spendingtype})
+        let newdata = Dictionary(grouping: list, by: {$0.spendingtype})
         
+        renewaldata?[newdata.keys.first!] = data
+        
+        delegate?.listTableViewController(self, didEdit: renewaldata ?? [:])
     }
 
     /*
@@ -227,24 +248,11 @@ class ListTableViewController: UITableViewController {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
         
-        // 成為 delegate
+        // 成為 EditTableViewControllerDelegate delegate
         if let controller = segue.destination as? EditTableViewController {
             controller.delegate = self
         }
         
-        var data = [Spending]()
-        // 資料整理
-        for key in keys {
-            for i in dic[key]! {
-                data.append(i)
-            }
-        }
-    
-        // 再次改變資料型別 ["spendingtype": [Spending]]
-//        renewaldata = Dictionary(grouping: data, by: { $0.spendingtype})
-        let ttt = Dictionary(grouping: list, by: {$0.spendingtype})
-        
-        renewaldata?[ttt.keys.first!] = data
     }
     
     @IBSegueAction func SendData(_ coder: NSCoder) -> EditTableViewController? {
@@ -270,7 +278,6 @@ extension ListTableViewController: EditTableViewControllerDelegate {
     
     func editTableViewController(_ controller: EditTableViewController, didEdit data: Spending) {
         
-        
         if let indexpath = selectIndexPath {
 //            print(data)
             dic[keys[indexpath.section]]![indexpath.row] = data
@@ -295,9 +302,7 @@ extension ListTableViewController: EditTableViewControllerDelegate {
         dic = Dictionary(grouping: list, by: { formatter.string(from: $0.date)})
         keys = Array(dic.keys)
         keys.sort(by: <)
-        
-//        print(list)
-//        tableView.reloadSections(IndexSet(integer: 0), with: .top)
+
         
     }
     
