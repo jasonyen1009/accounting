@@ -25,7 +25,8 @@ class ListTableViewController: UITableViewController {
     var now = Date()
     let formatter = DateFormatter()
     
-//    var newdate: Date?
+    // 用來保存點選的 indexPath
+    var selectIndexPath: IndexPath?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,7 +39,7 @@ class ListTableViewController: UITableViewController {
         dic = Dictionary(grouping: list, by: { formatter.string(from: $0.date)})
         keys = Array(dic.keys)
         keys.sort(by: <)
-//        print(dic)
+//        print(keys)
         // 取得消費類別
         let ttt = Dictionary(grouping: list, by: {$0.spendingtype})
         
@@ -178,7 +179,10 @@ class ListTableViewController: UITableViewController {
     }
     
     
-    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        
+    }
 
     /*
     // Override to support conditional editing of the table view.
@@ -222,6 +226,12 @@ class ListTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
+        
+        // 成為 delegate
+        if let controller = segue.destination as? EditTableViewController {
+            controller.delegate = self
+        }
+        
         var data = [Spending]()
         // 資料整理
         for key in keys {
@@ -237,5 +247,59 @@ class ListTableViewController: UITableViewController {
         renewaldata?[ttt.keys.first!] = data
     }
     
+    @IBSegueAction func SendData(_ coder: NSCoder) -> EditTableViewController? {
+        
+        
+        
+        if let row = tableView.indexPathForSelectedRow?.row,
+           let section = tableView.indexPathForSelectedRow?.section {
+            
+//            print(tableView.indexPathForSelectedRow!)
+            
+            // 將點選到的 indexPath 保存下來
+            selectIndexPath = tableView.indexPathForSelectedRow
+            return EditTableViewController(coder: coder, mydata: dic[keys[section]]![row])
+        }else {
+            return nil
+        }
+    }
+    
+}
 
+extension ListTableViewController: EditTableViewControllerDelegate {
+    
+    func editTableViewController(_ controller: EditTableViewController, didEdit data: Spending) {
+        
+        
+        if let indexpath = selectIndexPath {
+//            print(data)
+            dic[keys[indexpath.section]]![indexpath.row] = data
+        }
+        
+        tableView.reloadData()
+        
+//        dic = Dictionary(grouping: list, by: { formatter.string(from: $0.date)})
+//        keys = Array(dic.keys)
+//        keys.sort(by: <)
+//        print("-----")
+        print(dic)
+        var data = [Spending]()
+        // 資料整理
+        for key in keys {
+            for i in dic[key]! {
+                data.append(i)
+            }
+        }
+        list = data
+        
+        dic = Dictionary(grouping: list, by: { formatter.string(from: $0.date)})
+        keys = Array(dic.keys)
+        keys.sort(by: <)
+        
+//        print(list)
+//        tableView.reloadSections(IndexSet(integer: 0), with: .top)
+        
+    }
+    
+    
 }
