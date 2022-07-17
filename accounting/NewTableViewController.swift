@@ -20,8 +20,9 @@ class NewTableViewController: UITableViewController {
     
 
     @IBOutlet weak var DatePicker: UIDatePicker!
-    @IBOutlet weak var categoryButton: UIButton!
-    @IBOutlet weak var accountButton: UIButton!
+    @IBOutlet weak var categorySegmentedcontrol: UISegmentedControl!
+    @IBOutlet weak var accountSegmentedcontrol: UISegmentedControl!
+    @IBOutlet weak var accountImageview: UIImageView!
     @IBOutlet weak var accountTextfield: UITextField!
     @IBOutlet weak var noteTextView: UITextView!
     @IBOutlet weak var accountnameTextfield: UITextField!
@@ -61,39 +62,6 @@ class NewTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
-        // 製作 消費類別 Menu
-        categoryButton.showsMenuAsPrimaryAction = true
-        categoryButton.changesSelectionAsPrimaryAction = true
-        
-        categoryButton.menu = UIMenu(children: [
-            UIAction(title: "個人", handler: { action in
-            }),
-            UIAction(title: "飲食", handler: { action in
-            }),
-            UIAction(title: "購物", handler: { action in
-            }),
-            UIAction(title: "交通", handler: { action in
-            }),
-            UIAction(title: "醫療", handler: { action in
-            }),
-            UIAction(title: "生活", handler: { action in
-            })
-        
-        
-        ])
-        
-        // 製作 消費方式 Menu
-        accountButton.showsMenuAsPrimaryAction = true
-        accountButton.changesSelectionAsPrimaryAction = true
-        accountButton.menu = UIMenu(children: [
-            UIAction(title: "帳戶", handler: { action in
-            }),
-            UIAction(title: "信用卡", handler: { action in
-            }),
-            UIAction(title: "現金", handler: { action in
-            })
-        
-        ])
                 
         
         
@@ -114,6 +82,17 @@ class NewTableViewController: UITableViewController {
         0
     }
 
+    // 同步支付圖片
+    @IBAction func cahngepayimage(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case 0:
+            accountImageview.image = UIImage(named: "money")
+        case 1:
+            accountImageview.image = UIImage(named: "credit-card")
+        default:
+            accountImageview.image = UIImage(named: "bank")
+        }
+    }
     
     
     @IBAction func testttbutton(_ sender: Any) {
@@ -185,9 +164,9 @@ class NewTableViewController: UITableViewController {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
         let date = DatePicker.date
-        let sptype = categoryButton.titleLabel?.text ?? ""
+        let sptype = categorySegmentedcontrol.titleForSegment(at: categorySegmentedcontrol.selectedSegmentIndex) ?? ""
         let spname = accountnameTextfield.text ?? ""
-        let pytype = accountButton.titleLabel?.text ?? ""
+        let pytype = accountSegmentedcontrol.titleForSegment(at: accountSegmentedcontrol.selectedSegmentIndex) ?? ""
         let spending = Int(accountTextfield.text!) ?? 0
         let note = noteTextView.text ?? ""
         
