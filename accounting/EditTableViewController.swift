@@ -8,12 +8,12 @@
 import UIKit
 
 protocol EditTableViewControllerDelegate {
-    func editTableViewController(_ controller: EditTableViewController, didEdit data: Spending)
+    func editTableViewController(_ controller: EditTableViewController, didEdit data: Expense)
 }
 
 class EditTableViewController: UITableViewController {
     
-    var mydate: Spending?
+    var mydate: Expense?
     var number1 = 0.0
     var number2 = 0.0
     var calculatetype = ""
@@ -43,7 +43,7 @@ class EditTableViewController: UITableViewController {
 //         self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
-    init?(coder: NSCoder, mydata: Spending) {
+    init?(coder: NSCoder, mydata: Expense) {
         self.mydate = mydata
         super.init(coder: coder)
     }
@@ -57,10 +57,10 @@ class EditTableViewController: UITableViewController {
         
         if let data = mydate {
             DatePicker.date = data.date
-            accountnameTextfield.text = data.spendingname
-            accountTextfield.text = "\(data.spending)"
+            accountnameTextfield.text = data.expensename
+            accountTextfield.text = "\(data.expense)"
             accountButton.setTitle("\(data.paytype)", for: .normal)
-            categoryButton.setTitle("\(data.spendingtype)", for: .normal)
+            categoryButton.setTitle("\(data.expensetype)", for: .normal)
             noteTextView.text = "\(data.note)"
             
         }
@@ -69,13 +69,13 @@ class EditTableViewController: UITableViewController {
 
     // 即時編輯 資料 , 並回傳
     @IBAction func editdata(_ sender: Any) {
-        let editdata = Spending(date: DatePicker.date, spendingtype: mydate?.spendingtype ?? "", spendingname: accountnameTextfield.text ?? "", paytype: mydate?.paytype ?? "", spending: Int(accountTextfield.text ?? "0") ?? 0, note: noteTextView.text)
+        let editdata = Expense(date: DatePicker.date, expensetype: mydate?.expensetype ?? "", expensename: accountnameTextfield.text ?? "", paytype: mydate?.paytype ?? "", expense: Int(accountTextfield.text ?? "0") ?? 0, note: noteTextView.text)
         
         delegate?.editTableViewController(self, didEdit: editdata)
     }
     
     @IBAction func editdate(_ sender: Any) {
-        let editdata = Spending(date: DatePicker.date, spendingtype: mydate?.spendingtype ?? "", spendingname: accountnameTextfield.text ?? "", paytype: mydate?.paytype ?? "", spending: Int(accountTextfield.text ?? "0") ?? 0, note: noteTextView.text)
+        let editdata = Expense(date: DatePicker.date, expensetype: mydate?.expensetype ?? "", expensename: accountnameTextfield.text ?? "", paytype: mydate?.paytype ?? "", expense: Int(accountTextfield.text ?? "0") ?? 0, note: noteTextView.text)
         
         delegate?.editTableViewController(self, didEdit: editdata)
     }
@@ -157,7 +157,7 @@ extension EditTableViewController: UITextViewDelegate {
     // 由於textview 無法拉 action
     // 改為使用 UITextViewDelegate 中的 func 來達到資料更新
     func textViewDidChange(_ textView: UITextView) {
-        let editdata = Spending(date: DatePicker.date, spendingtype: mydate?.spendingtype ?? "", spendingname: accountnameTextfield.text ?? "", paytype: mydate?.paytype ?? "", spending: Int(accountTextfield.text ?? "0") ?? 0, note: noteTextView.text)
+        let editdata = Expense(date: DatePicker.date, expensetype: mydate?.expensetype ?? "", expensename: accountnameTextfield.text ?? "", paytype: mydate?.paytype ?? "", expense: Int(accountTextfield.text ?? "0") ?? 0, note: noteTextView.text)
         
         delegate?.editTableViewController(self, didEdit: editdata)
     }

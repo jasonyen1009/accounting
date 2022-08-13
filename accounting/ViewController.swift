@@ -29,16 +29,16 @@ class ViewController: UIViewController {
     
     // 所有支出總計
     var totaldata = [
-        "個人": [Spending](),
-        "飲食": [Spending](),
-        "購物": [Spending](),
-        "交通": [Spending](),
-        "醫療": [Spending](),
-        "生活": [Spending]()
+        "個人": [Expense](),
+        "飲食": [Expense](),
+        "購物": [Expense](),
+        "交通": [Expense](),
+        "醫療": [Expense](),
+        "生活": [Expense]()
     
     ] {
         didSet {
-            Spending.SaveSpending(totaldata)
+            Expense.SaveExpense(totaldata)
         }
     }
     // 支出總額
@@ -84,8 +84,8 @@ class ViewController: UIViewController {
         changeDateButton.setTitle("\(dateformatter.string(from: now))", for: .normal)
         
         // 取得儲存的資料
-        if let spending = Spending.loadSpending() {
-            self.totaldata = spending
+        if let expense = Expense.loadExpense() {
+            self.totaldata = expense
         }
 
         // tableview 高度設定為 view 的 2/5
@@ -129,12 +129,13 @@ class ViewController: UIViewController {
     
     // 點選 Done 返回
     @IBAction func unwindToDone(_ unwindSegue: UIStoryboardSegue) {
+        print("get")
 //        let sourceViewController = unwindSegue.source
-        if let source = unwindSegue.source as? NewTableViewController ,
-           let data = source.mydata {
-//            print(data)
+        if let source = unwindSegue.source as? HomeViewController ,
+           let data = source.homedata as? Expense {
+            print(data)
             // 判斷為哪種消費, 並新增至該消費中
-            switch data.spendingtype {
+            switch data.expensetype {
             case "個人":
                 totaldata["個人"]?.insert(data, at: 0)
             case "飲食":
@@ -236,7 +237,7 @@ class ViewController: UIViewController {
         var total = 0
         for label in assetLabel {
             for value in totaldata["\(label)"] ?? [] {
-                total += value.spending
+                total += value.expense
             }
         }
         amount = total
@@ -288,17 +289,17 @@ class ViewController: UIViewController {
         return formatter.string(from: NSNumber(value: money)) ?? ""
     }
     
-    // 計算各個消費 spending 總和
+    // 計算各個消費 expense 總和
     // 用於所有畫面更新
-    func calculate(_ spendingtype: String, date: Date) -> Int {
-        var spending = 0
-        for i in totaldata[spendingtype]! {
+    func calculate(_ expensetype: String, date: Date) -> Int {
+        var expense = 0
+        for i in totaldata[expensetype]! {
             // 判斷是否為 本月的月份
             if dateformatter.string(from: i.date) == dateformatter.string(from: date) {
-                spending += i.spending
+                expense += i.expense
             }
         }
-        return spending
+        return expense
     }
     
     // 所有畫面資料更新
@@ -398,7 +399,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     // 決定表格內容
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 //        let cell = UITableViewCell()
-        let cell = tableView.dequeueReusableCell(withIdentifier: "mycell", for: indexPath) as! SpendingtypeTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "mycell", for: indexPath) as! ExpensetypeTableViewCell
 
         let percentages = [
             Double(myasset.personal),
@@ -410,8 +411,8 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         ]
         
         // 自訂的 cell
-        cell.spendingtypeLabel.text = "\(assetLabel[indexPath.row])"
-        cell.spendingLabel.text = "\(moneyString(Int(percentages[indexPath.row])))"
+        cell.expensetypeLabel.text = "\(assetLabel[indexPath.row])"
+        cell.expenseLabel.text = "\(moneyString(Int(percentages[indexPath.row])))"
         cell.circleview.backgroundColor = UIColor(cgColor: colors[indexPath.row])
         // 判斷 percentage 大於 0 , 才會新增第二 字串
         if (percentages[indexPath.row] / percentages.reduce(0, +)) > 0.0 {
@@ -471,7 +472,7 @@ extension ViewController: UIPickerViewDelegate, UIPickerViewDataSource {
 // ListTableViewControllerDelegate
 extension ViewController: ListTableViewControllerDelegate {
     
-    func listTableViewController(_ controller: ListTableViewController, didEdit data: [String : [Spending]]) {
+    func listTableViewController(_ controller: ListTableViewController, didEdit data: [String : [Expense]]) {
         
         // 將新資料與 totaldata 總資料一起同步
         totaldata[data.keys.first!] = data[data.keys.first!]

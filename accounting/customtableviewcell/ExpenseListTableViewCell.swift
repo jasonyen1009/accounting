@@ -1,5 +1,5 @@
 //
-//  SpendingListTableViewCell.swift
+//  ExpenseListTableViewCell.swift
 //  accounting
 //
 //  Created by Hong Cheng Yen on 2022/6/4.
@@ -7,12 +7,12 @@
 
 import UIKit
 
-class SpendingListTableViewCell: UITableViewCell {
+class ExpenseListTableViewCell: UITableViewCell {
 
     @IBOutlet weak var noteimageview: UIImageView!
     @IBOutlet weak var accountimageview: UIImageView!
-    @IBOutlet weak var spendingnameLabel: UILabel!
-    @IBOutlet weak var spendingLabel: UILabel!
+    @IBOutlet weak var expensenameLabel: UILabel!
+    @IBOutlet weak var expenseLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

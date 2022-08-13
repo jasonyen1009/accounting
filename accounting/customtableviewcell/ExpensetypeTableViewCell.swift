@@ -1,5 +1,5 @@
 //
-//  SpendingtypeTableViewCell.swift
+//  ExpensetypeTableViewCell.swift
 //  accounting
 //
 //  Created by Hong Cheng Yen on 2022/6/3.
@@ -7,10 +7,10 @@
 
 import UIKit
 
-class SpendingtypeTableViewCell: UITableViewCell {
+class ExpensetypeTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var spendingtypeLabel: UILabel!
-    @IBOutlet weak var spendingLabel: UILabel!
+    @IBOutlet weak var expensetypeLabel: UILabel!
+    @IBOutlet weak var expenseLabel: UILabel!
     @IBOutlet weak var circleview: UIView!
     @IBOutlet weak var percentageLabel: UILabel!
     

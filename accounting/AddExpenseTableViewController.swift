@@ -1,36 +1,37 @@
 //
-//  NewTableViewController.swift
+//  AddExpenseTableViewController.swift
 //  accounting
 //
-//  Created by Hong Cheng Yen on 2022/5/6.
+//  Created by Hong Cheng Yen on 2022/8/10.
 //
 
 import UIKit
 
-class NewTableViewController: UITableViewController {
-    
+protocol AddExpenseTableViewControllerDelegate {
+    func addExpenseTableViewController(_ controller: AddExpenseTableViewController, didEdit data: Expense)
+}
+
+class AddExpenseTableViewController: UITableViewController {
+
     var mydata: Expense?
     var number1 = 0.0
     var number2 = 0.0
     var calculatetype = ""
-    
+    var delegate: AddExpenseTableViewControllerDelegate?
     // date
     var now = Date()
     let formatter = DateFormatter()
     
-
-    @IBOutlet weak var DatePicker: UIDatePicker!
     @IBOutlet weak var categorySegmentedcontrol: UISegmentedControl!
+    @IBOutlet weak var DatePicker: UIDatePicker!
     @IBOutlet weak var accountSegmentedcontrol: UISegmentedControl!
-    @IBOutlet weak var accountImageview: UIImageView!
-    @IBOutlet weak var accountTextfield: UITextField!
-    @IBOutlet weak var noteTextView: UITextView!
     @IBOutlet weak var accountnameTextfield: UITextField!
+    @IBOutlet weak var accountTextfield: UITextField!
+    @IBOutlet weak var accountImageview: UIImageView!
+    @IBOutlet weak var noteTextView: UITextView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // 禁止下拉
-        self.isModalInPresentation = true
-        
         // textfield delegate
         accountnameTextfield.delegate = self
         
@@ -46,23 +47,7 @@ class NewTableViewController: UITableViewController {
         
         //
         accountTextfield.inputView = keyboardView
-
-        // tableview 收鍵盤
-        // 如果使用以下程式碼
-        // 會造成 DatePickerview 衝突
-//        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyBoard))
-//        self.view.addGestureRecognizer(tap)
-        
-        
-        
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
-        
-        
-        
+                        
     }
     
     //收鍵盤
@@ -70,17 +55,6 @@ class NewTableViewController: UITableViewController {
         self.view.endEditing(true)
     }
     
-    // 將 tableView 的 HeaderInSection 高度設為 0
-//    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        0
-//    }
-    
-    // 將 tableView 的 FooterInSection 高度設為 0
-    override func tableView(_ tableView: UITableView, estimatedHeightForFooterInSection section: Int) -> CGFloat {
-        0
-    }
-
-    // 同步支付圖片
     @IBAction func cahngepayimage(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
@@ -90,19 +64,23 @@ class NewTableViewController: UITableViewController {
         default:
             accountImageview.image = UIImage(named: "bank")
         }
+        delegate?.addExpenseTableViewController(self, didEdit: updatedata())
+    }
+    
+    @IBAction func AddExpense(_ sender: UITextField) {
+        print("error")
+        delegate?.addExpenseTableViewController(self, didEdit: updatedata())
     }
     
     
-    @IBAction func testttbutton(_ sender: Any) {
-        print(noteTextView.text ?? "")
-    }
+    
     // MARK: - Table view data source
 
 //    override func numberOfSections(in tableView: UITableView) -> Int {
 //        // #warning Incomplete implementation, return the number of sections
-//        return 2
+//        return 0
 //    }
-//
+
 //    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 //        // #warning Incomplete implementation, return the number of rows
 //        return 0
@@ -152,15 +130,8 @@ class NewTableViewController: UITableViewController {
         return true
     }
     */
-
     
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    // 資料
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func updatedata() -> Expense {
         let date = DatePicker.date
         let sptype = categorySegmentedcontrol.titleForSegment(at: categorySegmentedcontrol.selectedSegmentIndex) ?? ""
         let spname = accountnameTextfield.text ?? ""
@@ -169,14 +140,21 @@ class NewTableViewController: UITableViewController {
         let note = noteTextView.text ?? ""
         
         mydata = Expense(date: date, expensetype: sptype, expensename: spname, paytype: pytype, expense: spending, note: note)
-        
-        
+        return mydata!
     }
+
+    
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    
     
     
 
 }
-extension NewTableViewController: KeyboardDelegate {
+
+extension AddExpenseTableViewController: KeyboardDelegate {
+    
     func keyWasTapped(character: String) {
         accountTextfield.insertText(character)
     }
@@ -244,11 +222,9 @@ extension NewTableViewController: KeyboardDelegate {
         dismissKeyBoard()
 
     }
-    
-    
 }
 
-extension NewTableViewController: UITextViewDelegate {
+extension AddExpenseTableViewController: UITextViewDelegate {
     
     func textViewDidBeginEditing(_ textView: UITextView) {
         if noteTextView.textColor == UIColor.lightGray {
@@ -263,13 +239,12 @@ extension NewTableViewController: UITextViewDelegate {
             noteTextView.textColor = UIColor.lightGray
         }
     }
-    
 }
 
-
-extension NewTableViewController: UITextFieldDelegate {
+extension AddExpenseTableViewController: UITextFieldDelegate {
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         accountTextfield.becomeFirstResponder()
-            return true
-      }
+        return true
+    }
 }

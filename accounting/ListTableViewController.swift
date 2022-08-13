@@ -8,22 +8,22 @@
 import UIKit
 
 protocol ListTableViewControllerDelegate {
-    func listTableViewController(_ controller: ListTableViewController, didEdit data: [String:[Spending]])
+    func listTableViewController(_ controller: ListTableViewController, didEdit data: [String:[Expense]])
 }
 
 class ListTableViewController: UITableViewController {
     
     // 原資料
-    var list = [Spending]()
+    var list = [Expense]()
     // 指定的日期
     let assigneddate: Date?
     
     // display 資料（本頁顯示資料）
-    var dic = [String:[Spending]]()
+    var dic = [String:[Expense]]()
     var keys = [String]()
     
     // 回傳的資料
-    var renewaldata: [String:[Spending]]?
+    var renewaldata: [String:[Expense]]?
     
     // date
     var now = Date()
@@ -48,7 +48,7 @@ class ListTableViewController: UITableViewController {
         keys.sort(by: <)
 //        print(keys)
         // 取得消費類別
-        let ttt = Dictionary(grouping: list, by: {$0.spendingtype})
+        let ttt = Dictionary(grouping: list, by: {$0.expensetype})
         
 //        print(ttt.keys.first ?? "")
         
@@ -66,9 +66,10 @@ class ListTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        print(keys)
     }
     
-    init?(coder: NSCoder, list: [Spending], date: Date){
+    init?(coder: NSCoder, list: [Expense], date: Date){
         self.list = list
         self.assigneddate = date
         super.init(coder: coder)
@@ -112,13 +113,13 @@ class ListTableViewController: UITableViewController {
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "data", for: indexPath) as! SpendingListTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "data", for: indexPath) as! ExpenseListTableViewCell
         let row = indexPath.row
         let section = indexPath.section
 
         // 自定義 cell
-        cell.spendingnameLabel.text = dic[keys[section]]![row].spendingname
-        cell.spendingLabel.text = moneyString(dic[keys[section]]![row].spending)
+        cell.expensenameLabel.text = dic[keys[section]]![row].expensename
+        cell.expenseLabel.text = moneyString(dic[keys[section]]![row].expense)
         
         // 判斷 花費的方式
         switch dic[keys[section]]![row].paytype {
@@ -135,7 +136,7 @@ class ListTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 
-        // 判斷 日期內是否還有資料，若沒有資料將回傳 nil
+        // 判斷 日期內是否還有資料，若沒有資料將回傳 nil, error
         if dic[keys[section]]!.isEmpty {
             return nil
         }
@@ -188,7 +189,7 @@ class ListTableViewController: UITableViewController {
     }
     
     func updatedata() {
-        var data = [Spending]()
+        var data = [Expense]()
         // 資料整理
         for key in keys {
             for i in dic[key]! {
@@ -198,7 +199,7 @@ class ListTableViewController: UITableViewController {
         
         // 再次改變資料型別 ["spendingtype": [Spending]]
 //        renewaldata = Dictionary(grouping: data, by: { $0.spendingtype})
-        let newdata = Dictionary(grouping: list, by: {$0.spendingtype})
+        let newdata = Dictionary(grouping: list, by: {$0.expensetype})
         
         renewaldata?[newdata.keys.first!] = data
         
@@ -276,10 +277,10 @@ class ListTableViewController: UITableViewController {
 
 extension ListTableViewController: EditTableViewControllerDelegate {
     
-    func editTableViewController(_ controller: EditTableViewController, didEdit data: Spending) {
+    func editTableViewController(_ controller: EditTableViewController, didEdit data: Expense) {
         
         if let indexpath = selectIndexPath {
-//            print(data)
+            print(data)
             dic[keys[indexpath.section]]![indexpath.row] = data
         }
         
@@ -290,7 +291,7 @@ extension ListTableViewController: EditTableViewControllerDelegate {
 //        keys.sort(by: <)
 //        print("-----")
         print(dic)
-        var data = [Spending]()
+        var data = [Expense]()
         // 資料整理
         for key in keys {
             for i in dic[key]! {
