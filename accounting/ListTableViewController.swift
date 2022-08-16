@@ -60,13 +60,7 @@ class ListTableViewController: UITableViewController {
         // 資料分類後，決定要顯示的月份格式判斷
         formatter.dateFormat = "yyyy/MM"
         
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
-        print(keys)
+        
     }
     
     init?(coder: NSCoder, list: [Expense], date: Date){
@@ -97,12 +91,6 @@ class ListTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        
-//        let dic = Dictionary(grouping: list, by: { $0.date})
-//        var keys = Array(dic.keys)
-//        keys.sort(by: <)
-//        let item = dic[keys[section]]!
         
         // // 判斷 是否為指定的日期，若不是將回傳 0
         if keys[section].contains(formatter.string(from: assigneddate!)) {
@@ -140,6 +128,7 @@ class ListTableViewController: UITableViewController {
         if dic[keys[section]]!.isEmpty {
             return nil
         }
+        
         // 判斷 是否為指定的日期，若不是將回傳 nil
         if keys[section].contains(formatter.string(from: assigneddate!)) {
             return keys[section]
@@ -280,31 +269,38 @@ extension ListTableViewController: EditTableViewControllerDelegate {
     func editTableViewController(_ controller: EditTableViewController, didEdit data: Expense) {
         
         if let indexpath = selectIndexPath {
-            print(data)
+            print("data \(data)")
             dic[keys[indexpath.section]]![indexpath.row] = data
         }
         
-        tableView.reloadData()
-        
-//        dic = Dictionary(grouping: list, by: { formatter.string(from: $0.date)})
-//        keys = Array(dic.keys)
-//        keys.sort(by: <)
-//        print("-----")
-        print(dic)
-        var data = [Expense]()
-        // 資料整理
+        // 資料重新整理
+        var redata = [Expense]()
         for key in keys {
             for i in dic[key]! {
-                data.append(i)
+                redata.append(i)
             }
         }
-        list = data
         
+        // 修改的資料取代原資料
+        list = redata
+        
+        // date 格式
+        // 進行日期分類的格式
+        formatter.dateFormat = "yyyy/MM/dd"
+        
+        // display 資料 設定
         dic = Dictionary(grouping: list, by: { formatter.string(from: $0.date)})
         keys = Array(dic.keys)
         keys.sort(by: <)
-
         
+        // 資料分類後，決定要顯示的月份格式判斷
+        formatter.dateFormat = "yyyy/MM"
+        
+        // 頁面刷新
+        tableView.reloadData()
+        
+        // 即時與 ViewController 中的 totaldata 同步資料
+        updatedata()
     }
     
     

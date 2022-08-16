@@ -66,18 +66,24 @@ class EditTableViewController: UITableViewController {
         }
     }
     
+    
+    func updatedata() -> Expense {
+        let editdata = Expense(date: DatePicker.date, expensetype: mydate?.expensetype ?? "", expensename: accountnameTextfield.text ?? "", paytype: mydate?.paytype ?? "", expense: Int(accountTextfield.text ?? "0") ?? 0, note: noteTextView.text)
+        return editdata
+    }
+    
 
     // 即時編輯 資料 , 並回傳
     @IBAction func editdata(_ sender: Any) {
-        let editdata = Expense(date: DatePicker.date, expensetype: mydate?.expensetype ?? "", expensename: accountnameTextfield.text ?? "", paytype: mydate?.paytype ?? "", expense: Int(accountTextfield.text ?? "0") ?? 0, note: noteTextView.text)
         
-        delegate?.editTableViewController(self, didEdit: editdata)
+        delegate?.editTableViewController(self, didEdit: updatedata())
+        
     }
     
     @IBAction func editdate(_ sender: Any) {
-        let editdata = Expense(date: DatePicker.date, expensetype: mydate?.expensetype ?? "", expensename: accountnameTextfield.text ?? "", paytype: mydate?.paytype ?? "", expense: Int(accountTextfield.text ?? "0") ?? 0, note: noteTextView.text)
         
-        delegate?.editTableViewController(self, didEdit: editdata)
+        delegate?.editTableViewController(self, didEdit: updatedata())
+        
     }
     
 
@@ -157,8 +163,8 @@ extension EditTableViewController: UITextViewDelegate {
     // 由於textview 無法拉 action
     // 改為使用 UITextViewDelegate 中的 func 來達到資料更新
     func textViewDidChange(_ textView: UITextView) {
-        let editdata = Expense(date: DatePicker.date, expensetype: mydate?.expensetype ?? "", expensename: accountnameTextfield.text ?? "", paytype: mydate?.paytype ?? "", expense: Int(accountTextfield.text ?? "0") ?? 0, note: noteTextView.text)
         
-        delegate?.editTableViewController(self, didEdit: editdata)
+        delegate?.editTableViewController(self, didEdit: updatedata())
+        
     }
 }

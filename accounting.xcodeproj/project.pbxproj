@@ -17,7 +17,6 @@
 		259E4BFB28A3AAF000F42FD4 /* AddExpenseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259E4BFA28A3AAF000F42FD4 /* AddExpenseTableViewController.swift */; };
 		259E4BFD28A3AB1400F42FD4 /* AddIncomeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259E4BFC28A3AB1400F42FD4 /* AddIncomeTableViewController.swift */; };
 		25AAB5E62824193A0076ECC7 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AAB5E52824193A0076ECC7 /* CustomButton.swift */; };
-		25AAB5E8282520340076ECC7 /* NewTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AAB5E7282520340076ECC7 /* NewTableViewController.swift */; };
 		25BB3A8B28991CD800C0D204 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BB3A8A28991CD800C0D204 /* HomeViewController.swift */; };
 		25BC680B2823BCEB0051CA86 /* Keyboard.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25BC680A2823BCEB0051CA86 /* Keyboard.xib */; };
 		25BC680D2823C34B0051CA86 /* Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BC680C2823C34B0051CA86 /* Keyboard.swift */; };
@@ -61,7 +60,6 @@
 		259E4BFA28A3AAF000F42FD4 /* AddExpenseTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddExpenseTableViewController.swift; sourceTree = "<group>"; };
 		259E4BFC28A3AB1400F42FD4 /* AddIncomeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddIncomeTableViewController.swift; sourceTree = "<group>"; };
 		25AAB5E52824193A0076ECC7 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
-		25AAB5E7282520340076ECC7 /* NewTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTableViewController.swift; sourceTree = "<group>"; };
 		25BB3A8A28991CD800C0D204 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		25BC680A2823BCEB0051CA86 /* Keyboard.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Keyboard.xib; sourceTree = "<group>"; };
 		25BC680C2823C34B0051CA86 /* Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keyboard.swift; sourceTree = "<group>"; };
@@ -159,7 +157,6 @@
 				25BB3A8A28991CD800C0D204 /* HomeViewController.swift */,
 				257CFC54286EEB6900C34501 /* EditTableViewController.swift */,
 				258778BE283B5CF200E685AF /* ListTableViewController.swift */,
-				25AAB5E7282520340076ECC7 /* NewTableViewController.swift */,
 				257EC9BF28842D6200A19FB9 /* CustomView.swift */,
 				25D4B2BB280EC0AF006D2547 /* Expense.swift */,
 				259E4BF828A39AF600F42FD4 /* Income.swift */,
@@ -324,7 +321,6 @@
 				257CFC55286EEB6A00C34501 /* EditTableViewController.swift in Sources */,
 				25BB3A8B28991CD800C0D204 /* HomeViewController.swift in Sources */,
 				259E4BFD28A3AB1400F42FD4 /* AddIncomeTableViewController.swift in Sources */,
-				25AAB5E8282520340076ECC7 /* NewTableViewController.swift in Sources */,
 				25D4B28E280E9818006D2547 /* ViewController.swift in Sources */,
 				25D4B28A280E9818006D2547 /* AppDelegate.swift in Sources */,
 				259E4BFB28A3AAF000F42FD4 /* AddExpenseTableViewController.swift in Sources */,

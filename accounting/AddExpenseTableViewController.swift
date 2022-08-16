@@ -34,7 +34,7 @@ class AddExpenseTableViewController: UITableViewController {
         super.viewDidLoad()
         // textfield delegate
         accountnameTextfield.delegate = self
-        
+        accountTextfield.delegate = self
         // textview delegate
         noteTextView.delegate = self
         
@@ -64,13 +64,9 @@ class AddExpenseTableViewController: UITableViewController {
         default:
             accountImageview.image = UIImage(named: "bank")
         }
-        delegate?.addExpenseTableViewController(self, didEdit: updatedata())
+//        delegate?.addExpenseTableViewController(self, didEdit: updatedata())
     }
     
-    @IBAction func AddExpense(_ sender: UITextField) {
-        print("error")
-        delegate?.addExpenseTableViewController(self, didEdit: updatedata())
-    }
     
     
     
@@ -246,5 +242,10 @@ extension AddExpenseTableViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         accountTextfield.becomeFirstResponder()
         return true
+    }
+    
+    // 輸入金額時，將資料同步到 homedata
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        delegate?.addExpenseTableViewController(self, didEdit: updatedata())
     }
 }
