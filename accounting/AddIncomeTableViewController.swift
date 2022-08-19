@@ -7,18 +7,76 @@
 
 import UIKit
 
-class AddIncomeTableViewController: UITableViewController {
+protocol AddIncomeTableViewControllerDelegate: AddIncomeTableViewController {
+    func addIncomeTableViewController(_ controller: AddIncomeTableViewController, didEdit data: Income)
+}
 
+class AddIncomeTableViewController: UITableViewController {
+    
+    var mydata: Income?
+    var number1 = 0.0
+    var number2 = 0.0
+    var calculatetype = ""
+    
+    // date
+    var now = Date()
+    let formatter = DateFormatter()
+    var delegate: AddIncomeTableViewControllerDelegate?
+
+    @IBOutlet weak var categorySegmentedcontrol: UISegmentedControl!
+    @IBOutlet weak var DatePicker: UIDatePicker!
+    @IBOutlet weak var accountsSegmentedcontrol: UISegmentedControl!
+    @IBOutlet weak var accountImagview: UIImageView!
+    @IBOutlet weak var incomenameTextfield: UITextField!
+    @IBOutlet weak var incomeTextfield: UITextField!
+    @IBOutlet weak var noteTextview: UITextView!
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        // textfield delegate
+        incomeTextfield.delegate = self
+        incomenameTextfield.delegate = self
+        // textview delegate
+        noteTextview.delegate = self
+        
+        noteTextview.text = "備忘錄"
+        noteTextview.textColor = UIColor.lightGray
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        // custom keyboard
+        let keyboardView = Keyboard(frame: CGRect(x: 0, y: 0, width: 0, height: (view.frame.height) * 2 / 6))
+        keyboardView.delegate = self
+        
+        //
+        incomeTextfield.inputView = keyboardView
+        
+        
     }
-
+    
+    //收鍵盤
+    @objc func dismissKeyBoard() {
+        self.view.endEditing(true)
+    }
+    
+    @IBAction func changeincomeimage(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case 0:
+            accountImagview.image = UIImage(named: "salary")
+        case 1:
+            accountImagview.image = UIImage(named: "interest")
+        case 2:
+            accountImagview.image = UIImage(named: "invest")
+        case 3:
+            accountImagview.image = UIImage(named: "rent")
+        case 4:
+            accountImagview.image = UIImage(named: "transaction")
+        default :
+            accountImagview.image = UIImage(named: "game")
+            
+        }
+    }
+    
     // MARK: - Table view data source
 
 //    override func numberOfSections(in tableView: UITableView) -> Int {
@@ -86,4 +144,103 @@ class AddIncomeTableViewController: UITableViewController {
     }
     */
 
+}
+
+extension AddIncomeTableViewController: KeyboardDelegate {
+    
+    func keyWasTapped(character: String) {
+        incomeTextfield.insertText(character)
+    }
+    
+    func deletTapped() {
+        incomeTextfield.deleteBackward()
+        
+    }
+    
+    func deletAllTapped() {
+        incomeTextfield.text?.removeAll()
+        
+    }
+    
+    func plusTapped() {
+        if let number = incomeTextfield.text {
+            number1 = Double(number) ?? 0
+            incomeTextfield.text?.removeAll()
+        }
+        calculatetype = "+"
+    }
+    
+    func multiplicationTapped() {
+        if let number = incomeTextfield.text {
+            number1 = Double(number) ?? 0
+            incomeTextfield.text?.removeAll()
+        }
+        calculatetype = "X"
+    }
+    
+    func deductTapped() {
+        if let number = incomeTextfield.text {
+            number1 = Double(number) ?? 0
+            incomeTextfield.text?.removeAll()
+        }
+        calculatetype = "-"
+    }
+    
+    func divisionTapped() {
+        if let number = incomeTextfield.text {
+            number1 = Double(number) ?? 0
+            incomeTextfield.text?.removeAll()
+        }
+        calculatetype = "/"
+    }
+    
+    func calculateTapped() {
+        if let number = incomeTextfield.text {
+            number2 = Double(number) ?? 0
+            switch calculatetype{
+            case "+":
+                incomeTextfield.text = String(number1 + number2)
+            case "X":
+                incomeTextfield.text = String(number1 *  number2)
+            case "-":
+                incomeTextfield.text = String(number1 -  number2)
+            case "/":
+                incomeTextfield.text = String(number1 /  number2)
+            default :
+                print("")
+            }
+            number1 = 0.0
+            number2 = 0.0
+        }
+        dismissKeyBoard()
+        
+    }
+}
+
+
+
+extension AddIncomeTableViewController: UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if noteTextview.textColor == UIColor.lightGray {
+            noteTextview.text = nil
+            noteTextview.textColor = UIColor.black
+        }
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if noteTextview.text.isEmpty {
+            noteTextview.textColor = UIColor.lightGray
+        }
+    }
+
+}
+
+
+extension AddIncomeTableViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        incomeTextfield.becomeFirstResponder()
+        return true
+    }
+    
 }

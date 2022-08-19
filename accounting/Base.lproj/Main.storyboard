@@ -832,6 +832,9 @@
                                                         <segment title="買賣"/>
                                                         <segment title="娛樂"/>
                                                     </segments>
+                                                    <connections>
+                                                        <action selector="changeincomeimage:" destination="fag-Uf-Pmj" eventType="valueChanged" id="bBN-Oi-YKL"/>
+                                                    </connections>
                                                 </segmentedControl>
                                             </subviews>
                                             <constraints>
@@ -897,7 +900,7 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="money" translatesAutoresizingMaskIntoConstraints="NO" id="PsW-UV-JUE">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="salary" translatesAutoresizingMaskIntoConstraints="NO" id="PsW-UV-JUE">
                                                     <rect key="frame" x="65" y="60" width="50" height="50"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="50" id="jYa-Eh-cq7"/>
@@ -974,6 +977,15 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="DatePicker" destination="ov9-zk-s01" id="HKb-eA-Pod"/>
+                        <outlet property="accountImagview" destination="PsW-UV-JUE" id="V8p-8C-h35"/>
+                        <outlet property="accountsSegmentedcontrol" destination="fAU-kj-4GN" id="zDq-uF-AP8"/>
+                        <outlet property="categorySegmentedcontrol" destination="Olm-ch-JsA" id="6eS-M2-mSs"/>
+                        <outlet property="incomeTextfield" destination="xiN-Cr-urz" id="wuR-dn-yeX"/>
+                        <outlet property="incomenameTextfield" destination="8fv-Th-N7t" id="8ZR-YX-5Yt"/>
+                        <outlet property="noteTextview" destination="4xG-XB-LMI" id="yHl-Fa-DQh"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2kd-aQ-zGI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="CMe-j8-UXE" userLabel="Exit" sceneMemberID="exit"/>
@@ -983,6 +995,7 @@
     </scenes>
     <resources>
         <image name="money" width="512" height="512"/>
+        <image name="salary" width="512" height="512"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
