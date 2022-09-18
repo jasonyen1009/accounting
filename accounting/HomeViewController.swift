@@ -43,8 +43,8 @@ class HomeViewController: UIViewController {
         }
     }
     
-    @IBSegueAction func test(_ coder: NSCoder) -> AddExpenseTableViewController? {
-        
+    
+    @IBSegueAction func ExpenseSegueAction(_ coder: NSCoder) -> AddExpenseTableViewController? {
         let controller = AddExpenseTableViewController(coder: coder)
         controller?.delegate = self
         return controller
@@ -77,6 +77,7 @@ extension HomeViewController: UIScrollViewDelegate {
 extension HomeViewController: AddExpenseTableViewControllerDelegate {
     func addExpenseTableViewController(_ controller: AddExpenseTableViewController, didEdit data: Expense) {
         homedata = data
+        print(homedata)
     }
     
     

@@ -333,7 +333,7 @@
                                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="91r-QP-X1p">
                                                 <rect key="frame" x="0.0" y="0.0" width="390" height="683"/>
                                                 <connections>
-                                                    <segue destination="bJO-GA-SaF" kind="embed" destinationCreationSelector="test:" id="b4B-c2-L0X"/>
+                                                    <segue destination="bJO-GA-SaF" kind="embed" identifier="" destinationCreationSelector="ExpenseSegueAction:" id="b4B-c2-L0X"/>
                                                 </connections>
                                             </containerView>
                                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="584-80-ZgY">
