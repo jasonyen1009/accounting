@@ -19,7 +19,7 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // 禁止下拉
+        // 禁止頁面下拉
         self.isModalInPresentation = true
         
         // scrollview delegate
@@ -34,9 +34,8 @@ class HomeViewController: UIViewController {
             value = true
             scrollview.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
             
-            
-            
         default:
+            
             value = true
             scrollview.setContentOffset(CGPoint(x: view.frame.width, y: 0), animated: true)
 
@@ -50,8 +49,11 @@ class HomeViewController: UIViewController {
         return controller
     }
     
-    
-    
+    @IBSegueAction func IncomeSegueAction(_ coder: NSCoder) -> AddIncomeTableViewController? {
+        let controller = AddIncomeTableViewController(coder: coder)
+        controller?.delegate = self
+        return controller
+    }
 }
 
 extension HomeViewController: UIScrollViewDelegate {
@@ -65,7 +67,6 @@ extension HomeViewController: UIScrollViewDelegate {
                 segmentedcontrol.selectedSegmentIndex = 0
             }
         }
-        
     }
     
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
@@ -75,10 +76,19 @@ extension HomeViewController: UIScrollViewDelegate {
 }
 
 extension HomeViewController: AddExpenseTableViewControllerDelegate {
+    
     func addExpenseTableViewController(_ controller: AddExpenseTableViewController, didEdit data: Expense) {
         homedata = data
-        print(homedata)
+        print(homedata!)
     }
     
+}
+
+extension HomeViewController: AddIncomeTableViewControllerDelegate {
+    
+    func addIncomeTableViewController(_ controller: AddIncomeTableViewController, didEdit data: Income) {
+        homedata = data
+        print(homedata!)
+    }
     
 }

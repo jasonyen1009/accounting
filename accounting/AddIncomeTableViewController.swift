@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol AddIncomeTableViewControllerDelegate: AddIncomeTableViewController {
+protocol AddIncomeTableViewControllerDelegate {
     func addIncomeTableViewController(_ controller: AddIncomeTableViewController, didEdit data: Income)
 }
 
@@ -143,6 +143,19 @@ class AddIncomeTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    func updatedata() -> Income {
+        let date = DatePicker.date
+        let inctype = categorySegmentedcontrol.titleForSegment(at: categorySegmentedcontrol.selectedSegmentIndex) ?? ""
+        let incname = incomenameTextfield.text ?? ""
+        let account = accountsSegmentedcontrol.titleForSegment(at: accountsSegmentedcontrol.selectedSegmentIndex) ?? ""
+        let income = Int(incomeTextfield.text!) ?? 0
+        let note = noteTextview.text ?? ""
+        
+        mydata = Income(date: date, incometype: inctype, incomename: incname, accounts: account, income: income, note: note)
+        
+        return mydata!
+    }
 
 }
 
@@ -243,4 +256,8 @@ extension AddIncomeTableViewController: UITextFieldDelegate {
         return true
     }
     
+    // 輸入金額時，將資料同步到 homedata
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        delegate?.addIncomeTableViewController(self, didEdit: updatedata())
+    }
 }
