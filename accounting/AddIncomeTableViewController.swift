@@ -59,6 +59,7 @@ class AddIncomeTableViewController: UITableViewController {
         self.view.endEditing(true)
     }
     
+    // 更新收入種類圖示
     @IBAction func changeincomeimage(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
@@ -75,6 +76,18 @@ class AddIncomeTableViewController: UITableViewController {
             accountImagview.image = UIImage(named: "game")
             
         }
+        // 資料即時同步
+        delegate?.addIncomeTableViewController(self, didEdit: updatedata())
+    }
+    
+    @IBAction func changeaccounts(_ sender: UISegmentedControl) {
+        // 資料即時同步
+        delegate?.addIncomeTableViewController(self, didEdit: updatedata())
+    }
+    
+    @IBAction func changeday(_ sender: UIDatePicker) {
+        // 資料即時同步
+        delegate?.addIncomeTableViewController(self, didEdit: updatedata())
     }
     
     // MARK: - Table view data source

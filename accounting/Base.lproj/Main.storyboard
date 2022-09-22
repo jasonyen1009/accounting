@@ -643,6 +643,9 @@
                                                         <segment title="醫療"/>
                                                         <segment title="生活"/>
                                                     </segments>
+                                                    <connections>
+                                                        <action selector="changecategory:" destination="bJO-GA-SaF" eventType="valueChanged" id="bfg-tE-TP4"/>
+                                                    </connections>
                                                 </segmentedControl>
                                             </subviews>
                                             <constraints>
@@ -663,6 +666,9 @@
                                                 <datePicker contentMode="scaleToFill" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" style="inline" translatesAutoresizingMaskIntoConstraints="NO" id="35k-lw-EJ8">
                                                     <rect key="frame" x="20" y="11" width="310" height="303"/>
                                                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <connections>
+                                                        <action selector="changeday:" destination="bJO-GA-SaF" eventType="valueChanged" id="3nl-qL-aBA"/>
+                                                    </connections>
                                                 </datePicker>
                                             </subviews>
                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -855,6 +861,9 @@
                                                 <datePicker contentMode="scaleToFill" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" style="inline" translatesAutoresizingMaskIntoConstraints="NO" id="ov9-zk-s01">
                                                     <rect key="frame" x="20" y="11" width="310" height="303"/>
                                                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <connections>
+                                                        <action selector="changeday:" destination="fag-Uf-Pmj" eventType="valueChanged" id="aDO-ds-dTF"/>
+                                                    </connections>
                                                 </datePicker>
                                             </subviews>
                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -884,6 +893,9 @@
                                                                 <segment title="帳戶 2."/>
                                                                 <segment title="帳戶 3."/>
                                                             </segments>
+                                                            <connections>
+                                                                <action selector="changeaccounts:" destination="fag-Uf-Pmj" eventType="valueChanged" id="GVd-6l-h99"/>
+                                                            </connections>
                                                         </segmentedControl>
                                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="收入名稱" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="8fv-Th-N7t">
                                                             <rect key="frame" x="170" y="0.0" width="160" height="34"/>

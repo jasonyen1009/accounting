@@ -55,6 +55,7 @@ class AddExpenseTableViewController: UITableViewController {
         self.view.endEditing(true)
     }
     
+    // 更新消費類別圖示
     @IBAction func cahngepayimage(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
@@ -64,10 +65,22 @@ class AddExpenseTableViewController: UITableViewController {
         default:
             accountImageview.image = UIImage(named: "bank")
         }
-//        delegate?.addExpenseTableViewController(self, didEdit: updatedata())
+        // 資料即時同步
+        delegate?.addExpenseTableViewController(self, didEdit: updatedata())
     }
     
+    // 更新消費種類
+    @IBAction func changecategory(_ sender: UISegmentedControl) {
+        // 資料即時同步
+        delegate?.addExpenseTableViewController(self, didEdit: updatedata())
+    }
     
+    // 更新日期
+    @IBAction func changeday(_ sender: UIDatePicker) {
+        // 資料即時同步
+        delegate?.addExpenseTableViewController(self, didEdit: updatedata())
+    }
+
     
     
     // MARK: - Table view data source
@@ -144,6 +157,7 @@ class AddExpenseTableViewController: UITableViewController {
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     
+
     
     
 
