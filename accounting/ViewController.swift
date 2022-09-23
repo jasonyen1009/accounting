@@ -28,7 +28,7 @@ class ViewController: UIViewController {
     var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
     
     // 所有支出總計
-    var totaldata = [
+    var expensetotaldata = [
         "個人": [Expense](),
         "飲食": [Expense](),
         "購物": [Expense](),
@@ -38,9 +38,20 @@ class ViewController: UIViewController {
     
     ] {
         didSet {
-            Expense.SaveExpense(totaldata)
+            Expense.SaveExpense(expensetotaldata)
         }
     }
+    
+    // 所有收入總計
+    var incometotaldata = [
+        "薪水": [Income](),
+        "利息": [Income](),
+        "投資": [Income](),
+        "收租": [Income](),
+        "買賣": [Income](),
+        "娛樂": [Income]()
+    ]
+    
     // 支出總額
     var amount = 0
     let totalLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
@@ -70,6 +81,8 @@ class ViewController: UIViewController {
     var percentageLabel = [UILabel]()
 
 
+    var expense: Expense?
+    var income: Income?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,7 +98,7 @@ class ViewController: UIViewController {
         
         // 取得儲存的資料
         if let expense = Expense.loadExpense() {
-            self.totaldata = expense
+            self.expensetotaldata = expense
         }
 
         // tableview 高度設定為 view 的 2/5
@@ -132,22 +145,45 @@ class ViewController: UIViewController {
         print("get")
 //        let sourceViewController = unwindSegue.source
         if let source = unwindSegue.source as? HomeViewController ,
-           let data = source.homedata as? Expense {
+           let data = source.homedata  {
             print(data)
-            // 判斷為哪種消費, 並新增至該消費中
-            switch data.expensetype {
-            case "個人":
-                totaldata["個人"]?.insert(data, at: 0)
-            case "飲食":
-                totaldata["飲食"]?.insert(data, at: 0)
-            case "購物":
-                totaldata["購物"]?.insert(data, at: 0)
-            case "交通":
-                totaldata["交通"]?.insert(data, at: 0)
-            case "醫療":
-                totaldata["醫療"]?.insert(data, at: 0)
-            default:
-                totaldata["生活"]?.insert(data, at: 0)
+            
+            // 進行 型別 判斷
+            if type(of: data) == Expense.self {
+                // 若 資料 型別為 Expense 轉型為 Expsense
+                expense = data as? Expense
+                // 判斷為哪種消費, 並新增至該消費中
+                switch expense?.expensetype {
+                case "個人":
+                    expensetotaldata["個人"]?.insert(expense!, at: 0)
+                case "飲食":
+                    expensetotaldata["飲食"]?.insert(expense!, at: 0)
+                case "購物":
+                    expensetotaldata["購物"]?.insert(expense!, at: 0)
+                case "交通":
+                    expensetotaldata["交通"]?.insert(expense!, at: 0)
+                case "醫療":
+                    expensetotaldata["醫療"]?.insert(expense!, at: 0)
+                default:
+                    expensetotaldata["生活"]?.insert(expense!, at: 0)
+                }
+            }else {
+                // 非 Expense 轉型為 Income
+                income = data as? Income
+                switch income?.incometype {
+                case "薪水":
+                    incometotaldata["薪水"]?.insert(income!, at: 0)
+                case "利息":
+                    incometotaldata["利息"]?.insert(income!, at: 0)
+                case "投資":
+                    incometotaldata["投資"]?.insert(income!, at: 0)
+                case "收租":
+                    incometotaldata["收租"]?.insert(income!, at: 0)
+                case "買賣":
+                    incometotaldata["買賣"]?.insert(income!, at: 0)
+                default:
+                    incometotaldata["娛樂"]?.insert(income!, at: 0)
+                }
             }
             
             // 畫面更新
@@ -226,7 +262,7 @@ class ViewController: UIViewController {
         
         // 判斷點選哪一個 row 來傳遞點選到的 data
         if let row = myTableView.indexPathForSelectedRow?.row {
-            return ListTableViewController(coder: coder, list: totaldata["\(assetLabel[row])"] ?? [], date: now)
+            return ListTableViewController(coder: coder, list: expensetotaldata["\(assetLabel[row])"] ?? [], date: now)
         }else {
             return nil
         }
@@ -236,7 +272,7 @@ class ViewController: UIViewController {
     func calculateall() {
         var total = 0
         for label in assetLabel {
-            for value in totaldata["\(label)"] ?? [] {
+            for value in expensetotaldata["\(label)"] ?? [] {
                 total += value.expense
             }
         }
@@ -293,7 +329,7 @@ class ViewController: UIViewController {
     // 用於所有畫面更新
     func calculate(_ expensetype: String, date: Date) -> Int {
         var expense = 0
-        for i in totaldata[expensetype]! {
+        for i in expensetotaldata[expensetype]! {
             // 判斷是否為 本月的月份
             if dateformatter.string(from: i.date) == dateformatter.string(from: date) {
                 expense += i.expense
@@ -475,7 +511,7 @@ extension ViewController: ListTableViewControllerDelegate {
     func listTableViewController(_ controller: ListTableViewController, didEdit data: [String : [Expense]]) {
         
         // 將新資料與 totaldata 總資料一起同步
-        totaldata[data.keys.first!] = data[data.keys.first!]
+        expensetotaldata[data.keys.first!] = data[data.keys.first!]
         // 畫面更新
         updateUI()
     }
