@@ -17,11 +17,13 @@ class ViewController: UIViewController {
     let dateformatter = DateFormatter()
     
     // 支出總覽 display
-    var myasset = Myasset(personal: 0, dietary: 0, shopping: 0, traffic: 0, medical: 0, life: 0)
+    var displayexpense = Totalexpense(personal: 0, dietary: 0, shopping: 0, traffic: 0, medical: 0, life: 0)
+    // 收入總覽 display
+    var displayincome = Totalincome(salary: 0, interest: 0, invest: 0, rent: 0, transaction: 0, play: 0)
     
     // 支出種類
-    var assetLabel = ["個人", "飲食", "購物", "交通", "醫療", "生活"]
-    var assetLabel2 = ["個\n人", "飲\n食", "購\n物", "交\n通", "醫\n療", "生\n活"]
+    var expenseLabel = ["個人", "飲食", "購物", "交通", "醫療", "生活"]
+    var incomeLabel = ["薪水", "利息", "投資", "收租", "買賣", "娛樂"]
     
     // years, months
     var years = ["2021", "2022", "2023", "2024", "2025", "2026"]
@@ -53,7 +55,10 @@ class ViewController: UIViewController {
     ]
     
     // 支出總額
-    var amount = 0
+    var expenseamount = 0
+    // 收入總額
+    var incomeamount = 0
+    
     let totalLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
     // 角度
     let aDegree = CGFloat.pi / 180
@@ -72,6 +77,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var myTableView: UITableView!
     @IBOutlet weak var tableviewheightconstraint: NSLayoutConstraint!
     @IBOutlet weak var changeDateButton: UIButton!
+    @IBOutlet weak var changetypeSegmentedControl: UISegmentedControl!
+    
     
     // Pickerview
     let pickerView = UIPickerView(frame: CGRect(x: 0, y: 0, width: 250, height: 200))
@@ -262,7 +269,7 @@ class ViewController: UIViewController {
         
         // 判斷點選哪一個 row 來傳遞點選到的 data
         if let row = myTableView.indexPathForSelectedRow?.row {
-            return ListTableViewController(coder: coder, list: expensetotaldata["\(assetLabel[row])"] ?? [], date: now)
+            return ListTableViewController(coder: coder, list: expensetotaldata["\(expenseLabel[row])"] ?? [], date: now)
         }else {
             return nil
         }
@@ -271,24 +278,24 @@ class ViewController: UIViewController {
     // 計算總和
     func calculateall() {
         var total = 0
-        for label in assetLabel {
+        for label in expenseLabel {
             for value in expensetotaldata["\(label)"] ?? [] {
                 total += value.expense
             }
         }
-        amount = total
+        expenseamount = total
     }
     
     // 頁面顯示總和
     func calculateDisplay() {
         var total = 0
-        total += myasset.personal
-        total += myasset.dietary
-        total += myasset.shopping
-        total += myasset.traffic
-        total += myasset.medical
-        total += myasset.life
-        amount = total
+        total += displayexpense.personal
+        total += displayexpense.dietary
+        total += displayexpense.shopping
+        total += displayexpense.traffic
+        total += displayexpense.medical
+        total += displayexpense.life
+        expenseamount = total
     }
     
     // 最底層的 percentage
@@ -341,16 +348,16 @@ class ViewController: UIViewController {
     // 所有畫面資料更新
     func updateUI() {
         // 畫面更新
-        myasset.personal = calculate("個人",date: now)
-        myasset.dietary = calculate("飲食",date: now)
-        myasset.shopping = calculate("購物",date: now)
-        myasset.traffic = calculate("交通",date: now)
-        myasset.medical = calculate("醫療",date: now)
-        myasset.life = calculate("生活",date: now)
+        displayexpense.personal = calculate("個人",date: now)
+        displayexpense.dietary = calculate("飲食",date: now)
+        displayexpense.shopping = calculate("購物",date: now)
+        displayexpense.traffic = calculate("交通",date: now)
+        displayexpense.medical = calculate("醫療",date: now)
+        displayexpense.life = calculate("生活",date: now)
         
         calculateDisplay()
         
-        totalLabel.text = moneyString(amount)
+        totalLabel.text = moneyString(expenseamount)
         totalLabel.sizeToFit()
         // 這邊必須再次設定 position，不然位置會跑掉
         totalLabel.layer.position = position
@@ -368,19 +375,19 @@ class ViewController: UIViewController {
         percentageLabel.removeAll()
         
         // 若總額為 0 , 製作底層
-        if amount == 0 {
+        if expenseamount == 0 {
             creatcirclePath()
         }
                     
         // 更新 圖表
         var startDegree: CGFloat = 270
         let percentages = [
-            Double(myasset.personal),
-            Double(myasset.dietary),
-            Double(myasset.shopping),
-            Double(myasset.traffic),
-            Double(myasset.medical),
-            Double(myasset.life)
+            Double(displayexpense.personal),
+            Double(displayexpense.dietary),
+            Double(displayexpense.shopping),
+            Double(displayexpense.traffic),
+            Double(displayexpense.medical),
+            Double(displayexpense.life)
         ]
         
         // 繪製 各項比例圖表及文字
@@ -403,7 +410,7 @@ class ViewController: UIViewController {
             textLabel.font = UIFont.systemFont(ofSize: 10)
             
             // assetLabel2 垂直顯示
-            textLabel.text = "\(assetLabel[index])"
+            textLabel.text = "\(expenseLabel[index])"
             textLabel.numberOfLines = 0
             textLabel.sizeToFit()
 
@@ -429,7 +436,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     // 決定表格數量
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        assetLabel.count
+        expenseLabel.count
     }
     
     // 決定表格內容
@@ -438,17 +445,19 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "mycell", for: indexPath) as! ExpensetypeTableViewCell
 
         let percentages = [
-            Double(myasset.personal),
-            Double(myasset.dietary),
-            Double(myasset.shopping),
-            Double(myasset.traffic),
-            Double(myasset.medical),
-            Double(myasset.life)
+            Double(displayexpense.personal),
+            Double(displayexpense.dietary),
+            Double(displayexpense.shopping),
+            Double(displayexpense.traffic),
+            Double(displayexpense.medical),
+            Double(displayexpense.life)
         ]
         
         // 自訂的 cell
-        cell.expensetypeLabel.text = "\(assetLabel[indexPath.row])"
-        cell.expenseLabel.text = "\(moneyString(Int(percentages[indexPath.row])))"
+        
+        
+        cell.celltypeLabel.text = "\(expenseLabel[indexPath.row])"
+        cell.cellmoneyLabel.text = "\(moneyString(Int(percentages[indexPath.row])))"
         cell.circleview.backgroundColor = UIColor(cgColor: colors[indexPath.row])
         // 判斷 percentage 大於 0 , 才會新增第二 字串
         if (percentages[indexPath.row] / percentages.reduce(0, +)) > 0.0 {

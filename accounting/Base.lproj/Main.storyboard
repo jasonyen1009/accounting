@@ -114,9 +114,9 @@
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="500" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
+                                            <outlet property="cellmoneyLabel" destination="mCu-da-hdf" id="JH5-eM-0VJ"/>
+                                            <outlet property="celltypeLabel" destination="1qr-6Z-IC3" id="87t-LG-3im"/>
                                             <outlet property="circleview" destination="hts-z0-aMu" id="dyS-uq-YXw"/>
-                                            <outlet property="expenseLabel" destination="mCu-da-hdf" id="wUT-ck-Qy3"/>
-                                            <outlet property="expensetypeLabel" destination="1qr-6Z-IC3" id="483-8M-C2O"/>
                                             <outlet property="percentageLabel" destination="GVg-bV-0By" id="YVb-ZB-Zj2"/>
                                             <segue destination="ig1-F2-Neb" kind="show" destinationCreationSelector="Senddata:" id="mpr-HU-w2H"/>
                                         </connections>
@@ -182,6 +182,7 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="changeDateButton" destination="Oy0-Lv-QUr" id="bJi-7N-ZD5"/>
+                        <outlet property="changetypeSegmentedControl" destination="MnV-gq-kTa" id="8Vj-h3-AGb"/>
                         <outlet property="myTableView" destination="aFq-h7-uQL" id="dFX-SN-Em9"/>
                         <outlet property="tableviewheightconstraint" destination="shD-pD-OaS" id="gFa-3T-ASk"/>
                     </connections>

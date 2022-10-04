@@ -9,8 +9,8 @@ import UIKit
 
 class ExpensetypeTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var expensetypeLabel: UILabel!
-    @IBOutlet weak var expenseLabel: UILabel!
+    @IBOutlet weak var celltypeLabel: UILabel!
+    @IBOutlet weak var cellmoneyLabel: UILabel!
     @IBOutlet weak var circleview: UIView!
     @IBOutlet weak var percentageLabel: UILabel!
     
