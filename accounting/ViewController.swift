@@ -275,6 +275,11 @@ class ViewController: UIViewController {
         }
     }
     
+    // 切換 segmentedcontrol 觸發
+    @IBAction func changeUI(_ sender: UISegmentedControl) {
+        myTableView.reloadData()
+    }
+    
     // 計算總和
     func calculateall() {
         var total = 0
@@ -284,19 +289,38 @@ class ViewController: UIViewController {
             }
         }
         expenseamount = total
+        
+        total = 0
+        for label in incomeLabel {
+            for value in incometotaldata["\(label)"] ?? [] {
+                total += value.income
+            }
+        }
+        incomeamount = total
+        
     }
     
-    // 頁面顯示總和
-    func calculateDisplay() {
-        var total = 0
-        total += displayexpense.personal
-        total += displayexpense.dietary
-        total += displayexpense.shopping
-        total += displayexpense.traffic
-        total += displayexpense.medical
-        total += displayexpense.life
-        expenseamount = total
-    }
+//    // 頁面顯示總和
+//    func calculateDisplay() {
+//        var total = 0
+//        total += displayexpense.personal
+//        total += displayexpense.dietary
+//        total += displayexpense.shopping
+//        total += displayexpense.traffic
+//        total += displayexpense.medical
+//        total += displayexpense.life
+//        expenseamount = total
+//
+//        total = 0
+//        total += displayincome.salary
+//        total += displayincome.interest
+//        total += displayincome.invest
+//        total += displayincome.rent
+//        total += displayincome.transaction
+//        total += displayincome.play
+//        incomeamount = total
+//
+//    }
     
     // 最底層的 percentage
     func creatcirclePath() {
@@ -332,9 +356,9 @@ class ViewController: UIViewController {
         return formatter.string(from: NSNumber(value: money)) ?? ""
     }
     
-    // 計算各個消費 expense 總和
     // 用於所有畫面更新
-    func calculate(_ expensetype: String, date: Date) -> Int {
+    // 計算各個消費 expense 總和
+    func expensecalculate(_ expensetype: String, date: Date) -> Int {
         var expense = 0
         for i in expensetotaldata[expensetype]! {
             // 判斷是否為 本月的月份
@@ -344,18 +368,37 @@ class ViewController: UIViewController {
         }
         return expense
     }
+    // 計算各個消費 income 總和
+    func incomecalculate(_ incometype: String, date: Date) -> Int {
+        var income = 0
+        for i in incometotaldata[incometype]! {
+            // 判斷是否為 本月的月份
+            if dateformatter.string(from: i.date) == dateformatter.string(from: date) {
+                income += i.income
+            }
+        }
+        return income
+    }
+    
     
     // 所有畫面資料更新
     func updateUI() {
         // 畫面更新
-        displayexpense.personal = calculate("個人",date: now)
-        displayexpense.dietary = calculate("飲食",date: now)
-        displayexpense.shopping = calculate("購物",date: now)
-        displayexpense.traffic = calculate("交通",date: now)
-        displayexpense.medical = calculate("醫療",date: now)
-        displayexpense.life = calculate("生活",date: now)
+        displayexpense.personal = expensecalculate("個人",date: now)
+        displayexpense.dietary = expensecalculate("飲食",date: now)
+        displayexpense.shopping = expensecalculate("購物",date: now)
+        displayexpense.traffic = expensecalculate("交通",date: now)
+        displayexpense.medical = expensecalculate("醫療",date: now)
+        displayexpense.life = expensecalculate("生活",date: now)
         
-        calculateDisplay()
+        displayincome.salary = incomecalculate("薪水",date: now)
+        displayincome.interest = incomecalculate("利息",date: now)
+        displayincome.invest = incomecalculate("投資",date: now)
+        displayincome.rent = incomecalculate("收租",date: now)
+        displayincome.transaction = incomecalculate("買賣",date: now)
+        displayincome.play = incomecalculate("娛樂",date: now)
+        
+        calculateall()
         
         totalLabel.text = moneyString(expenseamount)
         totalLabel.sizeToFit()
@@ -381,7 +424,8 @@ class ViewController: UIViewController {
                     
         // 更新 圖表
         var startDegree: CGFloat = 270
-        let percentages = [
+        // expensepercentages
+        let expensepercentages = [
             Double(displayexpense.personal),
             Double(displayexpense.dietary),
             Double(displayexpense.shopping),
@@ -389,11 +433,20 @@ class ViewController: UIViewController {
             Double(displayexpense.medical),
             Double(displayexpense.life)
         ]
+        // incomepercentages
+        let incomepercentages = [
+            Double(displayincome.salary),
+            Double(displayincome.interest),
+            Double(displayincome.invest),
+            Double(displayincome.rent),
+            Double(displayincome.transaction),
+            Double(displayincome.play)
+        ]
         
         // 繪製 各項比例圖表及文字
-        for (index, percentage) in percentages.enumerated() {
+        for (index, percentage) in expensepercentages.enumerated() {
             // percentages.reduce(0, +) 取得 percentages 總數
-            let endDegree = startDegree + (percentage / percentages.reduce(0, +)) * 360
+            let endDegree = startDegree + (percentage / expensepercentages.reduce(0, +)) * 360
             let percentagePath = UIBezierPath(arcCenter: position, radius: 90, startAngle: aDegree * startDegree, endAngle: aDegree * endDegree, clockwise: true)
 
             let percentageLayer = CAShapeLayer()
@@ -403,7 +456,7 @@ class ViewController: UIViewController {
             percentageLayer.strokeColor = colors[index]
 
             // textlabel 座標
-            let textPath = UIBezierPath(arcCenter: position, radius: 125, startAngle: aDegree * startDegree, endAngle: aDegree * (startDegree + (percentage / percentages.reduce(0, +)) * 180), clockwise: true)
+            let textPath = UIBezierPath(arcCenter: position, radius: 125, startAngle: aDegree * startDegree, endAngle: aDegree * (startDegree + (percentage / expensepercentages.reduce(0, +)) * 180), clockwise: true)
             
             // label 製作
             let textLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
@@ -444,7 +497,8 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 //        let cell = UITableViewCell()
         let cell = tableView.dequeueReusableCell(withIdentifier: "mycell", for: indexPath) as! ExpensetypeTableViewCell
 
-        let percentages = [
+        // expensepercentages
+        let expensepercentages = [
             Double(displayexpense.personal),
             Double(displayexpense.dietary),
             Double(displayexpense.shopping),
@@ -452,19 +506,54 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             Double(displayexpense.medical),
             Double(displayexpense.life)
         ]
+        // incomepercentages
+        let incomepercentages = [
+            Double(displayincome.salary),
+            Double(displayincome.interest),
+            Double(displayincome.invest),
+            Double(displayincome.rent),
+            Double(displayincome.transaction),
+            Double(displayincome.play)
+        ]
         
         // 自訂的 cell
         
-        
-        cell.celltypeLabel.text = "\(expenseLabel[indexPath.row])"
-        cell.cellmoneyLabel.text = "\(moneyString(Int(percentages[indexPath.row])))"
-        cell.circleview.backgroundColor = UIColor(cgColor: colors[indexPath.row])
-        // 判斷 percentage 大於 0 , 才會新增第二 字串
-        if (percentages[indexPath.row] / percentages.reduce(0, +)) > 0.0 {
-            cell.percentageLabel.text = "\(String(format: "%.2f", (percentages[indexPath.row] / percentages.reduce(0, +) * 100))) %"
-        }else {
-            cell.percentageLabel.text = "0.00 %"
+        switch changetypeSegmentedControl.selectedSegmentIndex {
+        // 支出頁面
+        case 0:
+            cell.celltypeLabel.text = "\(expenseLabel[indexPath.row])"
+            cell.cellmoneyLabel.text = "\(moneyString(Int(expensepercentages[indexPath.row])))"
+            
+            cell.circleview.backgroundColor = UIColor(cgColor: colors[indexPath.row])
+            // 判斷 percentage 大於 0 , 才會新增第二 字串
+            if (expensepercentages[indexPath.row] / expensepercentages.reduce(0, +)) > 0.0 {
+                cell.percentageLabel.text = "\(String(format: "%.2f", (expensepercentages[indexPath.row] / expensepercentages.reduce(0, +) * 100))) %"
+            }else {
+                cell.percentageLabel.text = "0.00 %"
+            }
+        // 收入頁面
+        default :
+            cell.celltypeLabel.text = "\(incomeLabel[indexPath.row])"
+            cell.cellmoneyLabel.text = "\(moneyString(Int(incomepercentages[indexPath.row])))"
+            
+            cell.circleview.backgroundColor = UIColor(cgColor: colors[indexPath.row])
+            // 判斷 percentage 大於 0 , 才會新增第二 字串
+            if (incomepercentages[indexPath.row] / incomepercentages.reduce(0, +)) > 0.0 {
+                cell.percentageLabel.text = "\(String(format: "%.2f", (incomepercentages[indexPath.row] / incomepercentages.reduce(0, +) * 100))) %"
+            }else {
+                cell.percentageLabel.text = "0.00 %"
+            }
         }
+        
+//        cell.celltypeLabel.text = "\(expenseLabel[indexPath.row])"
+//        cell.cellmoneyLabel.text = "\(moneyString(Int(expensepercentages[indexPath.row])))"
+//        cell.circleview.backgroundColor = UIColor(cgColor: colors[indexPath.row])
+//        // 判斷 percentage 大於 0 , 才會新增第二 字串
+//        if (expensepercentages[indexPath.row] / expensepercentages.reduce(0, +)) > 0.0 {
+//            cell.percentageLabel.text = "\(String(format: "%.2f", (expensepercentages[indexPath.row] / expensepercentages.reduce(0, +) * 100))) %"
+//        }else {
+//            cell.percentageLabel.text = "0.00 %"
+//        }
         
         return cell
     }

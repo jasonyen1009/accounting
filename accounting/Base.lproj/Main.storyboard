@@ -154,6 +154,9 @@
                                     <segment title="支出"/>
                                     <segment title="收入"/>
                                 </segments>
+                                <connections>
+                                    <action selector="changeUI:" destination="BYZ-38-t0r" eventType="valueChanged" id="srB-LY-RSH"/>
+                                </connections>
                             </segmentedControl>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
