@@ -59,6 +59,12 @@ class ViewController: UIViewController {
     // 收入總額
     var incomeamount = 0
     
+    // 支出顯示總額
+    var displayexpenseamount = 0
+    // 收入顯示總額
+    var displayincomeamount = 0
+    
+    
     let totalLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
     // 角度
     let aDegree = CGFloat.pi / 180
@@ -251,6 +257,12 @@ class ViewController: UIViewController {
             // 將 pickerview 日期, 同步到 Button 上
             self.changeDateButton.setTitle(newdate, for: .normal)
             
+            // 將 newdate 同步到 now 上
+//            dateformatter.dateFormat = "yyyy,MMM"
+            let updatedate = self.dateformatter.date(from: newdate)
+            self.now = updatedate!
+            
+            
             // 畫面更新
             self.updateUI()
         }))
@@ -277,7 +289,11 @@ class ViewController: UIViewController {
     
     // 切換 segmentedcontrol 觸發
     @IBAction func changeUI(_ sender: UISegmentedControl) {
+        creatcirclePath()
+        creatpercentageLabel()
+        updateUI()
         myTableView.reloadData()
+        
     }
     
     // 計算總和
@@ -300,27 +316,6 @@ class ViewController: UIViewController {
         
     }
     
-//    // 頁面顯示總和
-//    func calculateDisplay() {
-//        var total = 0
-//        total += displayexpense.personal
-//        total += displayexpense.dietary
-//        total += displayexpense.shopping
-//        total += displayexpense.traffic
-//        total += displayexpense.medical
-//        total += displayexpense.life
-//        expenseamount = total
-//
-//        total = 0
-//        total += displayincome.salary
-//        total += displayincome.interest
-//        total += displayincome.invest
-//        total += displayincome.rent
-//        total += displayincome.transaction
-//        total += displayincome.play
-//        incomeamount = total
-//
-//    }
     
     // 最底層的 percentage
     func creatcirclePath() {
@@ -366,6 +361,7 @@ class ViewController: UIViewController {
                 expense += i.expense
             }
         }
+        displayexpenseamount += expense
         return expense
     }
     // 計算各個消費 income 總和
@@ -377,6 +373,7 @@ class ViewController: UIViewController {
                 income += i.income
             }
         }
+        displayincomeamount += income
         return income
     }
     
@@ -384,7 +381,12 @@ class ViewController: UIViewController {
     // 所有畫面資料更新
     func updateUI() {
         // 畫面更新
-        displayexpense.personal = expensecalculate("個人",date: now)
+
+        // 每次更新畫面必須設為 0 , 否則每次金額都會累積加上去
+        displayexpenseamount = 0
+        displayincomeamount = 0
+        
+        displayexpense.personal = expensecalculate("個人", date: now)
         displayexpense.dietary = expensecalculate("飲食",date: now)
         displayexpense.shopping = expensecalculate("購物",date: now)
         displayexpense.traffic = expensecalculate("交通",date: now)
@@ -398,9 +400,17 @@ class ViewController: UIViewController {
         displayincome.transaction = incomecalculate("買賣",date: now)
         displayincome.play = incomecalculate("娛樂",date: now)
         
-        calculateall()
+        // 選擇要顯示的總和
+        switch changetypeSegmentedControl.selectedSegmentIndex {
+        case 0:
+            totalLabel.text = moneyString(displayexpenseamount)
+        default :
+            totalLabel.text = moneyString(displayincomeamount)
+        }
         
-        totalLabel.text = moneyString(expenseamount)
+//        totalLabel.text = moneyString(expenseamount)
+        
+        
         totalLabel.sizeToFit()
         // 這邊必須再次設定 position，不然位置會跑掉
         totalLabel.layer.position = position
@@ -443,42 +453,83 @@ class ViewController: UIViewController {
             Double(displayincome.play)
         ]
         
-        // 繪製 各項比例圖表及文字
-        for (index, percentage) in expensepercentages.enumerated() {
-            // percentages.reduce(0, +) 取得 percentages 總數
-            let endDegree = startDegree + (percentage / expensepercentages.reduce(0, +)) * 360
-            let percentagePath = UIBezierPath(arcCenter: position, radius: 90, startAngle: aDegree * startDegree, endAngle: aDegree * endDegree, clockwise: true)
+        switch changetypeSegmentedControl.selectedSegmentIndex {
+        case 0:
+            // 繪製 各項比例圖表及文字
+            for (index, percentage) in expensepercentages.enumerated() {
+                // percentages.reduce(0, +) 取得 percentages 總數
+                let endDegree = startDegree + (percentage / expensepercentages.reduce(0, +)) * 360
+                let percentagePath = UIBezierPath(arcCenter: position, radius: 90, startAngle: aDegree * startDegree, endAngle: aDegree * endDegree, clockwise: true)
 
-            let percentageLayer = CAShapeLayer()
-            percentageLayer.path = percentagePath.cgPath
-            percentageLayer.fillColor = UIColor.clear.cgColor
-            percentageLayer.lineWidth = 40
-            percentageLayer.strokeColor = colors[index]
+                let percentageLayer = CAShapeLayer()
+                percentageLayer.path = percentagePath.cgPath
+                percentageLayer.fillColor = UIColor.clear.cgColor
+                percentageLayer.lineWidth = 40
+                percentageLayer.strokeColor = colors[index]
 
-            // textlabel 座標
-            let textPath = UIBezierPath(arcCenter: position, radius: 125, startAngle: aDegree * startDegree, endAngle: aDegree * (startDegree + (percentage / expensepercentages.reduce(0, +)) * 180), clockwise: true)
-            
-            // label 製作
-            let textLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
-            textLabel.font = UIFont.systemFont(ofSize: 10)
-            
-            // assetLabel2 垂直顯示
-            textLabel.text = "\(expenseLabel[index])"
-            textLabel.numberOfLines = 0
-            textLabel.sizeToFit()
+                // textlabel 座標
+                let textPath = UIBezierPath(arcCenter: position, radius: 125, startAngle: aDegree * startDegree, endAngle: aDegree * (startDegree + (percentage / expensepercentages.reduce(0, +)) * 180), clockwise: true)
+                
+                // label 製作
+                let textLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+                textLabel.font = UIFont.systemFont(ofSize: 10)
+                
+                // assetLabel2 垂直顯示
+                textLabel.text = "\(expenseLabel[index])"
+                textLabel.numberOfLines = 0
+                textLabel.sizeToFit()
 
-            // 如果將 textLabel.center = textPath.currentPoint
-            // 移動至判斷式外，回傳資料都 0 時，將造成閃退
-            if percentage > 0.0 {
-                textLabel.center = textPath.currentPoint
-                view.addSubview(textLabel)
-                percentageLabel.append(textLabel)
+                // 如果將 textLabel.center = textPath.currentPoint
+                // 移動至判斷式外，回傳資料都 0 時，將造成閃退
+                if percentage > 0.0 {
+                    textLabel.center = textPath.currentPoint
+                    view.addSubview(textLabel)
+                    percentageLabel.append(textLabel)
 
+                }
+                view.layer.addSublayer(percentageLayer)
+                percentageLayers.append(percentageLayer)
+                startDegree = endDegree
             }
-            view.layer.addSublayer(percentageLayer)
-            percentageLayers.append(percentageLayer)
-            startDegree = endDegree
+        default :
+            // 繪製 各項比例圖表及文字
+            for (index, percentage) in incomepercentages.enumerated() {
+                // percentages.reduce(0, +) 取得 percentages 總數
+                let endDegree = startDegree + (percentage / incomepercentages.reduce(0, +)) * 360
+                let percentagePath = UIBezierPath(arcCenter: position, radius: 90, startAngle: aDegree * startDegree, endAngle: aDegree * endDegree, clockwise: true)
+
+                let percentageLayer = CAShapeLayer()
+                percentageLayer.path = percentagePath.cgPath
+                percentageLayer.fillColor = UIColor.clear.cgColor
+                percentageLayer.lineWidth = 40
+                percentageLayer.strokeColor = colors[index]
+
+                // textlabel 座標
+                let textPath = UIBezierPath(arcCenter: position, radius: 125, startAngle: aDegree * startDegree, endAngle: aDegree * (startDegree + (percentage / incomepercentages.reduce(0, +)) * 180), clockwise: true)
+                
+                // label 製作
+                let textLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+                textLabel.font = UIFont.systemFont(ofSize: 10)
+                
+                // assetLabel2 垂直顯示
+                textLabel.text = "\(incomeLabel[index])"
+                textLabel.numberOfLines = 0
+                textLabel.sizeToFit()
+
+                // 如果將 textLabel.center = textPath.currentPoint
+                // 移動至判斷式外，回傳資料都 0 時，將造成閃退
+                if percentage > 0.0 {
+                    textLabel.center = textPath.currentPoint
+                    view.addSubview(textLabel)
+                    percentageLabel.append(textLabel)
+
+                }
+                view.layer.addSublayer(percentageLayer)
+                percentageLayers.append(percentageLayer)
+                startDegree = endDegree
+            }
         }
+
         myTableView.reloadData()
     }
 
@@ -544,16 +595,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.percentageLabel.text = "0.00 %"
             }
         }
-        
-//        cell.celltypeLabel.text = "\(expenseLabel[indexPath.row])"
-//        cell.cellmoneyLabel.text = "\(moneyString(Int(expensepercentages[indexPath.row])))"
-//        cell.circleview.backgroundColor = UIColor(cgColor: colors[indexPath.row])
-//        // 判斷 percentage 大於 0 , 才會新增第二 字串
-//        if (expensepercentages[indexPath.row] / expensepercentages.reduce(0, +)) > 0.0 {
-//            cell.percentageLabel.text = "\(String(format: "%.2f", (expensepercentages[indexPath.row] / expensepercentages.reduce(0, +) * 100))) %"
-//        }else {
-//            cell.percentageLabel.text = "0.00 %"
-//        }
         
         return cell
     }
