@@ -13,17 +13,30 @@ protocol ListTableViewControllerDelegate {
 
 class ListTableViewController: UITableViewController {
     
+    // 控制顯示資料，支出或是收入
+    var selectindex = 0
+    
     // 原資料
-    var list = [Expense]()
+    // 支出
+    // 收入
+    var expenselist = [Expense]()
+    var incomelist = [Income]()
+
     // 指定的日期
     let assigneddate: Date?
     
     // display 資料（本頁顯示資料）
-    var dic = [String:[Expense]]()
-    var keys = [String]()
+    var expensedic = [String:[Expense]]()
+    var expensekeys = [String]()
+    
+    var incomedic = [String:[Income]]()
+    var incomekeys = [String]()
+    
     
     // 回傳的資料
-    var renewaldata: [String:[Expense]]?
+    var expenserenewaldata: [String:[Expense]]?
+    var incomerenewaldata: [String:[Income]]?
+
     
     // date
     var now = Date()
@@ -43,18 +56,31 @@ class ListTableViewController: UITableViewController {
         formatter.dateFormat = "yyyy/MM/dd"
         
         // display 資料 設定
-        dic = Dictionary(grouping: list, by: { formatter.string(from: $0.date)})
-        keys = Array(dic.keys)
-        keys.sort(by: <)
-//        print(keys)
+        // expense
+        expensedic = Dictionary(grouping: expenselist, by: { formatter.string(from: $0.date)})
+        expensekeys = Array(expensedic.keys)
+        expensekeys.sort(by: <)
+        
+        // display 資料 設定
+        // income
+        incomedic = Dictionary(grouping: incomelist, by: { formatter.string(from: $0.date)})
+        incomekeys = Array(incomedic.keys)
+        incomekeys.sort(by: <)
+        
         // 取得消費類別
-        let ttt = Dictionary(grouping: list, by: {$0.expensetype})
-        
-//        print(ttt.keys.first ?? "")
-        
+        // enpense
+        let ttt = Dictionary(grouping: expenselist, by: {$0.expensetype})
         // 決定消費類別 ["spendingtype":[Spending]]
         if let str = ttt.keys.first {
-            renewaldata = [str: []]
+            expenserenewaldata = [str: []]
+        }
+        
+        // 取得消費類別
+        // income
+        let tt = Dictionary(grouping: incomelist, by: {$0.incometype})
+        // 決定消費類別 ["spendingtype":[Spending]]
+        if let str = tt.keys.first {
+            incomerenewaldata = [str: []]
         }
         
         // 資料分類後，決定要顯示的月份格式判斷
@@ -63,9 +89,18 @@ class ListTableViewController: UITableViewController {
         
     }
     
-    init?(coder: NSCoder, list: [Expense], date: Date){
-        self.list = list
+    // expense
+    init?(coder: NSCoder, list: [Expense], date: Date, index: Int){
+        self.expenselist = list
         self.assigneddate = date
+        self.selectindex = index
+        super.init(coder: coder)
+    }
+    //income
+    init?(coder: NSCoder, list: [Income], date: Date, index: Int){
+        self.incomelist = list
+        self.assigneddate = date
+        self.selectindex = index
         super.init(coder: coder)
     }
     
@@ -86,17 +121,40 @@ class ListTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        
-        return dic.keys.count
+        switch selectindex {
+        case 0:
+            // expense
+            return expensedic.keys.count
+        default :
+            // income
+            return incomedic.keys.count
+        }
+//        return expensedic.keys.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         // // 判斷 是否為指定的日期，若不是將回傳 0
-        if keys[section].contains(formatter.string(from: assigneddate!)) {
-            return dic[keys[section]]!.count
+//        if expensekeys[section].contains(formatter.string(from: assigneddate!)) {
+//            return expensedic[expensekeys[section]]!.count
+//        }
+//        return 0
+        
+        // 判斷 是否為指定的日期，若不是將回傳 0
+        switch selectindex {
+        case 0 :
+            // expense
+            if expensekeys[section].contains(formatter.string(from: assigneddate!)) {
+                return expensedic[expensekeys[section]]!.count
+            }
+            return 0
+        default :
+            // income
+            if incomekeys[section].contains(formatter.string(from: assigneddate!)) {
+                return incomedic[incomekeys[section]]!.count
+            }
+            return 0
         }
-        return 0
     }
 
     
@@ -104,47 +162,97 @@ class ListTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "data", for: indexPath) as! ExpenseListTableViewCell
         let row = indexPath.row
         let section = indexPath.section
-
-        // 自定義 cell
-        cell.expensenameLabel.text = dic[keys[section]]![row].expensename
-        cell.expenseLabel.text = moneyString(dic[keys[section]]![row].expense)
         
-        // 判斷 花費的方式
-        switch dic[keys[section]]![row].paytype {
-        case "帳戶" :
-            cell.accountimageview.image = UIImage(named: "bank")
-        case "信用卡" :
-            cell.accountimageview.image = UIImage(named: "credit-card")
-        default:
-            cell.accountimageview.image = UIImage(named: "money")
+        // 自定義 cell
+        switch selectindex {
+        case 0:
+            // expense
+            cell.expensenameLabel.text = expensedic[expensekeys[section]]![row].expensename
+            cell.expenseLabel.text = moneyString(expensedic[expensekeys[section]]![row].expense)
+        default :
+            // income
+            cell.expensenameLabel.text = incomedic[incomekeys[section]]![row].incomename
+            cell.expenseLabel.text = moneyString(incomedic[incomekeys[section]]![row].income)
+        }
+        
+        
+       // 判斷 花費的方式
+        switch selectindex {
+        case 0:
+            // expense
+            switch expensedic[expensekeys[section]]![row].paytype {
+            case "帳戶" :
+                cell.accountimageview.image = UIImage(named: "bank")
+            case "信用卡" :
+                cell.accountimageview.image = UIImage(named: "credit-card")
+            default:
+                cell.accountimageview.image = UIImage(named: "money")
+            }
+        default :
+            // income
+            switch incomedic[incomekeys[section]]![row].incometype {
+            case "薪水" :
+                cell.accountimageview.image = UIImage(named: "salary")
+            case "利息" :
+                cell.accountimageview.image = UIImage(named: "interest")
+            case "投資" :
+                cell.accountimageview.image = UIImage(named: "invest")
+            case "收租" :
+                cell.accountimageview.image = UIImage(named: "rent")
+            case "買賣" :
+                cell.accountimageview.image = UIImage(named: "transaction")
+            default:
+                cell.accountimageview.image = UIImage(named: "game")
+            }
         }
         
         return cell
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-
-        // 判斷 日期內是否還有資料，若沒有資料將回傳 nil, error
-        if dic[keys[section]]!.isEmpty {
-            return nil
-        }
         
-        // 判斷 是否為指定的日期，若不是將回傳 nil
-        if keys[section].contains(formatter.string(from: assigneddate!)) {
-            return keys[section]
-        }else {
-            return nil
+        // 判斷 日期內是否還有資料，若沒有資料將回傳 nil, error
+        switch selectindex {
+        case 0:
+            // expense
+            if expensedic[expensekeys[section]]!.isEmpty {
+                return nil
+            }
+            
+            // 判斷 是否為指定的日期，若不是將回傳 nil
+            if expensekeys[section].contains(formatter.string(from: assigneddate!)) {
+                return expensekeys[section]
+            }else {
+                return nil
+            }
+        default :
+            // income
+            if incomedic[incomekeys[section]]!.isEmpty {
+                return nil
+            }
+            
+            // 判斷 是否為指定的日期，若不是將回傳 nil
+            if incomekeys[section].contains(formatter.string(from: assigneddate!)) {
+                return incomekeys[section]
+            }else {
+                return nil
+            }
         }
         
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
-        dic[keys[indexPath.section]]!.remove(at: indexPath.row)
-        tableView.deleteRows(at: [indexPath], with: .automatic)
-        
-//        print(renewaldata)
-
+        switch selectindex {
+        case 0:
+            // expense
+            expensedic[expensekeys[indexPath.section]]!.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        default :
+            // income
+            incomedic[incomekeys[indexPath.section]]!.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
     }
     
     
@@ -157,9 +265,7 @@ class ListTableViewController: UITableViewController {
 
                  let alertView = UIAlertController(title: "", message: "Are you sure you want to delete the item ? ", preferredStyle: .alert)
                  let okAction = UIAlertAction(title: "OK", style: .default, handler: { (alert) in
-                     self.dic[self.keys[indexPath.section]]!.remove(at: indexPath.row)
-//                     self.dic.keys[indexPath.section]!.remove(at: indexPath.row)
-//                     self.imagesArray.remove(at: indexPath.row)
+                     self.expensedic[self.expensekeys[indexPath.section]]!.remove(at: indexPath.row)
                      self.tableView.deleteRows(at: [indexPath], with: .fade)
                      // 資料即時同步
                      self.updatedata()
@@ -180,19 +286,20 @@ class ListTableViewController: UITableViewController {
     func updatedata() {
         var data = [Expense]()
         // 資料整理
-        for key in keys {
-            for i in dic[key]! {
+        for key in expensekeys {
+            for i in expensedic[key]! {
                 data.append(i)
             }
         }
-        
+
         // 再次改變資料型別 ["spendingtype": [Spending]]
 //        renewaldata = Dictionary(grouping: data, by: { $0.spendingtype})
-        let newdata = Dictionary(grouping: list, by: {$0.expensetype})
-        
-        renewaldata?[newdata.keys.first!] = data
-        
-        delegate?.listTableViewController(self, didEdit: renewaldata ?? [:])
+        let newdata = Dictionary(grouping: expenselist, by: {$0.expensetype})
+
+        expenserenewaldata?[newdata.keys.first!] = data
+
+        delegate?.listTableViewController(self, didEdit: expenserenewaldata ?? [:])
+            
     }
 
     /*
@@ -256,7 +363,7 @@ class ListTableViewController: UITableViewController {
             
             // 將點選到的 indexPath 保存下來
             selectIndexPath = tableView.indexPathForSelectedRow
-            return EditTableViewController(coder: coder, mydata: dic[keys[section]]![row])
+            return EditTableViewController(coder: coder, mydata: expensedic[expensekeys[section]]![row])
         }else {
             return nil
         }
@@ -270,28 +377,28 @@ extension ListTableViewController: EditTableViewControllerDelegate {
         
         if let indexpath = selectIndexPath {
             print("data \(data)")
-            dic[keys[indexpath.section]]![indexpath.row] = data
+            expensedic[expensekeys[indexpath.section]]![indexpath.row] = data
         }
         
         // 資料重新整理
         var redata = [Expense]()
-        for key in keys {
-            for i in dic[key]! {
+        for key in expensekeys {
+            for i in expensedic[key]! {
                 redata.append(i)
             }
         }
         
         // 修改的資料取代原資料
-        list = redata
+        expenselist = redata
         
         // date 格式
         // 進行日期分類的格式
         formatter.dateFormat = "yyyy/MM/dd"
         
         // display 資料 設定
-        dic = Dictionary(grouping: list, by: { formatter.string(from: $0.date)})
-        keys = Array(dic.keys)
-        keys.sort(by: <)
+        expensedic = Dictionary(grouping: expenselist, by: { formatter.string(from: $0.date)})
+        expensekeys = Array(expensedic.keys)
+        expensekeys.sort(by: <)
         
         // 資料分類後，決定要顯示的月份格式判斷
         formatter.dateFormat = "yyyy/MM"

@@ -281,7 +281,13 @@ class ViewController: UIViewController {
         
         // 判斷點選哪一個 row 來傳遞點選到的 data
         if let row = myTableView.indexPathForSelectedRow?.row {
-            return ListTableViewController(coder: coder, list: expensetotaldata["\(expenseLabel[row])"] ?? [], date: now)
+            switch changetypeSegmentedControl.selectedSegmentIndex {
+            case 0:
+                return ListTableViewController(coder: coder, list: expensetotaldata["\(expenseLabel[row])"] ?? [], date: now, index: 0)
+            default :
+                return ListTableViewController(coder: coder, list: incometotaldata["\(incomeLabel[row])"] ?? [], date: now, index: 1)
+            }
+//            return ListTableViewController(coder: coder, list: expensetotaldata["\(expenseLabel[row])"] ?? [], date: now)
         }else {
             return nil
         }
