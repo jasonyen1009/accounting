@@ -265,7 +265,14 @@ class ListTableViewController: UITableViewController {
 
                  let alertView = UIAlertController(title: "", message: "Are you sure you want to delete the item ? ", preferredStyle: .alert)
                  let okAction = UIAlertAction(title: "OK", style: .default, handler: { (alert) in
-                     self.expensedic[self.expensekeys[indexPath.section]]!.remove(at: indexPath.row)
+                     
+                     switch self.selectindex {
+                     case 0:
+                         self.expensedic[self.expensekeys[indexPath.section]]!.remove(at: indexPath.row)
+                     default :
+                         self.incomedic[self.incomekeys[indexPath.section]]!.remove(at: indexPath.row)
+                     }
+                     
                      self.tableView.deleteRows(at: [indexPath], with: .fade)
                      // 資料即時同步
                      self.updatedata()
@@ -284,22 +291,55 @@ class ListTableViewController: UITableViewController {
     }
     
     func updatedata() {
-        var data = [Expense]()
-        // 資料整理
-        for key in expensekeys {
-            for i in expensedic[key]! {
-                data.append(i)
+//        var data = [Expense]()
+//        // 資料整理
+//        for key in expensekeys {
+//            for i in expensedic[key]! {
+//                data.append(i)
+//            }
+//        }
+//
+//        // 再次改變資料型別 ["spendingtype": [Spending]]
+////        renewaldata = Dictionary(grouping: data, by: { $0.spendingtype})
+//        let newdata = Dictionary(grouping: expenselist, by: {$0.expensetype})
+//
+//        expenserenewaldata?[newdata.keys.first!] = data
+//
+//        delegate?.listTableViewController(self, didEdit: expenserenewaldata ?? [:])
+        
+        switch selectindex {
+        case 0:
+            var data = [Expense]()
+            // 資料整理
+            for key in expensekeys {
+                for i in expensedic[key]! {
+                    data.append(i)
+                }
             }
-        }
 
-        // 再次改變資料型別 ["spendingtype": [Spending]]
-//        renewaldata = Dictionary(grouping: data, by: { $0.spendingtype})
-        let newdata = Dictionary(grouping: expenselist, by: {$0.expensetype})
+            // 再次改變資料型別 ["spendingtype": [Spending]]
+    //        renewaldata = Dictionary(grouping: data, by: { $0.spendingtype})
+            let newdata = Dictionary(grouping: expenselist, by: {$0.expensetype})
 
-        expenserenewaldata?[newdata.keys.first!] = data
+            expenserenewaldata?[newdata.keys.first!] = data
 
-        delegate?.listTableViewController(self, didEdit: expenserenewaldata ?? [:])
+            delegate?.listTableViewController(self, didEdit: expenserenewaldata ?? [:])
+        default :
+            var data = [Income]()
+            // 資料整理
+            for key in incomekeys {
+                for i in incomedic[key]! {
+                    data.append(i)
+                }
+            }
+
+            // 再次改變資料型別 ["spendingtype": [Spending]]
+            let newdata = Dictionary(grouping: incomelist, by: {$0.incometype})
+
+            incomerenewaldata?[newdata.keys.first!] = data
             
+        }
+        
     }
 
     /*
