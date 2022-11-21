@@ -20,13 +20,13 @@ struct Expense: Codable {
     static func SaveExpense(_ mydata: [String: [Self]]) {
         let encoder = JSONEncoder()
         let data = try? encoder.encode(mydata)
-        let url = documentsDirectory.appendingPathComponent("mydata")
+        let url = documentsDirectory.appendingPathComponent("expensedata")
         try? data?.write(to: url)
     }
     // 解碼
     static func loadExpense() -> [String: [Expense]]? {
         let decoder = JSONDecoder()
-        let url = documentsDirectory.appendingPathComponent("mydata")
+        let url = documentsDirectory.appendingPathComponent("expensedata")
         guard let data = try? Data(contentsOf: url) else { return nil}
         return try? decoder.decode([String: [Expense]].self, from: data)
     }

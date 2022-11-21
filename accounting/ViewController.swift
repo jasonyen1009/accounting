@@ -52,7 +52,11 @@ class ViewController: UIViewController {
         "收租": [Income](),
         "買賣": [Income](),
         "娛樂": [Income]()
-    ]
+    ] {
+        didSet {
+            Income.SaveIncome(incometotaldata)
+        }
+    }
     
     // 支出總額
     var expenseamount = 0
@@ -109,9 +113,14 @@ class ViewController: UIViewController {
         // 將 Button 日期設為 當前年月份
         changeDateButton.setTitle("\(dateformatter.string(from: now))", for: .normal)
         
-        // 取得儲存的資料
+        // 取得儲存 expense 的資料
         if let expense = Expense.loadExpense() {
             self.expensetotaldata = expense
+        }
+        
+        // 取得儲存 income 的資料
+        if let income = Income.loadIncome() {
+            self.incometotaldata = income
         }
 
         // tableview 高度設定為 view 的 2/5
