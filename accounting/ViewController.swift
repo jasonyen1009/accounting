@@ -217,7 +217,13 @@ class ViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let controller = segue.destination as? ListTableViewController {
             // 成為 ListTableViewControllerDelegate delegate
-            controller.delegate = self
+            switch changetypeSegmentedControl.selectedSegmentIndex {
+            case 0:
+                controller.expensedelegate = self
+            default :
+                controller.incomedelegate = self
+            }
+//            controller.delegate = self
         }
     }
     
@@ -660,7 +666,7 @@ extension ViewController: UIPickerViewDelegate, UIPickerViewDataSource {
 }
 
 // ListTableViewControllerDelegate
-extension ViewController: ListTableViewControllerDelegate {
+extension ViewController: ExpenseListTableViewControllerDelegate {
     
     func listTableViewController(_ controller: ListTableViewController, didEdit data: [String : [Expense]]) {
         
@@ -670,6 +676,16 @@ extension ViewController: ListTableViewControllerDelegate {
         updateUI()
     }
     
+    
+    
+}
+
+extension ViewController: IncomeListTableViewControllerDelegate {
+    func incomeListTableViewControllerDelegate(_ controller: ListTableViewController, didEdit data: [String : [Income]]) {
+        incometotaldata[data.keys.first!] = data[data.keys.first!]
+        
+        updateUI()
+    }
     
     
 }

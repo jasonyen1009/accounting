@@ -7,8 +7,12 @@
 
 import UIKit
 
-protocol ListTableViewControllerDelegate {
+protocol ExpenseListTableViewControllerDelegate {
     func listTableViewController(_ controller: ListTableViewController, didEdit data: [String:[Expense]])
+}
+
+protocol IncomeListTableViewControllerDelegate {
+    func incomeListTableViewControllerDelegate(_ controller: ListTableViewController, didEdit data: [String: [Income]])
 }
 
 class ListTableViewController: UITableViewController {
@@ -46,7 +50,8 @@ class ListTableViewController: UITableViewController {
     var selectIndexPath: IndexPath?
     
     // delegate
-    var delegate: ListTableViewControllerDelegate?
+    var expensedelegate: ExpenseListTableViewControllerDelegate?
+    var incomedelegate: IncomeListTableViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -291,21 +296,6 @@ class ListTableViewController: UITableViewController {
     }
     
     func updatedata() {
-//        var data = [Expense]()
-//        // 資料整理
-//        for key in expensekeys {
-//            for i in expensedic[key]! {
-//                data.append(i)
-//            }
-//        }
-//
-//        // 再次改變資料型別 ["spendingtype": [Spending]]
-////        renewaldata = Dictionary(grouping: data, by: { $0.spendingtype})
-//        let newdata = Dictionary(grouping: expenselist, by: {$0.expensetype})
-//
-//        expenserenewaldata?[newdata.keys.first!] = data
-//
-//        delegate?.listTableViewController(self, didEdit: expenserenewaldata ?? [:])
         
         switch selectindex {
         case 0:
@@ -317,13 +307,13 @@ class ListTableViewController: UITableViewController {
                 }
             }
 
-            // 再次改變資料型別 ["spendingtype": [Spending]]
+            // 再次改變資料型別 ["expensetype": [Expense]]
     //        renewaldata = Dictionary(grouping: data, by: { $0.spendingtype})
             let newdata = Dictionary(grouping: expenselist, by: {$0.expensetype})
 
             expenserenewaldata?[newdata.keys.first!] = data
 
-            delegate?.listTableViewController(self, didEdit: expenserenewaldata ?? [:])
+            expensedelegate?.listTableViewController(self, didEdit: expenserenewaldata ?? [:])
         default :
             var data = [Income]()
             // 資料整理
@@ -333,10 +323,11 @@ class ListTableViewController: UITableViewController {
                 }
             }
 
-            // 再次改變資料型別 ["spendingtype": [Spending]]
+            // 再次改變資料型別 ["incometype": [Income]]
             let newdata = Dictionary(grouping: incomelist, by: {$0.incometype})
 
             incomerenewaldata?[newdata.keys.first!] = data
+            incomedelegate?.incomeListTableViewControllerDelegate(self, didEdit: incomerenewaldata ?? [:])
             
         }
         
