@@ -105,7 +105,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         // 設定圖的位置設置
-        position = CGPoint(x: view.frame.width / 2, y: view.frame.height / 2 - 100)
+        position = CGPoint(x: view.frame.width / 2, y: view.frame.height / 2 - 150)
         
         // 設置 dateformatter 格式
         dateformatter.dateFormat = "yyyy,MMM"
