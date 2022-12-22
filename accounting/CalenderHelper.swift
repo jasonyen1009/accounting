@@ -45,7 +45,7 @@ class CalendarHelper
     
     func yearandmonth(date: Date) -> String
     {
-        dateFormatter.dateFormat = "yyyy MM"
+        dateFormatter.dateFormat = "yyyy/MM"
         
         return dateFormatter.string(from: date)
     }
