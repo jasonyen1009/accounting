@@ -186,7 +186,6 @@ class CalenderViewController: UIViewController {
         + " " + CalendarHelper().yearString(date: now)
                 
         monthButton.setTitle(text, for: .normal)
-        collectionView.reloadData()
     }
     
     // 數字轉為金錢格式文字
@@ -201,12 +200,14 @@ class CalenderViewController: UIViewController {
         now = CalendarHelper().plusMonth(date: now)
         setMonthView()
         closealltoggle(allButton)
+        collectionView.reloadData()
     }
     
     @IBAction func previousMonth(_ sender: UIButton) {
         now = CalendarHelper().minusMonth(date: now)
         setMonthView()
         closealltoggle(allButton)
+        collectionView.reloadData()
     }
     
 }
@@ -223,9 +224,24 @@ extension CalenderViewController: UICollectionViewDelegate, UICollectionViewData
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "calCell", for: indexPath) as! CalenderCell
         
         cell.dayOfMonth.setTitle(totalSquares[indexPath.item], for: .normal)
+        
+        // 判斷 button 上面的字是否為空白
+        // 若為空白就無法點選
+        if totalSquares[indexPath.item] == "" {
+            cell.dayOfMonth.isEnabled = false
+        }else {
+            cell.dayOfMonth.isEnabled = true
+        }
+        // 判斷是否為今日日期
+        // 若為今日日期 button 為選取模式
+        dateformatter.dateFormat = "dd"
+        if totalSquares[indexPath.item] == dateformatter.string(from: now) {
+            cell.dayOfMonth.isSelected = true
+        }
+        dateformatter.dateFormat = "yyyy/MM/dd"
+        
         cell.dayOfMonth.addTarget(self, action: #selector(printdate(sender: )), for: .touchUpInside)
         allButton.append(cell.dayOfMonth)
-
         
         return cell
     }
