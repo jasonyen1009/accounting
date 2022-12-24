@@ -273,6 +273,7 @@ extension CalenderViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.cellImageView.image = UIImage(named: "money")
             }
             cell.cellmoneyLabel.text = "\(moneyString(dd.expense))"
+            cell.cellmoneyLabel.textColor = UIColor(red: 200/255, green: 45/255, blue: 11/255, alpha: 1)
 
         }else {
             let dd = displaydata[indexPath.row] as! Income
@@ -293,6 +294,7 @@ extension CalenderViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.cellImageView.image = UIImage(named: "game")
             }
             cell.cellmoneyLabel.text = "\(moneyString(dd.income))"
+            cell.cellmoneyLabel.textColor = UIColor(red: 115/255, green: 186/255, blue: 155/255, alpha: 1)
 
         }
         
