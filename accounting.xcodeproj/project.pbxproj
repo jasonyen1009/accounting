@@ -33,6 +33,7 @@
 		961F68EF294DA04A002330A8 /* CalenderHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961F68EE294DA04A002330A8 /* CalenderHelper.swift */; };
 		96320C90294DA8D00067368A /* CalenderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96320C8F294DA8D00067368A /* CalenderCell.swift */; };
 		96320C92294DBEE10067368A /* CalenderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96320C91294DBEE10067368A /* CalenderTableViewCell.swift */; };
+		9633F9A4295DCE6100FABE77 /* AccountTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9633F9A3295DCE6100FABE77 /* AccountTableViewController.swift */; };
 		96B623EA29458752004B4187 /* CalenderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B623E929458752004B4187 /* CalenderViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -84,6 +85,7 @@
 		961F68EE294DA04A002330A8 /* CalenderHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalenderHelper.swift; sourceTree = "<group>"; };
 		96320C8F294DA8D00067368A /* CalenderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalenderCell.swift; sourceTree = "<group>"; };
 		96320C91294DBEE10067368A /* CalenderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalenderTableViewCell.swift; sourceTree = "<group>"; };
+		9633F9A3295DCE6100FABE77 /* AccountTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountTableViewController.swift; sourceTree = "<group>"; };
 		96B623E929458752004B4187 /* CalenderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalenderViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -160,6 +162,7 @@
 				25D4B289280E9818006D2547 /* AppDelegate.swift */,
 				25D4B28D280E9818006D2547 /* ViewController.swift */,
 				25D4B28F280E9818006D2547 /* Main.storyboard */,
+				9633F9A3295DCE6100FABE77 /* AccountTableViewController.swift */,
 				96320C91294DBEE10067368A /* CalenderTableViewCell.swift */,
 				96320C8F294DA8D00067368A /* CalenderCell.swift */,
 				96B623E929458752004B4187 /* CalenderViewController.swift */,
@@ -331,6 +334,7 @@
 			files = (
 				2582DE91284B8F4200284BAB /* ExpenseListTableViewCell.swift in Sources */,
 				257CFC55286EEB6A00C34501 /* EditTableViewController.swift in Sources */,
+				9633F9A4295DCE6100FABE77 /* AccountTableViewController.swift in Sources */,
 				25BB3A8B28991CD800C0D204 /* HomeViewController.swift in Sources */,
 				961F68EF294DA04A002330A8 /* CalenderHelper.swift in Sources */,
 				96B623EA29458752004B4187 /* CalenderViewController.swift in Sources */,
