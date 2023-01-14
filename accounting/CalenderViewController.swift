@@ -126,7 +126,12 @@ class CalenderViewController: UIViewController {
         }
         
         // 取得點選日期
-        let selectDay = "\(CalendarHelper().yearandmonth(date: now))/\(sender.titleLabel?.text! ?? "")"
+        var selectDay = "\(CalendarHelper().yearandmonth(date: now))/\(sender.titleLabel?.text! ?? "")"
+        
+        // 判斷日期數字是否小於 10，若小於 10 必須補 0
+        if Int(sender.titleLabel?.text ?? "") ?? 0 < 10 {
+            selectDay = "\(CalendarHelper().yearandmonth(date: now))/0\(sender.titleLabel?.text! ?? "")"
+        }
         
         // 先刪除所有顯示的資料
         displaydata.removeAll()
