@@ -25,13 +25,17 @@ class AddIncomeTableViewController: UITableViewController {
 
     @IBOutlet weak var categorySegmentedcontrol: UISegmentedControl!
     @IBOutlet weak var DatePicker: UIDatePicker!
-    @IBOutlet weak var accountsSegmentedcontrol: UISegmentedControl!
     @IBOutlet weak var accountImagview: UIImageView!
     @IBOutlet weak var incomenameTextfield: UITextField!
     @IBOutlet weak var incomeTextfield: UITextField!
     @IBOutlet weak var noteTextview: UITextView!
+    @IBOutlet weak var selectbank: UILabel!
     
     
+    // 使用 userDefault 抓取 最愛的銀行資料
+    let userDefault = UserDefaults.standard
+    // 顯示預設的最愛銀行
+    var favoritebanks = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,7 +55,25 @@ class AddIncomeTableViewController: UITableViewController {
         //
         incomeTextfield.inputView = keyboardView
         
+        // 抓取最愛的銀行名稱
+        let first = userDefault.array(forKey: "Banks") as! [String]
+        favoritebanks = first[0]
+        selectbank.text = first[0]
+        // 接收通知 bank 更新通知
+        NotificationCenter.default.addObserver(self, selector: #selector(updatebank(noti: )), name: AllNotification.bankmessage, object: nil)
         
+    }
+    
+    // notification 
+    @objc func updatebank(noti: Notification) {
+        if let userInfo = noti.userInfo,
+           let bank = userInfo[AllNotification.bankinfo] as? String {
+            favoritebanks = bank
+            selectbank.text = bank
+        }
+        
+        // 資料即時同步
+        delegate?.addIncomeTableViewController(self, didEdit: updatedata())
     }
     
     //收鍵盤
@@ -80,10 +102,6 @@ class AddIncomeTableViewController: UITableViewController {
         delegate?.addIncomeTableViewController(self, didEdit: updatedata())
     }
     
-    @IBAction func changeaccounts(_ sender: UISegmentedControl) {
-        // 資料即時同步
-        delegate?.addIncomeTableViewController(self, didEdit: updatedata())
-    }
     
     @IBAction func changeday(_ sender: UIDatePicker) {
         // 資料即時同步
@@ -161,7 +179,7 @@ class AddIncomeTableViewController: UITableViewController {
         let date = DatePicker.date
         let inctype = categorySegmentedcontrol.titleForSegment(at: categorySegmentedcontrol.selectedSegmentIndex) ?? ""
         let incname = incomenameTextfield.text ?? ""
-        let account = accountsSegmentedcontrol.titleForSegment(at: accountsSegmentedcontrol.selectedSegmentIndex) ?? ""
+        let account = favoritebanks
         let income = Int(incomeTextfield.text!) ?? 0
         let note = noteTextview.text ?? ""
         

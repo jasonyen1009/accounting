@@ -127,6 +127,9 @@ class AccountTableViewController: UITableViewController {
     
     // 點選 Tableview 事件
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        // 使用 Notification 傳送 點選的 bank 回傳資料到前一頁
+        NotificationCenter.default.post(name: AllNotification.bankmessage, object: nil, userInfo: [AllNotification.bankinfo: favorite["banks"]![indexPath.row]])
         // 返回上一頁
         navigationController?.popViewController(animated: true)
     }

@@ -30,6 +30,7 @@
 		25D4B2AB280E981A006D2547 /* accountingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D4B2AA280E981A006D2547 /* accountingUITests.swift */; };
 		25D4B2AD280E981A006D2547 /* accountingUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D4B2AC280E981A006D2547 /* accountingUITestsLaunchTests.swift */; };
 		25D4B2BC280EC0AF006D2547 /* Expense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D4B2BB280EC0AF006D2547 /* Expense.swift */; };
+		9610906A2972961E0074A998 /* AllNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961090692972961E0074A998 /* AllNotification.swift */; };
 		961F68EF294DA04A002330A8 /* CalenderHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961F68EE294DA04A002330A8 /* CalenderHelper.swift */; };
 		96320C90294DA8D00067368A /* CalenderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96320C8F294DA8D00067368A /* CalenderCell.swift */; };
 		96320C92294DBEE10067368A /* CalenderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96320C91294DBEE10067368A /* CalenderTableViewCell.swift */; };
@@ -82,6 +83,7 @@
 		25D4B2AA280E981A006D2547 /* accountingUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = accountingUITests.swift; sourceTree = "<group>"; };
 		25D4B2AC280E981A006D2547 /* accountingUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = accountingUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		25D4B2BB280EC0AF006D2547 /* Expense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Expense.swift; sourceTree = "<group>"; };
+		961090692972961E0074A998 /* AllNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllNotification.swift; sourceTree = "<group>"; };
 		961F68EE294DA04A002330A8 /* CalenderHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalenderHelper.swift; sourceTree = "<group>"; };
 		96320C8F294DA8D00067368A /* CalenderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalenderCell.swift; sourceTree = "<group>"; };
 		96320C91294DBEE10067368A /* CalenderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalenderTableViewCell.swift; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 				25D4B289280E9818006D2547 /* AppDelegate.swift */,
 				25D4B28D280E9818006D2547 /* ViewController.swift */,
 				25D4B28F280E9818006D2547 /* Main.storyboard */,
+				961090692972961E0074A998 /* AllNotification.swift */,
 				9633F9A3295DCE6100FABE77 /* AccountTableViewController.swift */,
 				96320C91294DBEE10067368A /* CalenderTableViewCell.swift */,
 				96320C8F294DA8D00067368A /* CalenderCell.swift */,
@@ -352,6 +355,7 @@
 				258778BF283B5CF200E685AF /* ListTableViewController.swift in Sources */,
 				25877879282E34E300E685AF /* Totalexpense.swift in Sources */,
 				259E4BF928A39AF600F42FD4 /* Income.swift in Sources */,
+				9610906A2972961E0074A998 /* AllNotification.swift in Sources */,
 				25D4B2BC280EC0AF006D2547 /* Expense.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
