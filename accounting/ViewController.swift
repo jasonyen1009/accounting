@@ -41,6 +41,8 @@ class ViewController: UIViewController {
     ] {
         didSet {
             Expense.SaveExpense(expensetotaldata)
+            // 發送 Expense 更新通知
+            NotificationCenter.default.post(name: AllNotification.updateEXorIN, object: nil)
         }
     }
     
@@ -55,6 +57,8 @@ class ViewController: UIViewController {
     ] {
         didSet {
             Income.SaveIncome(incometotaldata)
+            // 發送 Income 更新通知
+            NotificationCenter.default.post(name: AllNotification.updateEXorIN, object: nil)
         }
     }
     

@@ -9,5 +9,8 @@ import Foundation
 
 struct AllNotification {
     static let bankmessage = Notification.Name("updatebank")
+    static let updateEXorIN = Notification.Name("updateEXorIN")
+    
     static let bankinfo = "bank"
+    static let updateinfo = "EXorIN"
 }

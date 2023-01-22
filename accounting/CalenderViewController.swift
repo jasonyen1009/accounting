@@ -97,8 +97,29 @@ class CalenderViewController: UIViewController {
                 }
             }
         }
+        
+        
+        // 接收 Expense, Income 更新通知
+        NotificationCenter.default.addObserver(self, selector: #selector(updateExorIn(noti: )), name: AllNotification.updateEXorIN, object: nil)
 
     }
+    
+    
+    // 再次讀取最新的 Expensetotaldata, Incometotaldata
+    @objc func updateExorIn(noti: Notification) {
+        // 取得儲存 expense 的資料
+        if let expense = Expense.loadExpense() {
+            self.expensetotaldata = expense
+        }
+        
+        // 取得儲存 income 的資料
+        if let income = Income.loadIncome() {
+            self.incometotaldata = income
+        }
+        listTableView.reloadData()
+        
+    }
+    
     
     override open var shouldAutorotate: Bool {
         return false
