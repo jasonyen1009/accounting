@@ -56,9 +56,10 @@ class AddIncomeTableViewController: UITableViewController {
         incomeTextfield.inputView = keyboardView
         
         // 抓取最愛的銀行名稱
-        let first = userDefault.array(forKey: "Banks") as! [String]
-        favoritebanks = first[0]
-        selectbank.text = first[0]
+        let first = userDefault.array(forKey: "Banks") as? [String]
+        // 給定預設最愛的銀行，否則到新裝置會閃退
+        favoritebanks = first?[0] ?? "玉山銀行"
+        selectbank.text = first?[0] ?? "玉山銀行"
         // 接收通知 bank 更新通知
         NotificationCenter.default.addObserver(self, selector: #selector(updatebank(noti: )), name: AllNotification.bankmessage, object: nil)
         
