@@ -377,28 +377,49 @@ class ListTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
         
         // 成為 EditTableViewControllerDelegate delegate
-        if let controller = segue.destination as? EditTableViewController {
+        if let controller = segue.destination as? EditTableViewController ,
+           let section = tableView.indexPathForSelectedRow?.section,
+           let row = tableView.indexPathForSelectedRow?.row {
             controller.delegate = self
+            // 將點選到的 indexPath 保存下來
+            selectIndexPath = tableView.indexPathForSelectedRow
+            controller.mydate = expensedic[expensekeys[section]]![row]
+            
         }
         
     }
     
-    @IBSegueAction func SendData(_ coder: NSCoder) -> EditTableViewController? {
-        
-        
-        
-        if let row = tableView.indexPathForSelectedRow?.row,
-           let section = tableView.indexPathForSelectedRow?.section {
-            
-//            print(tableView.indexPathForSelectedRow!)
-            
-            // 將點選到的 indexPath 保存下來
-            selectIndexPath = tableView.indexPathForSelectedRow
-            return EditTableViewController(coder: coder, mydata: expensedic[expensekeys[section]]![row])
-        }else {
-            return nil
+    // 顯示一半頁面 Controller 的 Sheet
+    @IBSegueAction func ShowSheet(_ coder: NSCoder) -> EditTableViewController? {
+        let controller = EditTableViewController(coder: coder)
+        if let sheetPresentationController = controller?.sheetPresentationController {
+            sheetPresentationController.detents = [.medium(), .large()]
         }
+        return controller
     }
+    
+    
+//    @IBSegueAction func SendData(_ coder: NSCoder) -> EditTableViewController? {
+//
+//
+//
+////        if let row = tableView.indexPathForSelectedRow?.row,
+////           let section = tableView.indexPathForSelectedRow?.section {
+////
+//////            print(tableView.indexPathForSelectedRow!)
+////
+////            // 將點選到的 indexPath 保存下來
+////            selectIndexPath = tableView.indexPathForSelectedRow
+////            return EditTableViewController(coder: coder, mydata: expensedic[expensekeys[section]]![row])
+////        }else {
+////            return nil
+////        }
+//        let controller = EditTableViewController(coder: coder)
+//        if let sheetPresentationController = controller?.sheetPresentationController {
+//            sheetPresentationController.detents = [.medium(), .large()]
+//        }
+//        return controller
+//    }
     
 }
 

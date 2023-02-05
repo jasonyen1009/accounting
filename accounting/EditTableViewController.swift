@@ -43,14 +43,14 @@ class EditTableViewController: UITableViewController {
 //         self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
-    init?(coder: NSCoder, mydata: Expense) {
-        self.mydate = mydata
-        super.init(coder: coder)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+//    init?(coder: NSCoder, mydata: Expense) {
+//        self.mydate = mydata
+//        super.init(coder: coder)
+//    }
+//
+//    required init?(coder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
     
     // 畫面更新
     func updateUI() {

@@ -479,7 +479,7 @@
                                     <outlet property="accountimageview" destination="Q1U-Bf-FAf" id="4Ym-na-JL2"/>
                                     <outlet property="expenseLabel" destination="Ibj-hf-6cd" id="Jig-DV-O4D"/>
                                     <outlet property="expensenameLabel" destination="ikF-QV-TtR" id="J7I-jc-Dch"/>
-                                    <segue destination="EEc-R0-N9r" kind="presentation" destinationCreationSelector="SendData:" id="yVM-sS-mEg"/>
+                                    <segue destination="EEc-R0-N9r" kind="presentation" destinationCreationSelector="ShowSheet:" id="yVM-sS-mEg"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
