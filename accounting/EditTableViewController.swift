@@ -18,7 +18,7 @@ class EditTableViewController: UITableViewController {
     var number1 = 0.0
     var number2 = 0.0
     var calculatetype = ""
-    var delegate: EditTableViewControllerDelegate?
+    var Expensedelegate: EditTableViewControllerDelegate?
     
     @IBOutlet weak var DatePicker: UIDatePicker!
     @IBOutlet weak var categoryButton: UIButton!
@@ -65,10 +65,21 @@ class EditTableViewController: UITableViewController {
             noteTextView.text = "\(data.note)"
             
         }
+        
+        if let data = Incomedata {
+            DatePicker.date = data.date
+            ExorInnameTextfield.text = data.incomename
+            accountTextfield.text = "\(data.income)"
+            BankorPayButton.setTitle("\(data.accounts)", for: .normal)
+            categoryButton.setTitle("\(data.incometype)", for: .normal)
+            noteTextView.text = "\(data.note)"
+
+        }
+        
     }
     
     
-    func updatedata() -> Expense {
+    func updatedataEx() -> Expense {
         let editdata = Expense(date: DatePicker.date, expensetype: Expensedata?.expensetype ?? "", expensename: ExorInnameTextfield.text ?? "", paytype: Expensedata?.paytype ?? "", expense: Int(accountTextfield.text ?? "0") ?? 0, note: noteTextView.text)
         return editdata
     }
@@ -77,13 +88,13 @@ class EditTableViewController: UITableViewController {
     // 即時編輯 資料 , 並回傳
     @IBAction func editdata(_ sender: Any) {
         
-        delegate?.editTableViewController(self, didEdit: updatedata())
+        Expensedelegate?.editTableViewController(self, didEdit: updatedataEx())
         
     }
     
     @IBAction func editdate(_ sender: Any) {
         
-        delegate?.editTableViewController(self, didEdit: updatedata())
+//        Expensedelegate?.editTableViewController(self, didEdit: updatedataEx())
         
     }
     
@@ -165,7 +176,7 @@ extension EditTableViewController: UITextViewDelegate {
     // 改為使用 UITextViewDelegate 中的 func 來達到資料更新
     func textViewDidChange(_ textView: UITextView) {
         
-        delegate?.editTableViewController(self, didEdit: updatedata())
+        Expensedelegate?.editTableViewController(self, didEdit: updatedataEx())
         
     }
 }

@@ -378,15 +378,26 @@ class ListTableViewController: UITableViewController {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
         
-        // 成為 EditTableViewControllerDelegate delegate
+        
         if let controller = segue.destination as? EditTableViewController ,
            let section = tableView.indexPathForSelectedRow?.section,
            let row = tableView.indexPathForSelectedRow?.row {
-            controller.delegate = self
             
             // 將點選到的 indexPath 保存下來
             selectIndexPath = tableView.indexPathForSelectedRow
-            controller.Expensedata = expensedic[expensekeys[section]]![row]
+            // 將資料傳送到下一頁
+            // 判斷目前為 expense or income
+            switch selectindex {
+            // expense
+            case 0:
+                // 成為 EditTableViewControllerDelegate delegate
+                controller.Expensedelegate = self
+                controller.Expensedata = expensedic[expensekeys[section]]![row]
+            // income
+            default :
+                controller.Incomedata = incomedic[incomekeys[section]]![row]
+            }
+            
             
         }
         
@@ -401,28 +412,6 @@ class ListTableViewController: UITableViewController {
         return controller
     }
     
-    
-//    @IBSegueAction func SendData(_ coder: NSCoder) -> EditTableViewController? {
-//
-//
-//
-////        if let row = tableView.indexPathForSelectedRow?.row,
-////           let section = tableView.indexPathForSelectedRow?.section {
-////
-//////            print(tableView.indexPathForSelectedRow!)
-////
-////            // 將點選到的 indexPath 保存下來
-////            selectIndexPath = tableView.indexPathForSelectedRow
-////            return EditTableViewController(coder: coder, mydata: expensedic[expensekeys[section]]![row])
-////        }else {
-////            return nil
-////        }
-//        let controller = EditTableViewController(coder: coder)
-//        if let sheetPresentationController = controller?.sheetPresentationController {
-//            sheetPresentationController.detents = [.medium(), .large()]
-//        }
-//        return controller
-//    }
     
 }
 
