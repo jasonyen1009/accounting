@@ -13,7 +13,8 @@ protocol EditTableViewControllerDelegate {
 
 class EditTableViewController: UITableViewController {
     
-    var mydate: Expense?
+    var Expensedata: Expense?
+    var Incomedata: Income?
     var number1 = 0.0
     var number2 = 0.0
     var calculatetype = ""
@@ -21,8 +22,8 @@ class EditTableViewController: UITableViewController {
     
     @IBOutlet weak var DatePicker: UIDatePicker!
     @IBOutlet weak var categoryButton: UIButton!
-    @IBOutlet weak var accountButton: UIButton!
-    @IBOutlet weak var accountnameTextfield: UITextField!
+    @IBOutlet weak var BankorPayButton: UIButton!
+    @IBOutlet weak var ExorInnameTextfield: UITextField!
     @IBOutlet weak var accountTextfield: UITextField!
     @IBOutlet weak var noteTextView: UITextView!
     
@@ -55,11 +56,11 @@ class EditTableViewController: UITableViewController {
     // 畫面更新
     func updateUI() {
         
-        if let data = mydate {
+        if let data = Expensedata {
             DatePicker.date = data.date
-            accountnameTextfield.text = data.expensename
+            ExorInnameTextfield.text = data.expensename
             accountTextfield.text = "\(data.expense)"
-            accountButton.setTitle("\(data.paytype)", for: .normal)
+            BankorPayButton.setTitle("\(data.paytype)", for: .normal)
             categoryButton.setTitle("\(data.expensetype)", for: .normal)
             noteTextView.text = "\(data.note)"
             
@@ -68,7 +69,7 @@ class EditTableViewController: UITableViewController {
     
     
     func updatedata() -> Expense {
-        let editdata = Expense(date: DatePicker.date, expensetype: mydate?.expensetype ?? "", expensename: accountnameTextfield.text ?? "", paytype: mydate?.paytype ?? "", expense: Int(accountTextfield.text ?? "0") ?? 0, note: noteTextView.text)
+        let editdata = Expense(date: DatePicker.date, expensetype: Expensedata?.expensetype ?? "", expensename: ExorInnameTextfield.text ?? "", paytype: Expensedata?.paytype ?? "", expense: Int(accountTextfield.text ?? "0") ?? 0, note: noteTextView.text)
         return editdata
     }
     

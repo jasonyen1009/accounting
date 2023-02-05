@@ -47,6 +47,8 @@ class ListTableViewController: UITableViewController {
     let formatter = DateFormatter()
     
     // 用來保存點選的 indexPath
+    // 0 expense
+    // 1 income 
     var selectIndexPath: IndexPath?
     
     // delegate
@@ -381,9 +383,10 @@ class ListTableViewController: UITableViewController {
            let section = tableView.indexPathForSelectedRow?.section,
            let row = tableView.indexPathForSelectedRow?.row {
             controller.delegate = self
+            
             // 將點選到的 indexPath 保存下來
             selectIndexPath = tableView.indexPathForSelectedRow
-            controller.mydate = expensedic[expensekeys[section]]![row]
+            controller.Expensedata = expensedic[expensekeys[section]]![row]
             
         }
         

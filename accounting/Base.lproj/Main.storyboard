@@ -421,7 +421,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JSJ-uY-Fhe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2036.9230769230769" y="826.77725118483409"/>
+            <point key="canvasLocation" x="2037" y="827"/>
         </scene>
         <!--List Table View Controller-->
         <scene sceneID="SDU-VC-hJL">
@@ -836,10 +836,10 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="BankorPayButton" destination="Bwf-4l-HpI" id="vOE-V5-kh5"/>
                         <outlet property="DatePicker" destination="kAw-KF-uD4" id="yMZ-aT-ABz"/>
-                        <outlet property="accountButton" destination="Bwf-4l-HpI" id="vOE-V5-kh5"/>
+                        <outlet property="ExorInnameTextfield" destination="VF0-Jm-a84" id="fb7-qc-fci"/>
                         <outlet property="accountTextfield" destination="2n7-TS-YiK" id="O0J-Jq-zvR"/>
-                        <outlet property="accountnameTextfield" destination="VF0-Jm-a84" id="fb7-qc-fci"/>
                         <outlet property="categoryButton" destination="VNj-yq-x2T" id="33S-3M-h2N"/>
                         <outlet property="noteTextView" destination="W8D-Re-8iY" id="ztW-Ix-mx3"/>
                     </connections>
