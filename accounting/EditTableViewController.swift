@@ -7,8 +7,12 @@
 
 import UIKit
 
-protocol EditTableViewControllerDelegate {
+protocol ExEditTableViewControllerDelegate {
     func editTableViewController(_ controller: EditTableViewController, didEdit data: Expense)
+}
+
+protocol InEditTableViewControllerDelegate {
+    func ineditTableViewController(_ controller: EditTableViewController, didEdit data: Income)
 }
 
 class EditTableViewController: UITableViewController {
@@ -18,7 +22,8 @@ class EditTableViewController: UITableViewController {
     var number1 = 0.0
     var number2 = 0.0
     var calculatetype = ""
-    var Expensedelegate: EditTableViewControllerDelegate?
+    var Expensedelegate: ExEditTableViewControllerDelegate?
+    var Incomedelegate: InEditTableViewControllerDelegate?
     
     @IBOutlet weak var DatePicker: UIDatePicker!
     @IBOutlet weak var categoryButton: UIButton!
@@ -84,11 +89,17 @@ class EditTableViewController: UITableViewController {
         return editdata
     }
     
+    func updatedataIn() -> Income {
+        let editdata = Income(date: DatePicker.date, incometype: Incomedata?.incometype ?? "", incomename: ExorInnameTextfield.text ?? "", accounts: Incomedata?.accounts ?? "", income: Int(accountTextfield.text ?? "0") ?? 0, note: noteTextView.text)
+        return editdata
+    }
 
     // 即時編輯 資料 , 並回傳
     @IBAction func editdata(_ sender: Any) {
         
         Expensedelegate?.editTableViewController(self, didEdit: updatedataEx())
+        
+        Incomedelegate?.ineditTableViewController(self, didEdit: updatedataIn())
         
     }
     

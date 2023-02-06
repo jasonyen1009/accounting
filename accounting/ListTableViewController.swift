@@ -314,7 +314,6 @@ class ListTableViewController: UITableViewController {
             let newdata = Dictionary(grouping: expenselist, by: {$0.expensetype})
 
             expenserenewaldata?[newdata.keys.first!] = data
-
             expensedelegate?.listTableViewController(self, didEdit: expenserenewaldata ?? [:])
         default :
             var data = [Income]()
@@ -393,9 +392,14 @@ class ListTableViewController: UITableViewController {
                 // 成為 EditTableViewControllerDelegate delegate
                 controller.Expensedelegate = self
                 controller.Expensedata = expensedic[expensekeys[section]]![row]
+                print("I delegate expense")
             // income
             default :
+                // 成為 EditTableViewControllerDelegate delegate
+                controller.Incomedelegate = self
                 controller.Incomedata = incomedic[incomekeys[section]]![row]
+                print("I delegate income")
+
             }
             
             
@@ -415,7 +419,7 @@ class ListTableViewController: UITableViewController {
     
 }
 
-extension ListTableViewController: EditTableViewControllerDelegate {
+extension ListTableViewController: ExEditTableViewControllerDelegate {
     
     func editTableViewController(_ controller: EditTableViewController, didEdit data: Expense) {
         
@@ -452,6 +456,50 @@ extension ListTableViewController: EditTableViewControllerDelegate {
         
         // 即時與 ViewController 中的 totaldata 同步資料
         updatedata()
+        print("Update expense data")
+    }
+    
+    
+}
+
+extension ListTableViewController: InEditTableViewControllerDelegate {
+    func ineditTableViewController(_ controller: EditTableViewController, didEdit data: Income) {
+        
+        if let indexpath = selectIndexPath {
+            print("data \(data)")
+            incomedic[incomekeys[indexpath.section]]![indexpath.row] = data
+        }
+        
+        // 資料重新整理
+        var redata = [Income]()
+        for key in incomekeys {
+            for i in incomedic[key]! {
+                redata.append(i)
+            }
+        }
+        
+        // 修改的資料取代原資料
+        incomelist = redata
+        
+        // date 格式
+        // 進行日期分類的格式
+        formatter.dateFormat = "yyyy/MM/dd"
+        
+        // display 資料 設定
+        incomedic = Dictionary(grouping: incomelist, by: { formatter.string(from: $0.date)})
+        incomekeys = Array(incomedic.keys)
+        incomekeys.sort(by: <)
+        
+        // 資料分類後，決定要顯示的月份格式判斷
+        formatter.dateFormat = "yyyy/MM"
+        
+        // 頁面刷新
+        tableView.reloadData()
+        
+        // 即時與 ViewController 中的 totaldata 同步資料
+        updatedata()
+        print("Update income data")
+
     }
     
     
