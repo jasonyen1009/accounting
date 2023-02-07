@@ -40,7 +40,12 @@ class EditTableViewController: UITableViewController {
         super.viewDidLoad()
         
         // 將 date 設定為資料的日期
-        date = Expensedata?.date ?? Date()
+        if let Exdate = Expensedata?.date {
+            date = Exdate
+        }
+        if let Indate = Incomedata?.date {
+            date = Indate
+        }
         // 抓取 星期
         dateformatter.dateFormat = "EEEE"
         WeekLabel.text = dateformatter.string(from: date)
