@@ -261,6 +261,12 @@ extension CalenderViewController: UICollectionViewDelegate, UICollectionViewData
         // 判斷是否為今日日期
         // 若為今日日期 button 為選取模式
         dateformatter.dateFormat = "dd"
+        // 若小於 10 必須補 0
+        if Int(totalSquares[indexPath.item]) ?? 0 < 10 {
+            if "0\(totalSquares[indexPath.item])" == dateformatter.string(from: now) {
+                cell.dayOfMonth.isSelected = true
+            }
+        }
         if totalSquares[indexPath.item] == dateformatter.string(from: now) {
             cell.dayOfMonth.isSelected = true
         }
@@ -325,6 +331,10 @@ extension CalenderViewController: UITableViewDelegate, UITableViewDataSource {
         }
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
     }
     
     

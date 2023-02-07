@@ -370,6 +370,7 @@
                                             <outlet property="cellImageView" destination="oTS-Vw-2ec" id="VXW-n5-Sls"/>
                                             <outlet property="cellmoneyLabel" destination="fIt-sT-JHX" id="hOL-C6-W66"/>
                                             <outlet property="cellnameLabel" destination="yuS-1i-4qX" id="hc1-WF-tEh"/>
+                                            <segue destination="EEc-R0-N9r" kind="presentation" id="nar-UE-nlo"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -421,7 +422,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JSJ-uY-Fhe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2037" y="827"/>
+            <point key="canvasLocation" x="2843" y="1494"/>
         </scene>
         <!--List Table View Controller-->
         <scene sceneID="SDU-VC-hJL">
@@ -492,7 +493,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e0h-GV-NhH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2966.1538461538462" y="826.77725118483409"/>
+            <point key="canvasLocation" x="2843" y="792"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="mDh-qu-2vC">
@@ -822,7 +823,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0kr-AV-ET6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="8zm-QY-wa5" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3770.7692307692305" y="826.77725118483409"/>
+            <point key="canvasLocation" x="3777" y="792"/>
         </scene>
         <!--Add Expense Table View Controller-->
         <scene sceneID="u4I-dL-dHT">
@@ -1288,23 +1289,10 @@
             </objects>
             <point key="canvasLocation" x="381.53846153846155" y="95.97156398104265"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="Sga-b3-gKn">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Se0-X5-amf" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="calendar" id="O6T-O8-dyP"/>
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="sIt-5l-tU7">
-                        <rect key="frame" x="0.0" y="47" width="390" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="NEG-UV-qkD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1023" y="927"/>
-        </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="nar-UE-nlo"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="arrowshape.turn.up.left" catalog="system" width="128" height="104"/>
         <image name="arrowshape.turn.up.right" catalog="system" width="128" height="104"/>
