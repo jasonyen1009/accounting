@@ -183,6 +183,10 @@ class ViewController: UIViewController {
                 if expense?.expensename == "" {
                     expense?.expensename = type
                 }
+                // 若為預設備忘錄字串，將清空
+                if expense?.note == "備忘錄" {
+                    expense?.note = ""
+                }
                 // 判斷為哪種消費, 並新增至該消費中
                 switch expense?.expensetype {
                 case "個人":
@@ -205,6 +209,10 @@ class ViewController: UIViewController {
                 let type = income!.incometype
                 if income?.incomename == "" {
                     income?.incomename = type
+                }
+                // 若為預設備忘錄字串，將清空
+                if income?.note == "備忘錄" {
+                    income?.note = ""
                 }
                 switch income?.incometype {
                 case "薪水":

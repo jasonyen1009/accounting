@@ -251,6 +251,11 @@ extension AddExpenseTableViewController: UITextViewDelegate {
             noteTextView.textColor = UIColor.lightGray
         }
     }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        delegate?.addExpenseTableViewController(self, didEdit: updatedata())
+    }
+
 }
 
 extension AddExpenseTableViewController: UITextFieldDelegate {

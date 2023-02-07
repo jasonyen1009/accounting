@@ -277,7 +277,11 @@ extension AddIncomeTableViewController: UITextViewDelegate {
             noteTextview.textColor = UIColor.lightGray
         }
     }
-
+    
+    func textViewDidChange(_ textView: UITextView) {
+        delegate?.addIncomeTableViewController(self, didEdit: updatedata())
+    }
+    
 }
 
 
