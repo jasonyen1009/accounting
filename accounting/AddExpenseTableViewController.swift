@@ -147,7 +147,9 @@ class AddExpenseTableViewController: UITableViewController {
         let pytype = accountSegmentedcontrol.titleForSegment(at: accountSegmentedcontrol.selectedSegmentIndex) ?? ""
         let spending = Int(accountTextfield.text!) ?? 0
         let note = noteTextView.text ?? ""
-        
+        if spname == "" {
+            print("error message")
+        }
         mydata = Expense(date: date, expensetype: sptype, expensename: spname, paytype: pytype, expense: spending, note: note)
         return mydata!
     }

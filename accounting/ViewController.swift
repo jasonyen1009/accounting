@@ -178,6 +178,11 @@ class ViewController: UIViewController {
             if type(of: data) == Expense.self {
                 // 若 資料 型別為 Expense 轉型為 Expsense
                 expense = data as? Expense
+                // 若沒有新增消費名稱，就使用消費類別當作名稱
+                let type = expense!.expensetype
+                if expense?.expensename == "" {
+                    expense?.expensename = type
+                }
                 // 判斷為哪種消費, 並新增至該消費中
                 switch expense?.expensetype {
                 case "個人":
@@ -196,6 +201,11 @@ class ViewController: UIViewController {
             }else {
                 // 非 Expense 轉型為 Income
                 income = data as? Income
+                // 若沒有新增收入名稱，就使用收入類別當作名稱
+                let type = income!.incometype
+                if income?.incomename == "" {
+                    income?.incomename = type
+                }
                 switch income?.incometype {
                 case "薪水":
                     incometotaldata["薪水"]?.insert(income!, at: 0)
