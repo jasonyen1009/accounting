@@ -25,17 +25,29 @@ class EditTableViewController: UITableViewController {
     var Expensedelegate: ExEditTableViewControllerDelegate?
     var Incomedelegate: InEditTableViewControllerDelegate?
     
-    @IBOutlet weak var DatePicker: UIDatePicker!
+    var date = Date()
+    var dateformatter = DateFormatter()
+    
     @IBOutlet weak var categoryButton: UIButton!
     @IBOutlet weak var BankorPayButton: UIButton!
     @IBOutlet weak var ExorInnameTextfield: UITextField!
     @IBOutlet weak var accountTextfield: UITextField!
     @IBOutlet weak var noteTextView: UITextView!
+    @IBOutlet weak var WeekLabel: UILabel!
+    @IBOutlet weak var MonthandDateLabel: UILabel!
     
-    
-
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // 將 date 設定為資料的日期
+        date = Expensedata?.date ?? Date()
+        // 抓取 星期
+        dateformatter.dateFormat = "EEEE"
+        WeekLabel.text = dateformatter.string(from: date)
+        // 抓取 幾月 幾號
+        dateformatter.dateFormat = "MMMM dd"
+        MonthandDateLabel.text = dateformatter.string(from: date)
+        
         
         // TextViewDelegate
         noteTextView.delegate = self
@@ -62,7 +74,7 @@ class EditTableViewController: UITableViewController {
     func updateUI() {
         
         if let data = Expensedata {
-            DatePicker.date = data.date
+//            DatePicker.date = data.date
             ExorInnameTextfield.text = data.expensename
             accountTextfield.text = "\(data.expense)"
             BankorPayButton.setTitle("\(data.paytype)", for: .normal)
@@ -72,7 +84,7 @@ class EditTableViewController: UITableViewController {
         }
         
         if let data = Incomedata {
-            DatePicker.date = data.date
+//            DatePicker.date = data.date
             ExorInnameTextfield.text = data.incomename
             accountTextfield.text = "\(data.income)"
             BankorPayButton.setTitle("\(data.accounts)", for: .normal)
@@ -85,12 +97,12 @@ class EditTableViewController: UITableViewController {
     
     
     func updatedataEx() -> Expense {
-        let editdata = Expense(date: DatePicker.date, expensetype: Expensedata?.expensetype ?? "", expensename: ExorInnameTextfield.text ?? "", paytype: Expensedata?.paytype ?? "", expense: Int(accountTextfield.text ?? "0") ?? 0, note: noteTextView.text)
+        let editdata = Expense(date: date, expensetype: Expensedata?.expensetype ?? "", expensename: ExorInnameTextfield.text ?? "", paytype: Expensedata?.paytype ?? "", expense: Int(accountTextfield.text ?? "0") ?? 0, note: noteTextView.text)
         return editdata
     }
     
     func updatedataIn() -> Income {
-        let editdata = Income(date: DatePicker.date, incometype: Incomedata?.incometype ?? "", incomename: ExorInnameTextfield.text ?? "", accounts: Incomedata?.accounts ?? "", income: Int(accountTextfield.text ?? "0") ?? 0, note: noteTextView.text)
+        let editdata = Income(date: date, incometype: Incomedata?.incometype ?? "", incomename: ExorInnameTextfield.text ?? "", accounts: Incomedata?.accounts ?? "", income: Int(accountTextfield.text ?? "0") ?? 0, note: noteTextView.text)
         return editdata
     }
 
@@ -103,11 +115,6 @@ class EditTableViewController: UITableViewController {
         
     }
     
-    @IBAction func editdate(_ sender: Any) {
-        
-//        Expensedelegate?.editTableViewController(self, didEdit: updatedataEx())
-        
-    }
     
 
     // MARK: - Table view data source
