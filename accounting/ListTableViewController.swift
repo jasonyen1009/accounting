@@ -47,8 +47,6 @@ class ListTableViewController: UITableViewController {
     let formatter = DateFormatter()
     
     // 用來保存點選的 indexPath
-    // 0 expense
-    // 1 income 
     var selectIndexPath: IndexPath?
     
     // delegate

@@ -370,7 +370,7 @@
                                             <outlet property="cellImageView" destination="oTS-Vw-2ec" id="VXW-n5-Sls"/>
                                             <outlet property="cellmoneyLabel" destination="fIt-sT-JHX" id="hOL-C6-W66"/>
                                             <outlet property="cellnameLabel" destination="yuS-1i-4qX" id="hc1-WF-tEh"/>
-                                            <segue destination="EEc-R0-N9r" kind="presentation" id="nar-UE-nlo"/>
+                                            <segue destination="EEc-R0-N9r" kind="presentation" destinationCreationSelector="ShowSheet:" id="nar-UE-nlo"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -493,7 +493,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e0h-GV-NhH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2843" y="792"/>
+            <point key="canvasLocation" x="2843" y="829"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="mDh-qu-2vC">
@@ -703,9 +703,6 @@
                                                             <rect key="frame" x="160" y="0.0" width="150" height="38"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <textInputTraits key="textInputTraits"/>
-                                                            <connections>
-                                                                <action selector="editdata:" destination="EEc-R0-N9r" eventType="editingDidEnd" id="hlo-t7-3oR"/>
-                                                            </connections>
                                                         </textField>
                                                     </subviews>
                                                 </stackView>
@@ -740,9 +737,6 @@
                                                             <rect key="frame" x="180" y="0.0" width="130" height="38"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <textInputTraits key="textInputTraits"/>
-                                                            <connections>
-                                                                <action selector="editdata:" destination="EEc-R0-N9r" eventType="editingDidEnd" id="gJb-0a-blB"/>
-                                                            </connections>
                                                         </textField>
                                                     </subviews>
                                                 </stackView>
@@ -823,7 +817,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0kr-AV-ET6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="8zm-QY-wa5" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3777" y="792"/>
+            <point key="canvasLocation" x="3811" y="1132"/>
         </scene>
         <!--Add Expense Table View Controller-->
         <scene sceneID="u4I-dL-dHT">
@@ -877,6 +871,7 @@
                                                 <datePicker contentMode="scaleToFill" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" style="inline" translatesAutoresizingMaskIntoConstraints="NO" id="35k-lw-EJ8">
                                                     <rect key="frame" x="20" y="11" width="310" height="303"/>
                                                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <locale key="locale" localeIdentifier="zh_TW"/>
                                                     <connections>
                                                         <action selector="changeday:" destination="bJO-GA-SaF" eventType="valueChanged" id="3nl-qL-aBA"/>
                                                     </connections>
@@ -1291,7 +1286,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="nar-UE-nlo"/>
+        <segue reference="yVM-sS-mEg"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="arrowshape.turn.up.left" catalog="system" width="128" height="104"/>

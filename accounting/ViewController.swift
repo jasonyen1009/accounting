@@ -42,7 +42,7 @@ class ViewController: UIViewController {
         didSet {
             Expense.SaveExpense(expensetotaldata)
             // 發送 Expense 更新通知
-            NotificationCenter.default.post(name: AllNotification.updateEXorIN, object: nil)
+            NotificationCenter.default.post(name: AllNotification.updateEXorINFromViewControlller, object: nil)
         }
     }
     
@@ -58,7 +58,7 @@ class ViewController: UIViewController {
         didSet {
             Income.SaveIncome(incometotaldata)
             // 發送 Income 更新通知
-            NotificationCenter.default.post(name: AllNotification.updateEXorIN, object: nil)
+            NotificationCenter.default.post(name: AllNotification.updateEXorINFromViewControlller, object: nil)
         }
     }
     
@@ -157,7 +157,25 @@ class ViewController: UIViewController {
         
         // 畫面更新
         updateUI()
+        
+        // 接收 CalenderViewController 更新 Expense, Income 通知
+        NotificationCenter.default.addObserver(self, selector: #selector(updateExorIn(noti: )), name: AllNotification.updateEXorINFromCalenderViewController, object: nil)
 
+    }
+    
+    // 再次讀取最新的資料，並重新更新所有畫面
+    @objc func updateExorIn(noti: Notification) {
+        
+        // 取得儲存 expense 的資料
+        if let expense = Expense.loadExpense() {
+            self.expensetotaldata = expense
+        }
+        // 取得儲存 income 的資料
+        if let income = Income.loadIncome() {
+            self.incometotaldata = income
+        }
+        updateUI()
+        
     }
     
     // 點選 cancel 返回

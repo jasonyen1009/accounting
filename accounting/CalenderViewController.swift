@@ -55,6 +55,11 @@ class CalenderViewController: UIViewController {
     
     var displaydata = [Any]()
     
+    // 用來保存點選的 indexPath
+    var selectIndexPath: IndexPath?
+    
+    var expense: Expense?
+    var income: Income?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -99,8 +104,9 @@ class CalenderViewController: UIViewController {
         }
         
         
-        // 接收 Expense, Income 更新通知
-        NotificationCenter.default.addObserver(self, selector: #selector(updateExorIn(noti: )), name: AllNotification.updateEXorIN, object: nil)
+        // 接收來自 ViewController 更新 Expense, Income 通知
+        NotificationCenter.default.addObserver(self, selector: #selector(updateExorIn(noti: )), name: AllNotification.updateEXorINFromViewControlller, object: nil)
+        
 
     }
     
@@ -116,6 +122,27 @@ class CalenderViewController: UIViewController {
         if let income = Income.loadIncome() {
             self.incometotaldata = income
         }
+        
+        // 先刪除所有顯示的資料
+        displaydata.removeAll()
+        // 測試將支出與收入資料放在一起
+        for i in expenseLabel {
+            for k in expensetotaldata["\(i)"] ?? [] {
+                // 判斷是否為今日的資料
+                if dateformatter.string(from: k.date) == dateformatter.string(from: now) {
+                    displaydata.append(k)
+                }
+            }
+        }
+        for i in incomeLabel {
+            for k in incometotaldata["\(i)"] ?? [] {
+                // 判斷是否為今日的資料
+                if dateformatter.string(from: k.date) == dateformatter.string(from: now) {
+                    displaydata.append(k)
+                }
+            }
+        }
+        
         listTableView.reloadData()
         
     }
@@ -174,6 +201,8 @@ class CalenderViewController: UIViewController {
             }
         }
         listTableView.reloadData()
+        // 將 now 日期改為 所選的日期
+        now = dateformatter.date(from: selectDay)!
         
     }
     
@@ -236,6 +265,80 @@ class CalenderViewController: UIViewController {
         collectionView.reloadData()
     }
     
+    // 顯示一半頁面 Controller 的 Sheet
+    @IBSegueAction func ShowSheet(_ coder: NSCoder) -> EditTableViewController? {
+        let controller = EditTableViewController(coder: coder)
+        if let sheetPresentationController = controller?.sheetPresentationController {
+            sheetPresentationController.detents = [.medium()]
+        }
+        return controller
+    }
+    
+    // 傳送資料到下一頁
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let controller = segue.destination as? EditTableViewController ,
+           let row = listTableView.indexPathForSelectedRow?.row {
+            
+            // 保存所選的 indexpath
+            selectIndexPath = listTableView.indexPathForSelectedRow
+            
+            
+            var index = 0
+            // 先判斷 選到的資料為 Expense or Income
+            if type(of: displaydata[row]) == Expense.self {
+                // Expensedelegate 成為代理人
+                controller.Expensedelegate = self
+                
+                let dd = displaydata[row] as! Expense
+                controller.Expensedata = dd
+                
+                // 刪除 傳送的資料
+                // expense 使用較為安全的寫法
+                // income 使用簡化後的寫法
+                for i in expenseLabel {
+                    index = 0
+                    for k in expensetotaldata["\(i)"] ?? [] {
+                        // 判斷是否為 點選的資料
+                        // 利用更加精準的時間來做判斷
+                        dateformatter.dateFormat = "yyyy/MM/dd HH:mm:ss.SSS"
+                        if dateformatter.string(from: dd.date) == dateformatter.string(from: k.date) {
+                            print("dd")
+//                            print("k", k)
+                            print(index)
+                            // 刪除選中的資料
+                            expensetotaldata["\(i)"]?.remove(at: index)
+                        }
+                        index += 1
+                        // 判斷後需要將時間格式改回
+                        // 否則 216 row 中的 now = dateformatter.date(from: selectDay)! 會閃退
+                        dateformatter.dateFormat = "yyyy/MM/dd"
+                    }
+                }
+            } else {
+                // Incomedelegate 成為代理人
+                controller.Incomedelegate = self
+                let dd = displaydata[row] as! Income
+                controller.Incomedata = dd
+                // 刪除 傳送的資料
+                for i in incomeLabel {
+                    for (ind, k) in incometotaldata["\(i)"]!.enumerated() {
+                        // 判斷是否為 點選的資料
+                        // 利用更加精準的時間來做判斷
+                        dateformatter.dateFormat = "yyyy/MM/dd HH:mm:ss.SSS"
+                        if dateformatter.string(from: dd.date) == dateformatter.string(from: k.date) {
+                            // 刪除選中的資料
+                            incometotaldata["\(i)"]?.remove(at: ind)
+                        }
+                        // 判斷後需要將時間格式改回
+                        // 否則 216 row 中的 now = dateformatter.date(from: selectDay)! 會閃退
+                        dateformatter.dateFormat = "yyyy/MM/dd"
+                    }
+                }
+                
+            }
+            
+        }
+    }
 }
 
 
@@ -339,5 +442,110 @@ extension CalenderViewController: UITableViewDelegate, UITableViewDataSource {
     
     
     
+    
+}
+
+extension CalenderViewController: ExEditTableViewControllerDelegate {
+    func editTableViewController(_ controller: EditTableViewController, didEdit data: Expense) {
+
+        expense = data
+        // 判斷為哪種消費, 並新增至該消費中
+        switch expense?.expensetype {
+        case "個人":
+            expensetotaldata["個人"]?.insert(expense!, at: 0)
+        case "飲食":
+            expensetotaldata["飲食"]?.insert(expense!, at: 0)
+        case "購物":
+            expensetotaldata["購物"]?.insert(expense!, at: 0)
+        case "交通":
+            expensetotaldata["交通"]?.insert(expense!, at: 0)
+        case "醫療":
+            expensetotaldata["醫療"]?.insert(expense!, at: 0)
+        default:
+            expensetotaldata["生活"]?.insert(expense!, at: 0)
+        }
+        
+        print(data)
+        
+        // 畫面重新整理
+        // 先刪除所有顯示的資料
+        displaydata.removeAll()
+        
+        // 測試將支出與收入資料放在一起
+        for i in expenseLabel {
+            for k in expensetotaldata["\(i)"] ?? [] {
+                // 判斷是否為今日的資料
+                if dateformatter.string(from: k.date) == dateformatter.string(from: now) {
+                    displaydata.append(k)
+                }
+            }
+        }
+        for i in incomeLabel {
+            for k in incometotaldata["\(i)"] ?? [] {
+                // 判斷是否為今日的資料
+                if dateformatter.string(from: k.date) == dateformatter.string(from: now) {
+                    displaydata.append(k)
+                }
+            }
+        }
+        
+        listTableView.reloadData()
+        
+        // 取得最新的資料後再保存到 expensetotaldata 內
+        Expense.SaveExpense(expensetotaldata)
+        NotificationCenter.default.post(name: AllNotification.updateEXorINFromCalenderViewController, object: nil)
+    }
+    
+    
+}
+
+extension CalenderViewController: InEditTableViewControllerDelegate {
+    func ineditTableViewController(_ controller: EditTableViewController, didEdit data: Income) {
+
+        income = data
+        switch income?.incometype {
+        case "薪水":
+            incometotaldata["薪水"]?.insert(income!, at: 0)
+        case "利息":
+            incometotaldata["利息"]?.insert(income!, at: 0)
+        case "投資":
+            incometotaldata["投資"]?.insert(income!, at: 0)
+        case "收租":
+            incometotaldata["收租"]?.insert(income!, at: 0)
+        case "買賣":
+            incometotaldata["買賣"]?.insert(income!, at: 0)
+        default:
+            incometotaldata["娛樂"]?.insert(income!, at: 0)
+        }
+        
+        print(data)
+        
+        // 畫面重新整理
+        // 先刪除所有顯示的資料
+        displaydata.removeAll()
+        
+        // 測試將支出與收入資料放在一起
+        for i in expenseLabel {
+            for k in expensetotaldata["\(i)"] ?? [] {
+                // 判斷是否為今日的資料
+                if dateformatter.string(from: k.date) == dateformatter.string(from: now) {
+                    displaydata.append(k)
+                }
+            }
+        }
+        for i in incomeLabel {
+            for k in incometotaldata["\(i)"] ?? [] {
+                // 判斷是否為今日的資料
+                if dateformatter.string(from: k.date) == dateformatter.string(from: now) {
+                    displaydata.append(k)
+                }
+            }
+        }
+        
+        listTableView.reloadData()
+        // 取得最新的資料後再保存到 expensetotaldata 內
+        Income.SaveIncome(incometotaldata)
+        NotificationCenter.default.post(name: AllNotification.updateEXorINFromCalenderViewController, object: nil)
+    }
     
 }

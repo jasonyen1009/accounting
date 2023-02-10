@@ -66,20 +66,17 @@ class EditTableViewController: UITableViewController {
 //         self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
-//    init?(coder: NSCoder, mydata: Expense) {
-//        self.mydate = mydata
-//        super.init(coder: coder)
-//    }
-//
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
+    // 畫面完全消失才傳送資料回上一頁
+    override func viewDidDisappear(_ animated: Bool) {
+        Expensedelegate?.editTableViewController(self, didEdit: updatedataEx())
+        Incomedelegate?.ineditTableViewController(self, didEdit: updatedataIn())
+    }
+    
     
     // 畫面更新
     func updateUI() {
         
         if let data = Expensedata {
-//            DatePicker.date = data.date
             ExorInnameTextfield.text = data.expensename
             accountTextfield.text = "\(data.expense)"
             BankorPayButton.setTitle("\(data.paytype)", for: .normal)
@@ -89,7 +86,6 @@ class EditTableViewController: UITableViewController {
         }
         
         if let data = Incomedata {
-//            DatePicker.date = data.date
             ExorInnameTextfield.text = data.incomename
             accountTextfield.text = "\(data.income)"
             BankorPayButton.setTitle("\(data.accounts)", for: .normal)
@@ -109,15 +105,6 @@ class EditTableViewController: UITableViewController {
     func updatedataIn() -> Income {
         let editdata = Income(date: date, incometype: Incomedata?.incometype ?? "", incomename: ExorInnameTextfield.text ?? "", accounts: Incomedata?.accounts ?? "", income: Int(accountTextfield.text ?? "0") ?? 0, note: noteTextView.text)
         return editdata
-    }
-
-    // 即時編輯 資料 , 並回傳
-    @IBAction func editdata(_ sender: Any) {
-        
-        Expensedelegate?.editTableViewController(self, didEdit: updatedataEx())
-        
-        Incomedelegate?.ineditTableViewController(self, didEdit: updatedataIn())
-        
     }
     
     
@@ -195,11 +182,4 @@ class EditTableViewController: UITableViewController {
 
 extension EditTableViewController: UITextViewDelegate {
     
-    // 由於textview 無法拉 action
-    // 改為使用 UITextViewDelegate 中的 func 來達到資料更新
-    func textViewDidChange(_ textView: UITextView) {
-        
-        Expensedelegate?.editTableViewController(self, didEdit: updatedataEx())
-        
-    }
 }

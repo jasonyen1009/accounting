@@ -21,6 +21,8 @@ class AddIncomeTableViewController: UITableViewController {
     // date
     var now = Date()
     let formatter = DateFormatter()
+    var minutes = ""
+    
     var delegate: AddIncomeTableViewControllerDelegate?
 
     @IBOutlet weak var categorySegmentedcontrol: UISegmentedControl!
@@ -54,6 +56,11 @@ class AddIncomeTableViewController: UITableViewController {
         
         //
         incomeTextfield.inputView = keyboardView
+        
+        // 抓取目前的時間
+        formatter.dateFormat = "HH:mm:ss.SSS"
+        let minandsec = formatter.string(from: now)
+        minutes = minandsec
         
         // 抓取最愛的銀行名稱
         let first = userDefault.array(forKey: "Banks") as? [String]
@@ -177,14 +184,17 @@ class AddIncomeTableViewController: UITableViewController {
     */
     
     func updatedata() -> Income {
-        let date = DatePicker.date
+        formatter.dateFormat = "yyyy/MM/dd"
+        let connectdate = "\(formatter.string(from: DatePicker.date)) \(minutes)"
+        formatter.dateFormat = "yyyy/MM/dd HH:mm:ss.SSS"
+        
         let inctype = categorySegmentedcontrol.titleForSegment(at: categorySegmentedcontrol.selectedSegmentIndex) ?? ""
         let incname = incomenameTextfield.text ?? ""
         let account = favoritebanks
         let income = Int(incomeTextfield.text!) ?? 0
         let note = noteTextview.text ?? ""
         
-        mydata = Income(date: date, incometype: inctype, incomename: incname, accounts: account, income: income, note: note)
+        mydata = Income(date: formatter.date(from: connectdate)!, incometype: inctype, incomename: incname, accounts: account, income: income, note: note)
         
         return mydata!
     }

@@ -21,6 +21,7 @@ class AddExpenseTableViewController: UITableViewController {
     // date
     var now = Date()
     let formatter = DateFormatter()
+    var minutes = ""
     
     @IBOutlet weak var categorySegmentedcontrol: UISegmentedControl!
     @IBOutlet weak var DatePicker: UIDatePicker!
@@ -48,6 +49,11 @@ class AddExpenseTableViewController: UITableViewController {
         //
         accountTextfield.inputView = keyboardView
                         
+        // 抓取目前的時間
+        formatter.dateFormat = "HH:mm:ss.SSS"
+        let minandsec = formatter.string(from: now)
+        minutes = minandsec
+
     }
     
     //收鍵盤
@@ -141,7 +147,10 @@ class AddExpenseTableViewController: UITableViewController {
     */
     
     func updatedata() -> Expense {
-        let date = DatePicker.date
+        formatter.dateFormat = "yyyy/MM/dd"
+        let connectdate = "\(formatter.string(from: DatePicker.date)) \(minutes)"
+        formatter.dateFormat = "yyyy/MM/dd HH:mm:ss.SSS"
+        
         let sptype = categorySegmentedcontrol.titleForSegment(at: categorySegmentedcontrol.selectedSegmentIndex) ?? ""
         let spname = accountnameTextfield.text ?? ""
         let pytype = accountSegmentedcontrol.titleForSegment(at: accountSegmentedcontrol.selectedSegmentIndex) ?? ""
@@ -150,7 +159,8 @@ class AddExpenseTableViewController: UITableViewController {
         if spname == "" {
             print("error message")
         }
-        mydata = Expense(date: date, expensetype: sptype, expensename: spname, paytype: pytype, expense: spending, note: note)
+        mydata = Expense(date: formatter.date(from: connectdate)!, expensetype: sptype, expensename: spname, paytype: pytype, expense: spending, note: note)
+        
         return mydata!
     }
 
