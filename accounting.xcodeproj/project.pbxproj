@@ -30,11 +30,13 @@
 		25D4B2AB280E981A006D2547 /* accountingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D4B2AA280E981A006D2547 /* accountingUITests.swift */; };
 		25D4B2AD280E981A006D2547 /* accountingUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D4B2AC280E981A006D2547 /* accountingUITestsLaunchTests.swift */; };
 		25D4B2BC280EC0AF006D2547 /* Expense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D4B2BB280EC0AF006D2547 /* Expense.swift */; };
+		960604D9299E62EA00C991A3 /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = 960604D8299E62EA00C991A3 /* Charts */; };
 		9610906A2972961E0074A998 /* AllNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961090692972961E0074A998 /* AllNotification.swift */; };
 		961F68EF294DA04A002330A8 /* CalenderHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961F68EE294DA04A002330A8 /* CalenderHelper.swift */; };
 		96320C90294DA8D00067368A /* CalenderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96320C8F294DA8D00067368A /* CalenderCell.swift */; };
 		96320C92294DBEE10067368A /* CalenderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96320C91294DBEE10067368A /* CalenderTableViewCell.swift */; };
 		9633F9A4295DCE6100FABE77 /* AccountTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9633F9A3295DCE6100FABE77 /* AccountTableViewController.swift */; };
+		9654855E299FA4B500BA7AF7 /* ChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9654855D299FA4B500BA7AF7 /* ChartViewController.swift */; };
 		96B623EA29458752004B4187 /* CalenderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B623E929458752004B4187 /* CalenderViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -88,6 +90,7 @@
 		96320C8F294DA8D00067368A /* CalenderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalenderCell.swift; sourceTree = "<group>"; };
 		96320C91294DBEE10067368A /* CalenderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalenderTableViewCell.swift; sourceTree = "<group>"; };
 		9633F9A3295DCE6100FABE77 /* AccountTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountTableViewController.swift; sourceTree = "<group>"; };
+		9654855D299FA4B500BA7AF7 /* ChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewController.swift; sourceTree = "<group>"; };
 		96B623E929458752004B4187 /* CalenderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalenderViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -96,6 +99,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				960604D9299E62EA00C991A3 /* Charts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -164,6 +168,7 @@
 				25D4B289280E9818006D2547 /* AppDelegate.swift */,
 				25D4B28D280E9818006D2547 /* ViewController.swift */,
 				25D4B28F280E9818006D2547 /* Main.storyboard */,
+				9654855D299FA4B500BA7AF7 /* ChartViewController.swift */,
 				961090692972961E0074A998 /* AllNotification.swift */,
 				9633F9A3295DCE6100FABE77 /* AccountTableViewController.swift */,
 				96320C91294DBEE10067368A /* CalenderTableViewCell.swift */,
@@ -219,6 +224,9 @@
 			dependencies = (
 			);
 			name = accounting;
+			packageProductDependencies = (
+				960604D8299E62EA00C991A3 /* Charts */,
+			);
 			productName = accounting;
 			productReference = 25D4B286280E9818006D2547 /* accounting.app */;
 			productType = "com.apple.product-type.application";
@@ -291,6 +299,9 @@
 				Base,
 			);
 			mainGroup = 25D4B27D280E9818006D2547;
+			packageReferences = (
+				960604D7299E62EA00C991A3 /* XCRemoteSwiftPackageReference "Charts" */,
+			);
 			productRefGroup = 25D4B287280E9818006D2547 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -336,6 +347,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2582DE91284B8F4200284BAB /* ExpenseListTableViewCell.swift in Sources */,
+				9654855E299FA4B500BA7AF7 /* ChartViewController.swift in Sources */,
 				257CFC55286EEB6A00C34501 /* EditTableViewController.swift in Sources */,
 				9633F9A4295DCE6100FABE77 /* AccountTableViewController.swift in Sources */,
 				25BB3A8B28991CD800C0D204 /* HomeViewController.swift in Sources */,
@@ -694,6 +706,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		960604D7299E62EA00C991A3 /* XCRemoteSwiftPackageReference "Charts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/danielgindi/Charts";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		960604D8299E62EA00C991A3 /* Charts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 960604D7299E62EA00C991A3 /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = Charts;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 25D4B27E280E9818006D2547 /* Project object */;
 }
