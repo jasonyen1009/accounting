@@ -11,6 +11,8 @@ import Charts
 class ChartViewController: UIViewController {
 
 
+    @IBOutlet weak var monthLabel: UILabel!
+    
     @IBOutlet weak var expenseLineChartView: LineChartView!
     @IBOutlet weak var incomeLineChartView: LineChartView!
     
@@ -73,6 +75,8 @@ class ChartViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // 設定 月份與年份
+        monthLabel.text = "\(CalendarHelper().monthString(date: now)) \(CalendarHelper().yearString(date: now))"
         
         // 取得儲存 expense 的資料
         if let expense = Expense.loadExpense() {
@@ -85,43 +89,20 @@ class ChartViewController: UIViewController {
         }
         
         
-        
-        print("本月的日期數量 totalSquares", CalendarHelper().daysInMonth(date: now))
-        
         // 設定初始畫面的月份字串 格式
         dateformatter.dateFormat = "yyyy/MM"
         dateString = dateformatter.string(from: now)
         
-        //
-        // 暫時設定的日期
-        dateString = "2023/02"
-        
-        // 設定抓取 expensetotaldata, incometotaldata 日期格式
-        dateformatter.dateFormat = "yyyy/MM/dd"
-        
-        
-        // 計算『每日』的 income, expense 總額
-        dailyIncome()
-        dailyExpense()
-        
-        // 計算每個『類別』的 income, expense 總額
-        categoryExpense()
-        categoryIncome()
-        
-        
-        // 設定 折線圖 表格
-        setLineChart(values: everyDateExpense, color: .systemRed, lineChartView: expenseLineChartView, label: "Expense")
-        setLineChart(values: everyDateIncome, color: .systemGreen, lineChartView: incomeLineChartView, label: "Income")
-        
-        // 設定 直方圖 表格
-        setBarChart(dataPoints: expenseLabel, values: everyExpense, barChartView: expenseBarChartView)
-        setBarChart(dataPoints: incomeLabel, values: everyIncome, barChartView: incomeBarChartView)
-        
-        
+        // 更新所有 chart
+        updateAllChart(dateString: dateString)
+
     }
     
     // 計算 expense 每日的總額
-    func dailyExpense() {
+    func dailyExpense(dateString: String) {
+        
+        // 設定判斷格式
+        dateformatter.dateFormat = "yyyy/MM/dd"
         // allEx 會存取每日的總額
         var allEx = 0
         // 抓取每日的日期
@@ -134,8 +115,6 @@ class ChartViewController: UIViewController {
                         // 判斷資料若為同一天日期就增加支出
                         if dateformatter.string(from: k.date) == "\(dateString)/0\(d)" {
                             allEx += k.expense
-                            
-                            print(dateformatter.string(from: k.date))
                         }
                     }
                     if dateformatter.string(from: k.date) == "\(dateString)/\(d)" {
@@ -151,7 +130,10 @@ class ChartViewController: UIViewController {
     }
     
     // 計算 income 每日的總額
-    func dailyIncome() {
+    func dailyIncome(dateString: String) {
+        
+        // 設定判斷格式
+        dateformatter.dateFormat = "yyyy/MM/dd"
         var allIn = 0
         // 抓取每日的日期
         for d in 1..<CalendarHelper().daysInMonth(date: now) + 1 {
@@ -178,7 +160,7 @@ class ChartViewController: UIViewController {
     }
     
     // 計算 expense 每個類別的總額
-    func categoryExpense() {
+    func categoryExpense(dateString: String) {
         // 每個支出類別的總和
         var typeEx = 0
         // 抓取所有資料進行比對
@@ -200,7 +182,7 @@ class ChartViewController: UIViewController {
     }
     
     // 計算 income 每個類別的總額
-    func categoryIncome() {
+    func categoryIncome(dateString: String) {
         // 每個支出類別的總和
         var typeIn = 0
         // 抓取所有資料進行比對
@@ -306,6 +288,9 @@ class ChartViewController: UIViewController {
         // 隱藏數值文字
         lineChartView.data?.setValueTextColor(.clear)
         
+        // 設定 y 軸的最小值, 若沒設定 線會卡在中間顯示
+        lineChartView.leftAxis.axisMinimum = 0
+        
     }
     
     // BarCharts 設置
@@ -313,14 +298,27 @@ class ChartViewController: UIViewController {
         // 產生 barChartEntry
         var dataEntry:[BarChartDataEntry] = []
         
+        // 保存每筆資料的顏色
+        var valueColors = [UIColor]()
+        let threshold: Double = 0
+        
         // 產生 每筆 barChartDataEntry
         for i in 0..<dataPoints.count {
             dataEntry.append(BarChartDataEntry(x: Double(i), y: Double(values[i])))
+            // 小於 0 的金額，字體顏色就設定為 clear
+            if Double(values[i]) > threshold {
+                valueColors.append(.black)
+            }else {
+                valueColors.append(.clear)
+            }
         }
         
         // 產生 barChartDataSet
         let barChartDataSet = BarChartDataSet(entries: dataEntry, label: "")
         barChartDataSet.colors = colors
+        
+        // 將顯示的數字指定成 valueColors 中的顏色
+        barChartDataSet.valueColors = valueColors
         
         // 產生 barChartData
         let barChartData = BarChartData(dataSet: barChartDataSet)
@@ -359,7 +357,69 @@ class ChartViewController: UIViewController {
         // 隱藏 legend (左下角的說明)
         barChartView.legend.enabled = false
         
+        // 設定 y 軸的最小值
+        barChartView.leftAxis.axisMinimum = 0
+        
     }
+    
+    // 更新所有的 Chart
+    func updateAllChart(dateString: String) {
+        
+        // 移除 每日的總額
+        everyDateExpense.removeAll()
+        everyDateIncome.removeAll()
+        // 移除 每個類別的總額
+        everyExpense.removeAll()
+        everyIncome.removeAll()
+        
+        
+        // 計算『每日』的 income, expense 總額
+        dailyIncome(dateString: dateString)
+        dailyExpense(dateString: dateString)
+        
+        // 計算每個『類別』的 income, expense 總額
+        categoryExpense(dateString: dateString)
+        categoryIncome(dateString: dateString)
 
+        // 設定 折線圖 表格
+        setLineChart(values: everyDateExpense, color: .systemRed, lineChartView: expenseLineChartView, label: "Expense")
+        setLineChart(values: everyDateIncome, color: .systemGreen, lineChartView: incomeLineChartView, label: "Income")
+        
+        // 設定 直方圖 表格
+        setBarChart(dataPoints: expenseLabel, values: everyExpense, barChartView: expenseBarChartView)
+        setBarChart(dataPoints: incomeLabel, values: everyIncome, barChartView: incomeBarChartView)
+        
+    }
+    
+
+    @IBAction func nextMonth(_ sender: UIButton) {
+        now = CalendarHelper().plusMonth(date: now)
+
+        // 更新 月份與年份
+        monthLabel.text = "\(CalendarHelper().monthString(date: now)) \(CalendarHelper().yearString(date: now))"
+        
+        dateformatter.dateFormat = "yyyy/MM"
+        dateString = dateformatter.string(from: now)
+
+        // 更新所有 chart
+        updateAllChart(dateString: dateString)
+
+    }
+    
+    
+    @IBAction func previousMonth(_ sender: UIButton) {
+        
+        now = CalendarHelper().minusMonth(date: now)
+        
+        // 更新 月份與年份
+        monthLabel.text = "\(CalendarHelper().monthString(date: now)) \(CalendarHelper().yearString(date: now))"
+        
+        dateformatter.dateFormat = "yyyy/MM"
+        dateString = dateformatter.string(from: now)
+        
+        // 更新所有 chart
+        updateAllChart(dateString: dateString)
+        
+    }
 
 }

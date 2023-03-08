@@ -439,6 +439,9 @@
                                         <rect key="frame" x="0.0" y="0.0" width="39.666666666666664" height="34.333333333333336"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" image="chevron.left" catalog="system"/>
+                                        <connections>
+                                            <action selector="previousMonth:" destination="Qfc-wk-Gjc" eventType="touchUpInside" id="PKV-K0-pFp"/>
+                                        </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="March 2023" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZyO-3k-tyd">
                                         <rect key="frame" x="49.666666666666657" y="0.0" width="270.66666666666674" height="34.333333333333336"/>
@@ -450,36 +453,44 @@
                                         <rect key="frame" x="330.33333333333331" y="0.0" width="39.666666666666686" height="34.333333333333336"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" image="chevron.right" catalog="system"/>
+                                        <connections>
+                                            <action selector="nextMonth:" destination="Qfc-wk-Gjc" eventType="touchUpInside" id="wor-sQ-l8r"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zl1-Bo-MYf" customClass="LineChartView" customModule="Charts">
-                                <rect key="frame" x="10" y="262" width="370" height="158"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="systemBrownColor"/>
-                            </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9in-Up-bR2" customClass="BarChartView" customModule="Charts">
-                                <rect key="frame" x="10" y="428" width="370" height="158"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="systemBrownColor"/>
-                            </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lqS-JT-AHW" customClass="LineChartView" customModule="Charts">
-                                <rect key="frame" x="10" y="104" width="370" height="150"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="systemBrownColor"/>
-                            </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="E3m-gz-yWE" customClass="BarChartView" customModule="Charts">
-                                <rect key="frame" x="10" y="594" width="370" height="158"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="systemBrownColor"/>
-                            </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Pyu-KY-FQs">
+                                <rect key="frame" x="10" y="106.33333333333331" width="370" height="644.66666666666674"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lqS-JT-AHW" customClass="LineChartView" customModule="Charts">
+                                        <rect key="frame" x="0.0" y="0.0" width="370" height="157.33333333333334"/>
+                                        <color key="backgroundColor" systemColor="systemBrownColor"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zl1-Bo-MYf" customClass="LineChartView" customModule="Charts">
+                                        <rect key="frame" x="0.0" y="162.33333333333337" width="370" height="157.66666666666663"/>
+                                        <color key="backgroundColor" systemColor="systemBrownColor"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9in-Up-bR2" customClass="BarChartView" customModule="Charts">
+                                        <rect key="frame" x="0.0" y="325" width="370" height="157.33333333333337"/>
+                                        <color key="backgroundColor" systemColor="systemBrownColor"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E3m-gz-yWE" customClass="BarChartView" customModule="Charts">
+                                        <rect key="frame" x="0.0" y="487.33333333333331" width="370" height="157.33333333333331"/>
+                                        <color key="backgroundColor" systemColor="systemBrownColor"/>
+                                    </view>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="FVF-dN-YBz"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="FVF-dN-YBz" firstAttribute="bottom" secondItem="Pyu-KY-FQs" secondAttribute="bottom" constant="10" id="7fb-SV-twq"/>
                             <constraint firstItem="FVF-dN-YBz" firstAttribute="trailing" secondItem="PO4-qT-D0m" secondAttribute="trailing" constant="10" id="80C-Bb-Wye"/>
+                            <constraint firstItem="FVF-dN-YBz" firstAttribute="trailing" secondItem="Pyu-KY-FQs" secondAttribute="trailing" constant="10" id="DxT-Fd-LFC"/>
+                            <constraint firstItem="Pyu-KY-FQs" firstAttribute="top" secondItem="PO4-qT-D0m" secondAttribute="bottom" constant="10" id="V9i-HB-day"/>
                             <constraint firstItem="PO4-qT-D0m" firstAttribute="top" secondItem="FVF-dN-YBz" secondAttribute="top" constant="15" id="iQW-BJ-EeG"/>
                             <constraint firstItem="PO4-qT-D0m" firstAttribute="leading" secondItem="FVF-dN-YBz" secondAttribute="leading" constant="10" id="lbo-fc-WZH"/>
+                            <constraint firstItem="Pyu-KY-FQs" firstAttribute="leading" secondItem="FVF-dN-YBz" secondAttribute="leading" constant="10" id="xQ5-fy-NCN"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="" image="bar-chart" id="Pmb-0v-BKc"/>
@@ -488,6 +499,7 @@
                         <outlet property="expenseLineChartView" destination="zl1-Bo-MYf" id="cfj-OT-9Lz"/>
                         <outlet property="incomeBarChartView" destination="E3m-gz-yWE" id="wMR-WN-iTP"/>
                         <outlet property="incomeLineChartView" destination="lqS-JT-AHW" id="h2M-62-nNG"/>
+                        <outlet property="monthLabel" destination="ZyO-3k-tyd" id="ZmL-bS-SHg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4ut-fh-RYA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
