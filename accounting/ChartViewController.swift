@@ -95,7 +95,28 @@ class ChartViewController: UIViewController {
         
         // 更新所有 chart
         updateAllChart(dateString: dateString)
+        
+        // 接收來自 ViewController 更新 Expense, Income 通知
+        NotificationCenter.default.addObserver(self, selector: #selector(updateExorIn(noti: )), name: AllNotification.updateEXorINFromViewControlller, object: nil)
 
+    }
+    
+    // notification
+    @objc func updateExorIn(noti: Notification) {
+        // 取得儲存 expense 的資料
+        if let expense = Expense.loadExpense() {
+            self.expensetotaldata = expense
+        }
+        
+        // 取得儲存 income 的資料
+        if let income = Income.loadIncome() {
+            self.incometotaldata = income
+        }
+        // 設定初始畫面的月份字串 格式
+        dateformatter.dateFormat = "yyyy/MM"
+        dateString = dateformatter.string(from: now)
+        
+        updateAllChart(dateString: dateString)
     }
     
     // 計算 expense 每日的總額
