@@ -248,7 +248,6 @@ class ViewController: UIViewController {
             default :
                 controller.incomedelegate = self
             }
-//            controller.delegate = self
         }
     }
     
@@ -368,21 +367,25 @@ class ViewController: UIViewController {
 
         }
 
-        
+        // 在產生每次的 chart 前，都先移除 expense, income
         everyExpense.removeAll()
         everyIncome.removeAll()
+        
         dateformatter.dateFormat = "yyyy/MM"
+        // 計算每筆類別的 expense, income
         categoryExpense(dateString: dateformatter.string(from: now))
         categoryIncome(dateString: dateformatter.string(from: now))
+        // 計算完後，必須將日期格式調整回來
         dateformatter.dateFormat = "yyyy,MMM"
         
-        
+        // 判斷要顯示的 Charts
         switch changetypeSegmentedControl.selectedSegmentIndex {
         case 0:
-            
+            // 產生 expense pieChartView
             createPieChart(dataPoints: expenseLabel, values: everyExpense)
-
+            
         default :
+            // 產生 income pieChartView
             createPieChart(dataPoints: incomeLabel, values: everyIncome)
 
         }
@@ -408,9 +411,7 @@ class ViewController: UIViewController {
             everyExpense.append(typeEx)
             typeEx = 0
         }
-        
-        // 將日期格式調整回來
-//        dateformatter.dateFormat = "yyyy,MMM"
+
     }
     
     // 計算 income 每個類別的總額
@@ -426,16 +427,11 @@ class ViewController: UIViewController {
                 if dateformatter.string(from: k.date) == dateString {
                     typeIn += k.income
                 }
-                print(dateformatter.string(from: k.date))
-                print(dateString)
-
             }
             everyIncome.append(typeIn)
             typeIn = 0
         }
-        
-        // 將日期格式調整回來
-//        dateformatter.dateFormat = "yyyy,MMM"
+
     }
     
 
@@ -460,28 +456,26 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             cell.celltypeLabel.text = "\(expenseLabel[indexPath.row])"
             cell.cellmoneyLabel.text = "\(moneyString(Int(everyExpense[indexPath.row])))"
             
-//            cell.cellmoneyLabel.text = "\(moneyString(Int(everyExpense[indexPath.row])))"
-
-            
             cell.circleview.backgroundColor = UIColor(cgColor: colors[indexPath.row])
+            
             // 判斷 percentage 大於 0 , 才會新增第二 字串
-//            if (expensepercentages[indexPath.row] / expensepercentages.reduce(0, +)) > 0.0 {
-//                cell.percentageLabel.text = "\(String(format: "%.2f", (expensepercentages[indexPath.row] / expensepercentages.reduce(0, +) * 100))) %"
+//            if (everyExpense[indexPath.row] / everyExpense.reduce(0, +)) > 0 {
+//                cell.percentageLabel.text = "\(String(format: "%.2f", (everyExpense[indexPath.row] / everyExpense.reduce(0, +) * 100))) %"
 //            }else {
 //                cell.percentageLabel.text = "0.00 %"
 //            }
+            // 暫時隱藏
+            cell.percentageLabel.text = ""
+            
         // 收入頁面
         default :
             cell.celltypeLabel.text = "\(incomeLabel[indexPath.row])"
             cell.cellmoneyLabel.text = "\(moneyString(Int(everyIncome[indexPath.row])))"
             
             cell.circleview.backgroundColor = UIColor(cgColor: colors[indexPath.row])
-            // 判斷 percentage 大於 0 , 才會新增第二 字串
-//            if (incomepercentages[indexPath.row] / incomepercentages.reduce(0, +)) > 0.0 {
-//                cell.percentageLabel.text = "\(String(format: "%.2f", (incomepercentages[indexPath.row] / incomepercentages.reduce(0, +) * 100))) %"
-//            }else {
-//                cell.percentageLabel.text = "0.00 %"
-//            }
+            // 暫時隱藏
+            cell.percentageLabel.text = ""
+
         }
         
         return cell
@@ -542,8 +536,10 @@ extension ViewController: ExpenseListTableViewControllerDelegate {
 
 extension ViewController: IncomeListTableViewControllerDelegate {
     func incomeListTableViewControllerDelegate(_ controller: ListTableViewController, didEdit data: [String : [Income]]) {
-        incometotaldata[data.keys.first!] = data[data.keys.first!]
         
+        // 將新資料與 totaldata 總資料一起同步
+        incometotaldata[data.keys.first!] = data[data.keys.first!]
+        // 畫面更新
         updateUI()
     }
     
