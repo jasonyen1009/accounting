@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "hut@1x.png",
+      "filename" : "pie-chart (1)@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "hut@2x.png",
+      "filename" : "pie-chart (1)@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "hut@3x.png",
+      "filename" : "pie-chart (1)@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

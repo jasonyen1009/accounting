@@ -312,6 +312,10 @@ class ChartViewController: UIViewController {
         // 設定 y 軸的最小值, 若沒設定 線會卡在中間顯示
         lineChartView.leftAxis.axisMinimum = 0
         
+        // 控制左邊顯示數值的標籤數量
+        lineChartView.leftAxis.setLabelCount(5, force: true)
+
+        
     }
     
     // BarCharts 設置
@@ -381,6 +385,9 @@ class ChartViewController: UIViewController {
         // 設定 y 軸的最小值
         barChartView.leftAxis.axisMinimum = 0
         
+        // 控制左邊顯示數值的標籤數量
+        barChartView.leftAxis.setLabelCount(5, force: true)
+
     }
     
     // 更新所有的 Chart

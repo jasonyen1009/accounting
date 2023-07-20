@@ -103,6 +103,24 @@ class CalenderViewController: UIViewController {
             }
         }
         
+        // 抓取二月的資料？？？
+        dateformatter.dateFormat = "yyyy/MM"
+        var testMonth = [Int]()
+        for i in expenseLabel {
+            for k in expensetotaldata["\(i)"] ?? [] {
+                // 判斷是否為 二月 的資料
+//                print("sss", dateformatter.string(from: k.date))
+                
+                if dateformatter.string(from: k.date) == "2023/02" {
+                    dateformatter.dateFormat = "dd"
+                    testMonth.append(Int(dateformatter.string(from: k.date)) ?? 0)
+                }
+                dateformatter.dateFormat = "yyyy/MM"
+            }
+        }
+        
+        print("test", Set(testMonth).sorted(by: <))
+        
         
         // 接收來自 ViewController 更新 Expense, Income 通知
         NotificationCenter.default.addObserver(self, selector: #selector(updateExorIn(noti: )), name: AllNotification.updateEXorINFromViewControlller, object: nil)
