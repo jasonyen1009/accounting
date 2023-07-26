@@ -11,7 +11,8 @@ class CalenderViewController: UIViewController {
 
     
     @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var monthButton: UIButton!
+    @IBOutlet weak var monthLabel: UILabel!
+    @IBOutlet weak var yearLabel: UILabel!
     @IBOutlet weak var listTableView: UITableView!
     
     
@@ -180,6 +181,20 @@ class CalenderViewController: UIViewController {
     
     @objc func printdate(sender: UIButton) {
         closealltoggle(allButton)
+        
+        sender.frame = CGRect(x: sender.frame.origin.x, y: sender.frame.origin.y, width: sender.frame.width, height: sender.frame.width)
+        
+        sender.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20) // 調整數字 18 為所需的文字大小
+        
+        // 設置按鈕文字顏色
+        sender.setTitleColor(.black, for: .normal)
+        
+        // 設置按鈕的圓形邊框
+        sender.layer.cornerRadius = 15
+        
+               
+        // 設定選取狀態下按鈕的顏色（點選後的顏色）
+        sender.layer.masksToBounds = true
         // 判斷是否為空的 Button
         if sender.titleLabel?.text == "Button" {
             sender.isSelected = false
@@ -255,10 +270,9 @@ class CalenderViewController: UIViewController {
             count += 1
         }
         
-        let text = CalendarHelper().monthString(date: now)
-        + " " + CalendarHelper().yearString(date: now)
-                
-        monthButton.setTitle(text, for: .normal)
+        // 設定 月份 與 年份
+        monthLabel.text = CalendarHelper().monthString(date: now)
+        yearLabel.text = CalendarHelper().yearString(date: now)
     }
     
     // 數字轉為金錢格式文字
