@@ -54,22 +54,23 @@ class TabBarWithCorners: UITabBar {
         super.layoutSubviews()
         self.isTranslucent = true
         var tabFrame = self.frame
-        let bottomSafeAreaHeight: CGFloat
-
+        
+        var bottomSafeAreaHeight: CGFloat = 0
+        
         if #available(iOS 15.0, *) {
-            bottomSafeAreaHeight = UIApplication.shared.connectedScenes
-                .filter({$0.activationState == .foregroundActive})
-                .map({$0 as? UIWindowScene})
-                .compactMap({$0})
-                .first?.windows
-                .filter({$0.isKeyWindow}).first?
-                .safeAreaInsets.bottom ?? 0
+            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+                bottomSafeAreaHeight = windowScene.windows
+                    .filter({$0.isKeyWindow})
+                    .first?
+                    .safeAreaInsets.bottom ?? 0
+            }
         } else {
             bottomSafeAreaHeight = UIApplication.shared.windows.first?.safeAreaInsets.bottom ?? 0
         }
-
-        tabFrame.size.height = 50 + bottomSafeAreaHeight
-        tabFrame.origin.y = self.frame.origin.y + self.frame.height - 50 - bottomSafeAreaHeight
+        
+        tabFrame.size.height = 65 + bottomSafeAreaHeight
+        tabFrame.origin.y = self.frame.origin.y + self.frame.height - 65 - bottomSafeAreaHeight
+        
         self.layer.cornerRadius = 18 // 設定 Tab Bar 的圓角半徑
         self.frame = tabFrame
         self.items?.forEach({ $0.titlePositionAdjustment = UIOffset(horizontal: 0.0, vertical: -5.0) }) // 調整 Tab Bar 項目的標題位置
