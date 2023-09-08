@@ -120,7 +120,7 @@ class CalenderViewController: UIViewController {
             }
         }
         
-        print("test", Set(testMonth).sorted(by: <))
+//        print("test", Set(testMonth).sorted(by: <))
         
         
         // 接收來自 ViewController 更新 Expense, Income 通知

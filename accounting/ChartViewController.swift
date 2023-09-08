@@ -11,13 +11,21 @@ import Charts
 class ChartViewController: UIViewController {
 
 
-    @IBOutlet weak var monthLabel: UILabel!
     
-    @IBOutlet weak var expenseLineChartView: LineChartView!
-    @IBOutlet weak var incomeLineChartView: LineChartView!
+    @IBOutlet weak var ExandInLineChartView: LineChartView!
     
     @IBOutlet weak var expenseBarChartView: BarChartView!
     @IBOutlet weak var incomeBarChartView: BarChartView!
+    
+    @IBOutlet weak var expenseButton: UIButton!
+    @IBOutlet weak var incomeButton: UIButton!
+    
+    @IBOutlet weak var TimeframeSelectorButton: UIButton!
+    @IBOutlet weak var changeDateButton: UIButton!
+    
+    @IBOutlet weak var expenseUILabel: UILabel!
+    @IBOutlet weak var incomeUILabel: UILabel!
+    @IBOutlet weak var totalLabel: UILabel!
     
     // Time
     var time = Timer()
@@ -72,11 +80,18 @@ class ChartViewController: UIViewController {
         UIColor(red: 247/255, green: 37/255, blue: 133/255, alpha: 1)
     ]
     
+    // 控制 LineChart 圖表的顯示類別
+    var chartDisplayType = "ex"
+    
+    // 保存目前選單的文字 Day Week Month
+    var TimeframeSelector = "Day"
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // 設定 月份與年份
-        monthLabel.text = "\(CalendarHelper().monthString(date: now)) \(CalendarHelper().yearString(date: now))"
+//        monthLabel.text = "\(CalendarHelper().monthString(date: now)) \(CalendarHelper().yearString(date: now))"
         
         // 取得儲存 expense 的資料
         if let expense = Expense.loadExpense() {
@@ -98,8 +113,75 @@ class ChartViewController: UIViewController {
         
         // 接收來自 ViewController 更新 Expense, Income 通知
         NotificationCenter.default.addObserver(self, selector: #selector(updateExorIn(noti: )), name: AllNotification.updateEXorINFromViewControlller, object: nil)
-
+        
+        setButton(button: expenseButton, .systemRed)
+        setButton(button: incomeButton, .systemGray)
+        
+        setButton(TimeframeSelectorButton)
+        
+        // 設定月份字串 格式
+        dateformatter.dateFormat = "yyyy,MMM"
+        changeDateButton.setTitle(dateformatter.string(from: now), for: .normal)
+        dateformatter.dateFormat = "yyyy/MM"
+        
     }
+    
+    
+    func setButton(_ button: UIButton) {
+        
+        button.showsMenuAsPrimaryAction = true
+        button.changesSelectionAsPrimaryAction = true
+        button.menu = UIMenu(children: [
+            UIAction(title: "Day",  handler: { [self] action in
+                // 設置 button 顯示 Day
+                TimeframeSelector = "Day"
+                // 設定判斷格式
+                dateformatter.dateFormat = "yyyy/MM/dd"
+                // 更新所有 chart
+                updateAllChart(dateString: dateString)
+                
+            }),
+            UIAction(title: "Week",  handler: { [self] action in
+                // 設置 button 顯示 Week
+                TimeframeSelector = "Week"
+                // 設定判斷格式
+                dateformatter.dateFormat = "yyyy/MM/dd"
+                // 更新所有 chart
+                updateAllChart(dateString: dateString)
+
+            }),
+            UIAction(title: "Month",  handler: { [self] action in
+                // 設置 button 顯示 Month
+                TimeframeSelector = "Month"
+                // 設定判斷格式
+                dateformatter.dateFormat = "yyyy/MM/dd"
+                // 更新所有 chart
+                updateAllChart(dateString: dateString)
+
+            }),
+        ])
+    }
+    
+    
+    // 按鈕的顏色
+    func setButton(button: UIButton, _ color: UIColor) {
+        let originalImage = UIImage(systemName: "circle.fill")?.withTintColor(color, renderingMode: .alwaysOriginal)
+
+        // 設定縮小後的圖片大小
+        let scaledSize = CGSize(width: 10, height: 10) // 設定你想要的大小
+        
+        // 透過 UIGraphicsImageRenderer 來縮小圖片
+        let renderer = UIGraphicsImageRenderer(size: scaledSize)
+        let scaledImage = renderer.image { context in
+            originalImage?.draw(in: CGRect(origin: .zero, size: scaledSize))
+        }
+        
+        // 設定縮小後的圖片為 Button 的圖片
+        button.setImage(scaledImage, for: .normal)
+        button.tintColor = color
+    }
+    
+    
     
     // notification
     @objc func updateExorIn(noti: Notification) {
@@ -202,6 +284,254 @@ class ChartViewController: UIViewController {
         dateformatter.dateFormat = "yyyy/MM/dd"
     }
     
+    // 抓取指定日期 當日的總 支出
+    func getTotalExpenseOnSelectedDate(dateString: String) -> Int {
+        // 設定判斷格式
+        dateformatter.dateFormat = "yyyy/MM/dd"
+        var selectDayEx = 0
+        // 抓取所有資料進行比對
+        for i in expenseLabel {
+            for k in expensetotaldata["\(i)"] ?? [] {
+                if dateformatter.string(from: k.date) == dateString {
+                    selectDayEx += k.expense
+                }
+            }
+        }
+        
+        return selectDayEx
+    }
+    
+    // 抓取指定日期 當日的總 收入
+    func getTotalIncomeOnSelectedDate(dateString: String) -> Int {
+        // 設定判斷格式
+        dateformatter.dateFormat = "yyyy/MM/dd"
+        var selectDayIn = 0
+        // 抓取所有資料進行比對
+        for i in incomeLabel {
+            for k in incometotaldata["\(i)"] ?? [] {
+                if dateformatter.string(from: k.date) == dateString {
+                    selectDayIn += k.income
+                }
+            }
+        }
+        
+        return selectDayIn
+    }
+    
+    // 抓取指定日期 當月的總 支出 // dateString = "2023/08"
+    func getTotalExpenseOnSelectedMonth(dateString: String) -> Int {
+        // 設定判斷格式
+        dateformatter.dateFormat = "yyyy/MM/dd"
+        var selectMonthEx = 0
+        // 抓取所有資料進行比對
+        for i in expenseLabel {
+            for k in expensetotaldata["\(i)"] ?? [] {
+                if dateformatter.string(from: k.date).contains(dateString) {
+                    selectMonthEx += k.expense
+                }
+            }
+        }
+        return selectMonthEx
+    }
+    
+    // 抓取指定日期 當月的總 收入 // dateString = "2023/08"
+    func getTotalIncomeOnSelectedMonth(dateString: String) -> Int {
+        // 設定判斷格式
+        dateformatter.dateFormat = "yyyy/MM/dd"
+        var selectMonthIn = 0
+        // 抓取所有資料進行比對
+        for i in incomeLabel {
+            for k in incometotaldata["\(i)"] ?? [] {
+                if dateformatter.string(from: k.date).contains(dateString) {
+                    selectMonthIn += k.income
+                }
+            }
+        }
+        return selectMonthIn
+    }
+    
+    // 回傳一週的支出 array -> LineChart
+    func 一週支出(day: String) -> [Int] {
+        var expense = [Int]()
+        // 設定判斷格式
+        dateformatter.dateFormat = "yyyy/MM/dd"
+        for i in CalendarHelper().getDatesForWeek(date: dateformatter.date(from: day)!) {
+            expense.append(getTotalExpenseOnSelectedDate(dateString: i))
+        }
+        
+        return expense
+    }
+    
+    // 回傳一週的收入 array -> LineChart
+    func 一週收入(day: String) -> [Int] {
+        var income = [Int]()
+        // 設定判斷格式
+        dateformatter.dateFormat = "yyyy/MM/dd"
+        for i in CalendarHelper().getDatesForWeek(date: dateformatter.date(from: day)!) {
+            income.append(getTotalIncomeOnSelectedDate(dateString: i))
+        }
+        return income
+    }
+    
+    // 回傳一年的 支出 array -> LineChart
+    func 一年支出(day: String) -> [Int] {
+        var expense = [Int]()
+        // 建立 ["01", "02", "03", "04"... "12"] 的 Array()
+        let months = (1...12).map { String(format: "%02d", $0) }
+        // 設定判斷格式
+        dateformatter.dateFormat = "yyyy/MM"
+        // 將 year 與 month 合併 -> ["year/01", "year/02", ... "year/12"]
+        for i in months.map({ month in
+            "\(CalendarHelper().yearString(date: now))/\(month)"
+        }) {
+            expense.append(getTotalExpenseOnSelectedMonth(dateString: i))
+        }
+        // 設定判斷格式
+        dateformatter.dateFormat = "yyyy/MM/dd"
+        return expense
+    }
+    
+    // 回傳一年的 收入 array -> LineChart
+    func 一年收入(day: String) -> [Int] {
+        var income = [Int]()
+        // 建立 ["year/01", "year/02", ... "year/12"] 的 Array()
+        let months = (1...12).map { String(format: "\(CalendarHelper().yearString(date: now))/%02d", $0) }
+        // 設定判斷格式
+        dateformatter.dateFormat = "yyyy/MM"
+        for i in months {
+            income.append(getTotalIncomeOnSelectedMonth(dateString: i))
+        }
+        // 設定判斷格式
+        dateformatter.dateFormat = "yyyy/MM/dd"
+        return income
+    }
+    
+    // 抓取本日的 expense
+    // 目前沒有使用到
+    func getDailyExpenses() -> [Int] {
+        var today = [Int]()
+        // 每個支出類別的總和
+        var typeEx = 0
+        // 抓取所有資料進行比對
+        for i in expenseLabel {
+            for k in expensetotaldata["\(i)"] ?? [] {
+                // 判斷是否為指定的日期
+                if dateformatter.string(from: k.date) == dateformatter.string(from: Date()) {
+                    typeEx += k.expense
+                }
+            }
+            today.append(typeEx)
+            typeEx = 0
+        }
+        return today
+    }
+    
+    // 抓取本日的 income
+    // 目前沒有使用到
+    func getDailyIncome() -> [Int] {
+        var today = [Int]()
+        // 每個支出類別的總和
+        var typeIn = 0
+        // 抓取所有資料進行比對
+        for i in incomeLabel {
+            for k in incometotaldata["\(i)"] ?? [] {
+                // 判斷是否為指定的日期
+                if dateformatter.string(from: k.date) == dateformatter.string(from: Date()) {
+                    typeIn += k.income
+                }
+            }
+            today.append(typeIn)
+            typeIn = 0
+        }
+        
+        return today
+    }
+    
+    // 抓取本週每個 expense 的總額
+    func getWeekExpenses() -> [Int] {
+        // 設定日期格式
+        dateformatter.dateFormat = "yyyy/MM/dd"
+        var week = [Int]()
+        // 每個支出類別的總和
+        var typeEx = 0
+        // 抓取所有資料進行比對
+        for i in expenseLabel {
+            for k in expensetotaldata["\(i)"] ?? [] {
+                // 判斷是否為指定的日期
+                if CalendarHelper().getDatesForWeek(date: now).contains(dateformatter.string(from: k.date)) {
+                    typeEx += k.expense
+                }
+            }
+            week.append(typeEx)
+            typeEx = 0
+        }
+        return week
+    }
+    
+    // 抓取本週每個 income 的總額
+    func getWeekIncome() -> [Int] {
+        // 設定日期格式
+        dateformatter.dateFormat = "yyyy/MM/dd"
+        var week = [Int]()
+        // 每個支出類別的總和
+        var typeIn = 0
+        // 抓取所有資料進行比對
+        for i in incomeLabel {
+            for k in incometotaldata["\(i)"] ?? [] {
+                // 判斷是否為指定的日期
+                if CalendarHelper().getDatesForWeek(date: Date()).contains(dateformatter.string(from: k.date)) {
+                    typeIn += k.income
+                }
+            }
+            week.append(typeIn)
+            typeIn = 0
+        }
+        return week
+    }
+    
+    // 抓取本月的 expense
+    func getMonthExpenses() -> [Int] {
+        // 設定日期格式
+        dateformatter.dateFormat = "yyyy/MM/dd"
+        var month = [Int]()
+        // 每個支出類別的總和
+        var typeEx = 0
+        // 抓取所有資料進行比對
+        for i in expenseLabel {
+            for k in expensetotaldata["\(i)"] ?? [] {
+                // 判斷是否為指定的日期
+                if dateformatter.string(from: k.date).contains(CalendarHelper().yearString(date: now)) {
+                    typeEx += k.expense
+                }
+            }
+            month.append(typeEx)
+            typeEx = 0
+        }
+        return month
+    }
+    
+    // 抓取本月的 income
+    func getMonthIncome() -> [Int] {
+        // 設定日期格式
+        dateformatter.dateFormat = "yyyy/MM/dd"
+        var month = [Int]()
+        // 每個支出類別的總和
+        var typeIn = 0
+        // 抓取所有資料進行比對
+        for i in incomeLabel {
+            for k in incometotaldata["\(i)"] ?? [] {
+                // 判斷是否為指定的日期
+                if dateformatter.string(from: k.date).contains(CalendarHelper().yearString(date: now)) {
+                    typeIn += k.income
+                }
+            }
+            month.append(typeIn)
+            typeIn = 0
+        }
+        return month
+    }
+    
+    
     // 計算 income 每個類別的總額
     func categoryIncome(dateString: String) {
         // 每個支出類別的總和
@@ -227,11 +557,32 @@ class ChartViewController: UIViewController {
     
     // LineCharts 設置
     func setLineChart(values: [Int], color: UIColor, lineChartView: LineChartView, label: String) {
+        // 確保從 week 切回時產生錯誤，每次都先設為 nil
+        lineChartView.xAxis.valueFormatter = nil
+        
         // 產生 chartsEntry
         var chartsEntry: [ChartDataEntry] = []
         
-        for i in 0..<values.count {
-            chartsEntry.append(ChartDataEntry(x: Double(i+1), y: Double(values[i])))
+        // 細部設定
+        // 使用 switch 來決定顯示的標籤
+        switch TimeframeSelector {
+        // 切換 Day 時，必須改成 x: Double(i+1)
+        case "Day":
+            for i in 0..<values.count {
+                chartsEntry.append(ChartDataEntry(x: Double(i+1), y: Double(values[i])))
+            }
+        // 切換 week 時，必須改成 x: Double(i)
+        case "Week":
+            for i in 0..<values.count {
+                chartsEntry.append(ChartDataEntry(x: Double(i), y: Double(values[i])))
+            }
+        // 切換 month 時，必須改成 x: Double(i)
+        case "Month":
+            for i in 0..<values.count {
+                chartsEntry.append(ChartDataEntry(x: Double(i), y: Double(values[i])))
+            }
+        default :
+            print("error")
         }
         
         // 產生 lineChartDataSet
@@ -305,7 +656,7 @@ class ChartViewController: UIViewController {
         // 隱藏右邊欄位的資料
         lineChartView.rightAxis.enabled = false
         // 隱藏左邊欄位的資料
-        lineChartView.leftAxis.enabled = true
+        lineChartView.leftAxis.enabled = false
         // 隱藏數值文字
         lineChartView.data?.setValueTextColor(.clear)
         
@@ -314,6 +665,60 @@ class ChartViewController: UIViewController {
         
         // 控制左邊顯示數值的標籤數量
         lineChartView.leftAxis.setLabelCount(5, force: true)
+
+        lineChartView.legend.enabled = false
+        
+        // 細部設定
+        // 使用 switch 來決定顯示的標籤
+        switch TimeframeSelector {
+        case "Day":
+            // 設置 x 軸的標籤數量，這裡設置為 values.count，即所有日期
+            lineChartView.xAxis.labelCount = values.count / 5 // 每 5 個點顯示一個數據
+            // 設置 x 軸的最小值和最大值，這裡設置為 0 和 6，對應數據的索引範圍
+            lineChartView.xAxis.axisMinimum = 1
+            lineChartView.xAxis.axisMaximum = Double(values.count)
+        case "Week":
+            lineChartView.xAxis.labelCount = 7
+
+            // 設置 x 軸的最小值和最大值，這裡設置為 0 和 6，對應數據的索引範圍
+            lineChartView.xAxis.axisMinimum = 0
+            lineChartView.xAxis.axisMaximum = 6
+
+            // 強制顯示所有標籤
+            lineChartView.xAxis.forceLabelsEnabled = true
+            
+            lineChartView.xAxis.valueFormatter = IndexAxisValueFormatter(values: CalendarHelper().getDatesForWeekWithoutyear(date: now))
+        case "Month":
+            lineChartView.xAxis.labelCount = 12
+
+            // 設置 x 軸的最小值和最大值，這裡設置為 0 和 11，對應數據的索引範圍
+            lineChartView.xAxis.axisMinimum = 0
+            lineChartView.xAxis.axisMaximum = 11
+
+            // 強制顯示所有標籤
+            lineChartView.xAxis.forceLabelsEnabled = true
+            // 製作
+            // 建立 ["year/01", "year/02", ... "year/12"] 的 Array()
+            let months = (1...12).map { String(format: "\(CalendarHelper().yearString(date: now))/%02d", $0) }
+            
+            var value = [String]()
+            // 轉換日期格式
+            dateformatter.dateFormat = "yyyy/MM"
+            for i in months {
+                let dd = dateformatter.date(from: i)!
+                // 轉換成 MMM
+                dateformatter.dateFormat = "MMM"
+                value.append(dateformatter.string(from: dd))
+                // 轉換成 yyyy/MM
+                dateformatter.dateFormat = "yyyy/MM"
+            }
+            lineChartView.xAxis.valueFormatter = IndexAxisValueFormatter(values: value)
+        default:
+            print("error")
+        }
+        
+        
+        
 
         
     }
@@ -367,7 +772,7 @@ class ChartViewController: UIViewController {
         barChartView.xAxis.labelPosition = .bottom
         // 隱藏右邊欄位的資料
         barChartView.rightAxis.enabled = false
-
+        barChartView.leftAxis.enabled = false
         // 關閉點擊後的十字線
         barChartDataSet.highlightEnabled = false
 
@@ -409,14 +814,59 @@ class ChartViewController: UIViewController {
         categoryExpense(dateString: dateString)
         categoryIncome(dateString: dateString)
 
-        // 設定 折線圖 表格
-        setLineChart(values: everyDateExpense, color: .systemRed, lineChartView: expenseLineChartView, label: "Expense")
-        setLineChart(values: everyDateIncome, color: .systemGreen, lineChartView: incomeLineChartView, label: "Income")
         
-        // 設定 直方圖 表格
-        setBarChart(dataPoints: expenseLabel, values: everyExpense, barChartView: expenseBarChartView)
-        setBarChart(dataPoints: incomeLabel, values: everyIncome, barChartView: incomeBarChartView)
-        
+        // 判斷目前顯示 月 週 日 的資料
+        switch TimeframeSelector {
+        case "Day":
+            // expense LineChart
+            if chartDisplayType == "ex" {
+                setLineChart(values: everyDateExpense, color: .systemRed, lineChartView: ExandInLineChartView, label: "Expense")
+            }else {
+            // income LineChart
+                setLineChart(values: everyDateIncome, color: .systemGreen, lineChartView: ExandInLineChartView, label: "Income")
+            }
+            setBarChart(dataPoints: expenseLabel, values: everyExpense, barChartView: expenseBarChartView)
+            setBarChart(dataPoints: incomeLabel, values: everyIncome, barChartView: incomeBarChartView)
+            
+            // 更新顯示的 expense, income, total label
+            expenseUILabel.text = "\(everyExpense.reduce(0, +))"
+            incomeUILabel.text = "\(everyIncome.reduce(0, +))"
+            totalLabel.text = "\(everyIncome.reduce(0, +) - everyExpense.reduce(0, +))"
+        case "Week":
+            // expense LineChart
+            if chartDisplayType == "ex" {
+                setLineChart(values: 一週支出(day: dateformatter.string(from: now)), color: .systemRed, lineChartView: ExandInLineChartView, label: "Expense")
+            }else {
+                // income LineChart
+                setLineChart(values: 一週收入(day: dateformatter.string(from: now)), color: .systemGreen, lineChartView: ExandInLineChartView, label: "Income")
+            }
+            // 直方圖
+            setBarChart(dataPoints: expenseLabel, values: getWeekExpenses(), barChartView: expenseBarChartView)
+            setBarChart(dataPoints: incomeLabel, values: getWeekIncome(), barChartView: incomeBarChartView)
+            
+            // 更新顯示的 expense, income, total label
+            expenseUILabel.text = "\(getWeekExpenses().reduce(0, +))"
+            incomeUILabel.text = "\(getWeekIncome().reduce(0, +))"
+            totalLabel.text = "\(getWeekIncome().reduce(0, +) - getWeekExpenses().reduce(0, +))"
+        case "Month":
+            // expense LineChart
+            if chartDisplayType == "ex" {
+                setLineChart(values: 一年支出(day: dateformatter.string(from: now)), color: .systemRed, lineChartView: ExandInLineChartView, label: "Expense")
+            }else {
+                // income LineChart
+                setLineChart(values: 一年收入(day: dateformatter.string(from: now)), color: .systemGreen, lineChartView: ExandInLineChartView, label: "Income")
+            }
+            // 直方圖
+            setBarChart(dataPoints: expenseLabel, values: getMonthExpenses(), barChartView: expenseBarChartView)
+            setBarChart(dataPoints: incomeLabel, values: getMonthIncome(), barChartView: incomeBarChartView)
+            
+            // 更新顯示的 expense, income, total label
+            expenseUILabel.text = "\(getMonthExpenses().reduce(0, +))"
+            incomeUILabel.text = "\(getMonthIncome().reduce(0, +))"
+            totalLabel.text = "\(getMonthIncome().reduce(0, +) - getMonthExpenses().reduce(0, +))"
+        default:
+            print("Error")
+        }
     }
     
 
@@ -424,7 +874,8 @@ class ChartViewController: UIViewController {
         now = CalendarHelper().plusMonth(date: now)
 
         // 更新 月份與年份
-        monthLabel.text = "\(CalendarHelper().monthString(date: now)) \(CalendarHelper().yearString(date: now))"
+        dateformatter.dateFormat = "yyyy,MMM"
+        changeDateButton.setTitle(dateformatter.string(from: now), for: .normal)
         
         dateformatter.dateFormat = "yyyy/MM"
         dateString = dateformatter.string(from: now)
@@ -440,7 +891,8 @@ class ChartViewController: UIViewController {
         now = CalendarHelper().minusMonth(date: now)
         
         // 更新 月份與年份
-        monthLabel.text = "\(CalendarHelper().monthString(date: now)) \(CalendarHelper().yearString(date: now))"
+        dateformatter.dateFormat = "yyyy,MMM"
+        changeDateButton.setTitle(dateformatter.string(from: now), for: .normal)
         
         dateformatter.dateFormat = "yyyy/MM"
         dateString = dateformatter.string(from: now)
@@ -449,5 +901,27 @@ class ChartViewController: UIViewController {
         updateAllChart(dateString: dateString)
         
     }
+    
+    
+    @IBAction func changeExpenseChart(_ sender: UIButton) {
+        // 按鈕切換
+        setButton(button: sender, .systemRed)
+        setButton(button: incomeButton, .systemGray)
+        chartDisplayType = "ex"
+        setLineChart(values: everyDateExpense, color: .systemRed, lineChartView: ExandInLineChartView, label: "Expense")
+        // 更新所有的圖表
+        updateAllChart(dateString: dateString)
+    }
+    
+    @IBAction func changeIncomeChart(_ sender: UIButton) {
+        // 按鈕切換
+        setButton(button: sender, .systemGreen)
+        setButton(button: expenseButton, .systemGray)
+        chartDisplayType = "in"
+        setLineChart(values: everyDateIncome, color: .systemGreen, lineChartView: ExandInLineChartView, label: "Income")
+        // 更新所有的圖表
+        updateAllChart(dateString: dateString)
 
+    }
+    
 }

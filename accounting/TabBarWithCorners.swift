@@ -68,8 +68,8 @@ class TabBarWithCorners: UITabBar {
             bottomSafeAreaHeight = UIApplication.shared.windows.first?.safeAreaInsets.bottom ?? 0
         }
         
-        tabFrame.size.height = 65 + bottomSafeAreaHeight
-        tabFrame.origin.y = self.frame.origin.y + self.frame.height - 65 - bottomSafeAreaHeight
+        tabFrame.size.height = 60 + bottomSafeAreaHeight
+        tabFrame.origin.y = self.frame.origin.y + self.frame.height - 60 - bottomSafeAreaHeight
         
         self.layer.cornerRadius = 18 // 設定 Tab Bar 的圓角半徑
         self.frame = tabFrame
