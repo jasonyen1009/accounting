@@ -924,4 +924,62 @@ class ChartViewController: UIViewController {
 
     }
     
+    // datepicker 日期變更事件
+    @objc func datePickerValueChanged(_ sender: UIDatePicker) {
+        // 更新 now 的日期
+        now = sender.date
+        // 設定月份字串 格式
+        dateformatter.dateFormat = "yyyy,MMM"
+        // 更新 changeDateButton 顯示的日期
+        changeDateButton.setTitle(dateformatter.string(from: now), for: .normal)
+        // 更新日期後，自動關閉 alert
+        dismiss(animated: true, completion: nil)
+        
+        updateAllChart(dateString: dateString)
+    }
+    
+    // alertcontroller + pickerview
+    @IBAction func showAlertController(_ sender: UIButton) {
+        
+        // 製作一個 date picker
+        let datepicker = UIDatePicker()
+        // 將 now 的日期給予 datepicker
+        datepicker.date = now
+        // datepicker 顯示樣式
+        datepicker.preferredDatePickerStyle = .inline
+        datepicker.datePickerMode = .date
+
+        datepicker.translatesAutoresizingMaskIntoConstraints = false
+                
+        datepicker.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
+
+        
+        // 設定一個 viewcontroller
+        let vc = UIViewController()
+        vc.preferredContentSize = CGSize(width: 300,height: 300)
+        // 將 datepicker 加入到 vc 的 view 中
+        vc.view.addSubview(datepicker)
+        
+        // 使用 Auto Layout 來定義 datepicker 的位置和尺寸
+        NSLayoutConstraint.activate([
+            datepicker.topAnchor.constraint(equalTo: vc.view.topAnchor),
+            datepicker.bottomAnchor.constraint(equalTo: vc.view.bottomAnchor),
+            datepicker.leadingAnchor.constraint(equalTo: vc.view.leadingAnchor),
+            datepicker.trailingAnchor.constraint(equalTo: vc.view.trailingAnchor)
+        ])
+
+        // AlertController
+        let alertcontroller = UIAlertController(title: "", message: "", preferredStyle: .alert)
+        // 最重要的一步驟
+        // 如果少了 setValue, pickerview 將不會顯示
+        alertcontroller.setValue(vc, forKey: "contentViewController")
+        
+        alertcontroller.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+        
+        present(alertcontroller, animated: true)
+
+        
+    }
+    
+    
 }
