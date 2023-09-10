@@ -9,7 +9,6 @@ import UIKit
 
 class ExpenseListTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var noteimageview: UIImageView!
     @IBOutlet weak var accountimageview: UIImageView!
     @IBOutlet weak var expensenameLabel: UILabel!
     @IBOutlet weak var expenseLabel: UILabel!
