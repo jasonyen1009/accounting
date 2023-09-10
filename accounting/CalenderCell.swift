@@ -12,5 +12,6 @@ class CalenderCell: UICollectionViewCell {
     
     @IBOutlet weak var dayOfMonth: UIButton!
 
+    @IBOutlet weak var ExorInFlagLabel: UILabel!
     
 }

@@ -120,7 +120,7 @@ class ChartViewController: UIViewController {
         setButton(TimeframeSelectorButton)
         
         // 設定月份字串 格式
-        dateformatter.dateFormat = "yyyy,MMM"
+        dateformatter.dateFormat = "yyyy,MMM-dd"
         changeDateButton.setTitle(dateformatter.string(from: now), for: .normal)
         dateformatter.dateFormat = "yyyy/MM"
         
@@ -874,7 +874,7 @@ class ChartViewController: UIViewController {
         now = CalendarHelper().plusMonth(date: now)
 
         // 更新 月份與年份
-        dateformatter.dateFormat = "yyyy,MMM"
+        dateformatter.dateFormat = "yyyy,MMM-dd"
         changeDateButton.setTitle(dateformatter.string(from: now), for: .normal)
         
         dateformatter.dateFormat = "yyyy/MM"
@@ -891,7 +891,7 @@ class ChartViewController: UIViewController {
         now = CalendarHelper().minusMonth(date: now)
         
         // 更新 月份與年份
-        dateformatter.dateFormat = "yyyy,MMM"
+        dateformatter.dateFormat = "yyyy,MMM-dd"
         changeDateButton.setTitle(dateformatter.string(from: now), for: .normal)
         
         dateformatter.dateFormat = "yyyy/MM"
@@ -929,7 +929,7 @@ class ChartViewController: UIViewController {
         // 更新 now 的日期
         now = sender.date
         // 設定月份字串 格式
-        dateformatter.dateFormat = "yyyy,MMM"
+        dateformatter.dateFormat = "yyyy,MMM-dd"
         // 更新 changeDateButton 顯示的日期
         changeDateButton.setTitle(dateformatter.string(from: now), for: .normal)
         // 更新日期後，自動關閉 alert

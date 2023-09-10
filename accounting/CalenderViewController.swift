@@ -126,6 +126,9 @@ class CalenderViewController: UIViewController {
         // 接收來自 ViewController 更新 Expense, Income 通知
         NotificationCenter.default.addObserver(self, selector: #selector(updateExorIn(noti: )), name: AllNotification.updateEXorINFromViewControlller, object: nil)
         
+        
+        dateformatter.dateFormat = "yyyy/MM"
+        print("本月", getExorInDatesForSelectMonth(dateString: dateformatter.string(from: now)))
 
     }
     
@@ -164,6 +167,52 @@ class CalenderViewController: UIViewController {
         
         listTableView.reloadData()
         
+    }
+    
+    // 抓取這個月有 支出或是消費的 日期
+    // 確保丟入的日期格式為 "yyyy/MM"
+    // dateString = "2023/09"
+    func getExorInDatesForSelectMonth(dateString: String) -> [Int] {
+        // 設定日期格式
+        dateformatter.dateFormat = "yyyy/MM/dd"
+        // 保存有 支出 或 收入 的日期
+        var month = [Int]()
+        // 抓取所有資料進行比對
+        for i in expenseLabel {
+            for k in expensetotaldata["\(i)"] ?? [] {
+                // 判斷是否為指定的日期
+                if dateformatter.string(from: k.date).contains(dateString) {
+                    // 轉換日期格式
+                    dateformatter.dateFormat = "dd"
+                    // 將 dd 轉換成 Int 放入 array 中
+                    if let day = Int(dateformatter.string(from: k.date)) {
+                        // 確保加入 沒有重複的日期
+                        if !month.contains(day) {
+                            month.append(day)
+                        }
+                    }
+                }
+                dateformatter.dateFormat = "yyyy/MM/dd"
+            }
+        }
+        for i in incomeLabel {
+            for k in incometotaldata["\(i)"] ?? [] {
+                // 判斷是否為指定的日期
+                if dateformatter.string(from: k.date).contains(dateString) {
+                    // 轉換日期格式
+                    dateformatter.dateFormat = "dd"
+                    // 將 dd 轉換成 Int 放入 array 中
+                    if let day = Int(dateformatter.string(from: k.date)) {
+                        // 確保加入 沒有重複的日期
+                        if !month.contains(day) {
+                            month.append(day)
+                        }
+                    }
+                }
+                dateformatter.dateFormat = "yyyy/MM/dd"
+            }
+        }
+        return month.sorted(by: <)
     }
     
     
@@ -390,8 +439,12 @@ extension CalenderViewController: UICollectionViewDelegate, UICollectionViewData
         // 若為空白就無法點選
         if totalSquares[indexPath.item] == "" {
             cell.dayOfMonth.isEnabled = false
+            // 隱藏 下方的小白點
+            cell.ExorInFlagLabel.isHidden = true
         }else {
             cell.dayOfMonth.isEnabled = true
+            // 顯示 下方的小白點
+            cell.ExorInFlagLabel.isHidden = false
         }
         // 判斷是否為今日日期
         // 若為今日日期 button 為選取模式
@@ -405,6 +458,18 @@ extension CalenderViewController: UICollectionViewDelegate, UICollectionViewData
         if totalSquares[indexPath.item] == dateformatter.string(from: now) {
             cell.dayOfMonth.isSelected = true
         }
+        
+        // 轉換日期格式
+        dateformatter.dateFormat = "yyyy/MM"
+        // 取得 本月 now 中所有包含 支出 或 收入 的所有日期
+        let months = getExorInDatesForSelectMonth(dateString: dateformatter.string(from: now))
+        if let day = Int("\(totalSquares[indexPath.item])") {
+            if !months.contains(day) {
+                // 隱藏 下方的小白點
+                cell.ExorInFlagLabel.isHidden = true
+            }
+        }
+        
         dateformatter.dateFormat = "yyyy/MM/dd"
         
         cell.dayOfMonth.addTarget(self, action: #selector(printdate(sender: )), for: .touchUpInside)
