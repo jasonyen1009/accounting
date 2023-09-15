@@ -23,9 +23,11 @@ class AddIncomeTableViewController: UITableViewController {
     let formatter = DateFormatter()
     var minutes = ""
     
+    // category
+    var category = "薪水"
+    
     var delegate: AddIncomeTableViewControllerDelegate?
 
-    @IBOutlet weak var categorySegmentedcontrol: UISegmentedControl!
     @IBOutlet weak var DatePicker: UIDatePicker!
     @IBOutlet weak var accountImagview: UIImageView!
     @IBOutlet weak var incomenameTextfield: UITextField!
@@ -33,6 +35,10 @@ class AddIncomeTableViewController: UITableViewController {
     @IBOutlet weak var noteTextview: UITextView!
     @IBOutlet weak var selectbank: UILabel!
     
+    @IBOutlet weak var categoryButton: MyButton!
+    
+    // 用於模糊化的 UIVisualEffectView
+    var blurEffectView: UIVisualEffectView?
     
     // 使用 userDefault 抓取 最愛的銀行資料
     let userDefault = UserDefaults.standard
@@ -44,8 +50,13 @@ class AddIncomeTableViewController: UITableViewController {
         // textfield delegate
         incomeTextfield.delegate = self
         incomenameTextfield.delegate = self
+        
         // textview delegate
         noteTextview.delegate = self
+        
+        // categoryButton delegate
+        categoryButton.delegate = self
+
         
         noteTextview.text = "備忘錄"
         noteTextview.textColor = UIColor.lightGray
@@ -70,6 +81,10 @@ class AddIncomeTableViewController: UITableViewController {
         // 接收通知 bank 更新通知
         NotificationCenter.default.addObserver(self, selector: #selector(updatebank(noti: )), name: AllNotification.bankmessage, object: nil)
         
+        // 設定 button 的 menu 表單
+        setButton(categoryButton)
+        
+        
     }
     
     // notification 
@@ -89,26 +104,6 @@ class AddIncomeTableViewController: UITableViewController {
         self.view.endEditing(true)
     }
     
-    // 更新收入種類圖示
-    @IBAction func changeincomeimage(_ sender: UISegmentedControl) {
-        switch sender.selectedSegmentIndex {
-        case 0:
-            accountImagview.image = UIImage(named: "salary")
-        case 1:
-            accountImagview.image = UIImage(named: "interest")
-        case 2:
-            accountImagview.image = UIImage(named: "invest")
-        case 3:
-            accountImagview.image = UIImage(named: "rent")
-        case 4:
-            accountImagview.image = UIImage(named: "transaction")
-        default :
-            accountImagview.image = UIImage(named: "game")
-            
-        }
-        // 資料即時同步
-        delegate?.addIncomeTableViewController(self, didEdit: updatedata())
-    }
     
     
     @IBAction func changeday(_ sender: UIDatePicker) {
@@ -188,7 +183,7 @@ class AddIncomeTableViewController: UITableViewController {
         let connectdate = "\(formatter.string(from: DatePicker.date)) \(minutes)"
         formatter.dateFormat = "yyyy/MM/dd HH:mm:ss.SSS"
         
-        let inctype = categorySegmentedcontrol.titleForSegment(at: categorySegmentedcontrol.selectedSegmentIndex) ?? ""
+        let inctype = category
         let incname = incomenameTextfield.text ?? ""
         let account = favoritebanks
         let income = Int(incomeTextfield.text!) ?? 0
@@ -197,6 +192,54 @@ class AddIncomeTableViewController: UITableViewController {
         mydata = Income(date: formatter.date(from: connectdate)!, incometype: inctype, incomename: incname, accounts: account, income: income, note: note)
         
         return mydata!
+    }
+    
+    func setButton(_ button: UIButton) {
+        button.showsMenuAsPrimaryAction = true
+        button.changesSelectionAsPrimaryAction = true
+        
+        button.menu = UIMenu(children: [
+            UIAction(title: "薪水",  handler: { [self] action in
+                category = "薪水"
+                accountImagview.image = UIImage(named: "salary")
+            }),
+            UIAction(title: "利息",  handler: { [self] action in
+                category = "利息"
+                accountImagview.image = UIImage(named: "interest")
+            }),
+            UIAction(title: "投資",  handler: { [self] action in
+                category = "投資"
+                accountImagview.image = UIImage(named: "invest")
+            }),
+            UIAction(title: "收租",  handler: { [self] action in
+                category = "收租"
+                accountImagview.image = UIImage(named: "rent")
+            }),
+            UIAction(title: "買賣",  handler: { [self] action in
+                category = "買賣"
+                accountImagview.image = UIImage(named: "transaction")
+            }),
+            UIAction(title: "娛樂",  handler: { [self] action in
+                category = "娛樂"
+                accountImagview.image = UIImage(named: "game")
+            })
+            
+        ])
+        
+        // 在按下 button 時顯示模糊背景
+        button.addTarget(self, action: #selector(showBlurBackground), for: .menuActionTriggered)
+        
+    }
+
+    
+    @objc func showBlurBackground() {
+        // 創建模糊效果
+        let blurEffect = UIBlurEffect(style: .light) // 這裡可以根據需要選擇模糊風格
+        // 創建模糊視圖
+        blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView?.frame = UIScreen.main.bounds
+        view.addSubview(blurEffectView!)
+        
     }
 
 }
@@ -304,6 +347,14 @@ extension AddIncomeTableViewController: UITextFieldDelegate {
     
     // 輸入金額時，將資料同步到 homedata
     func textFieldDidChangeSelection(_ textField: UITextField) {
+        delegate?.addIncomeTableViewController(self, didEdit: updatedata())
+    }
+}
+
+extension AddIncomeTableViewController: MyButtonDelegate {
+    func myButtonWillEndContextMenuInteraction() {
+        blurEffectView?.removeFromSuperview()
+        blurEffectView = nil
         delegate?.addIncomeTableViewController(self, didEdit: updatedata())
     }
 }

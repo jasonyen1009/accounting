@@ -39,6 +39,7 @@
 		9654855E299FA4B500BA7AF7 /* ChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9654855D299FA4B500BA7AF7 /* ChartViewController.swift */; };
 		966014652A696B0300D9E226 /* TabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 966014642A696B0300D9E226 /* TabbarController.swift */; };
 		966014672A696B3500D9E226 /* TabBarWithCorners.swift in Sources */ = {isa = PBXBuildFile; fileRef = 966014662A696B3500D9E226 /* TabBarWithCorners.swift */; };
+		967061D12AB3FC3C00F4A63A /* MyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967061D02AB3FC3C00F4A63A /* MyButton.swift */; };
 		96B623EA29458752004B4187 /* CalenderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B623E929458752004B4187 /* CalenderViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -95,6 +96,7 @@
 		9654855D299FA4B500BA7AF7 /* ChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewController.swift; sourceTree = "<group>"; };
 		966014642A696B0300D9E226 /* TabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarController.swift; sourceTree = "<group>"; };
 		966014662A696B3500D9E226 /* TabBarWithCorners.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarWithCorners.swift; sourceTree = "<group>"; };
+		967061D02AB3FC3C00F4A63A /* MyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyButton.swift; sourceTree = "<group>"; };
 		96B623E929458752004B4187 /* CalenderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalenderViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -183,6 +185,7 @@
 				961F68EE294DA04A002330A8 /* CalenderHelper.swift */,
 				259E4BFC28A3AB1400F42FD4 /* AddIncomeTableViewController.swift */,
 				259E4BFA28A3AAF000F42FD4 /* AddExpenseTableViewController.swift */,
+				967061D02AB3FC3C00F4A63A /* MyButton.swift */,
 				25BB3A8A28991CD800C0D204 /* HomeViewController.swift */,
 				257CFC54286EEB6900C34501 /* EditTableViewController.swift */,
 				258778BE283B5CF200E685AF /* ListTableViewController.swift */,
@@ -355,6 +358,7 @@
 				2582DE91284B8F4200284BAB /* ExpenseListTableViewCell.swift in Sources */,
 				966014652A696B0300D9E226 /* TabbarController.swift in Sources */,
 				9654855E299FA4B500BA7AF7 /* ChartViewController.swift in Sources */,
+				967061D12AB3FC3C00F4A63A /* MyButton.swift in Sources */,
 				257CFC55286EEB6A00C34501 /* EditTableViewController.swift in Sources */,
 				9633F9A4295DCE6100FABE77 /* AccountTableViewController.swift in Sources */,
 				25BB3A8B28991CD800C0D204 /* HomeViewController.swift in Sources */,

@@ -18,12 +18,19 @@ class AddExpenseTableViewController: UITableViewController {
     var number2 = 0.0
     var calculatetype = ""
     var delegate: AddExpenseTableViewControllerDelegate?
+    
+    // category
+    var category = "個人"
+    
     // date
     var now = Date()
     let formatter = DateFormatter()
     var minutes = ""
     
-    @IBOutlet weak var categorySegmentedcontrol: UISegmentedControl!
+    // 用於模糊化的 UIVisualEffectView
+    var blurEffectView: UIVisualEffectView?
+    
+//    @IBOutlet weak var categorySegmentedcontrol: UISegmentedControl!
     @IBOutlet weak var DatePicker: UIDatePicker!
     @IBOutlet weak var accountSegmentedcontrol: UISegmentedControl!
     @IBOutlet weak var accountnameTextfield: UITextField!
@@ -31,13 +38,19 @@ class AddExpenseTableViewController: UITableViewController {
     @IBOutlet weak var accountImageview: UIImageView!
     @IBOutlet weak var noteTextView: UITextView!
     
+    @IBOutlet weak var categoryButton: MyButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // textfield delegate
         accountnameTextfield.delegate = self
         accountTextfield.delegate = self
+        
         // textview delegate
         noteTextView.delegate = self
+        
+        // categoryButton delegate
+        categoryButton.delegate = self
         
         noteTextView.text = "備忘錄"
         noteTextView.textColor = UIColor.lightGray
@@ -54,6 +67,9 @@ class AddExpenseTableViewController: UITableViewController {
         let minandsec = formatter.string(from: now)
         minutes = minandsec
 
+        // 設定 button 的 menu 表單
+        setButton(categoryButton)
+ 
     }
     
     //收鍵盤
@@ -75,11 +91,6 @@ class AddExpenseTableViewController: UITableViewController {
         delegate?.addExpenseTableViewController(self, didEdit: updatedata())
     }
     
-    // 更新消費種類
-    @IBAction func changecategory(_ sender: UISegmentedControl) {
-        // 資料即時同步
-        delegate?.addExpenseTableViewController(self, didEdit: updatedata())
-    }
     
     // 更新日期
     @IBAction func changeday(_ sender: UIDatePicker) {
@@ -151,7 +162,7 @@ class AddExpenseTableViewController: UITableViewController {
         let connectdate = "\(formatter.string(from: DatePicker.date)) \(minutes)"
         formatter.dateFormat = "yyyy/MM/dd HH:mm:ss.SSS"
         
-        let sptype = categorySegmentedcontrol.titleForSegment(at: categorySegmentedcontrol.selectedSegmentIndex) ?? ""
+        let sptype = category
         let spname = accountnameTextfield.text ?? ""
         let pytype = accountSegmentedcontrol.titleForSegment(at: accountSegmentedcontrol.selectedSegmentIndex) ?? ""
         let spending = Int(accountTextfield.text!) ?? 0
@@ -163,6 +174,50 @@ class AddExpenseTableViewController: UITableViewController {
         
         return mydata!
     }
+    
+    
+    func setButton(_ button: UIButton) {
+        button.showsMenuAsPrimaryAction = true
+        button.changesSelectionAsPrimaryAction = true
+        
+        button.menu = UIMenu(children: [
+            UIAction(title: "個人",  handler: { [self] action in
+                category = "個人"
+            }),
+            UIAction(title: "飲食",  handler: { [self] action in
+                category = "飲食"
+            }),
+            UIAction(title: "購物",  handler: { [self] action in
+                category = "購物"
+            }),
+            UIAction(title: "交通",  handler: { [self] action in
+                category = "交通"
+            }),
+            UIAction(title: "醫療",  handler: { [self] action in
+                category = "醫療"
+            }),
+            UIAction(title: "生活",  handler: { [self] action in
+                category = "生活"
+            })
+            
+        ])
+        
+        // 在按下 button 時顯示模糊背景
+        button.addTarget(self, action: #selector(showBlurBackground), for: .menuActionTriggered)
+        
+    }
+
+    
+    @objc func showBlurBackground() {
+        // 創建模糊效果
+        let blurEffect = UIBlurEffect(style: .light) // 這裡可以根據需要選擇模糊風格
+        // 創建模糊視圖
+        blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView?.frame = UIScreen.main.bounds
+        view.addSubview(blurEffectView!)
+        
+    }
+    
 
     
     // MARK: - Navigation
@@ -279,4 +334,16 @@ extension AddExpenseTableViewController: UITextFieldDelegate {
     func textFieldDidChangeSelection(_ textField: UITextField) {
         delegate?.addExpenseTableViewController(self, didEdit: updatedata())
     }
+}
+
+extension AddExpenseTableViewController: MyButtonDelegate {
+    
+    // 執行 Menu 關閉時的動作
+    func myButtonWillEndContextMenuInteraction() {
+        blurEffectView?.removeFromSuperview()
+        blurEffectView = nil
+        // 資料即時同步
+        delegate?.addExpenseTableViewController(self, didEdit: updatedata())
+    }
+    
 }
