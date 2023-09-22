@@ -138,17 +138,11 @@
 				25BC680A2823BCEB0051CA86 /* Keyboard.xib */,
 				25BC680C2823C34B0051CA86 /* Keyboard.swift */,
 				25AAB5E52824193A0076ECC7 /* CustomButton.swift */,
+				966014662A696B3500D9E226 /* TabBarWithCorners.swift */,
+				967061D02AB3FC3C00F4A63A /* MyButton.swift */,
+				257EC9BF28842D6200A19FB9 /* CustomView.swift */,
 			);
 			path = custom;
-			sourceTree = "<group>";
-		};
-		2582DE9F2855EEDF00284BAB /* customtableviewcell */ = {
-			isa = PBXGroup;
-			children = (
-				2582DE90284B8F4200284BAB /* ExpenseListTableViewCell.swift */,
-				2582DE8E284A5EDF00284BAB /* ExpensetypeTableViewCell.swift */,
-			);
-			path = customtableviewcell;
 			sourceTree = "<group>";
 		};
 		25D4B27D280E9818006D2547 = {
@@ -174,34 +168,16 @@
 		25D4B288280E9818006D2547 /* accounting */ = {
 			isa = PBXGroup;
 			children = (
-				25063AB8282D08B4000EC4CC /* custom */,
-				2582DE9F2855EEDF00284BAB /* customtableviewcell */,
-				25D4B28B280E9818006D2547 /* SceneDelegate.swift */,
 				25D4B289280E9818006D2547 /* AppDelegate.swift */,
-				25D4B28D280E9818006D2547 /* ViewController.swift */,
-				963F06402ABC7CBF00AB7CA5 /* Localizable.strings */,
-				25D4B28F280E9818006D2547 /* Main.storyboard */,
-				966014642A696B0300D9E226 /* TabbarController.swift */,
-				966014662A696B3500D9E226 /* TabBarWithCorners.swift */,
-				9654855D299FA4B500BA7AF7 /* ChartViewController.swift */,
-				961090692972961E0074A998 /* AllNotification.swift */,
-				9633F9A3295DCE6100FABE77 /* AccountTableViewController.swift */,
-				96320C91294DBEE10067368A /* CalenderTableViewCell.swift */,
-				96320C8F294DA8D00067368A /* CalenderCell.swift */,
-				96B623E929458752004B4187 /* CalenderViewController.swift */,
-				961F68EE294DA04A002330A8 /* CalenderHelper.swift */,
-				259E4BFC28A3AB1400F42FD4 /* AddIncomeTableViewController.swift */,
-				259E4BFA28A3AAF000F42FD4 /* AddExpenseTableViewController.swift */,
-				967061D02AB3FC3C00F4A63A /* MyButton.swift */,
-				25BB3A8A28991CD800C0D204 /* HomeViewController.swift */,
-				257CFC54286EEB6900C34501 /* EditTableViewController.swift */,
-				258778BE283B5CF200E685AF /* ListTableViewController.swift */,
-				257EC9BF28842D6200A19FB9 /* CustomView.swift */,
-				25D4B2BB280EC0AF006D2547 /* Expense.swift */,
-				259E4BF828A39AF600F42FD4 /* Income.swift */,
-				25877878282E34E300E685AF /* Totalexpense.swift */,
+				25D4B28B280E9818006D2547 /* SceneDelegate.swift */,
 				25D4B292280E981A006D2547 /* Assets.xcassets */,
 				25D4B294280E981A006D2547 /* LaunchScreen.storyboard */,
+				25D4B28F280E9818006D2547 /* Main.storyboard */,
+				9657F9EC2ABDD2650012E63A /* Views */,
+				9657F9EB2ABDD2470012E63A /* View Controllers */,
+				9657F9EA2ABDD2160012E63A /* Models */,
+				25063AB8282D08B4000EC4CC /* custom */,
+				963F06402ABC7CBF00AB7CA5 /* Localizable.strings */,
 				25D4B297280E981A006D2547 /* Info.plist */,
 			);
 			path = accounting;
@@ -222,6 +198,46 @@
 				25D4B2AC280E981A006D2547 /* accountingUITestsLaunchTests.swift */,
 			);
 			path = accountingUITests;
+			sourceTree = "<group>";
+		};
+		9657F9EA2ABDD2160012E63A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				25877878282E34E300E685AF /* Totalexpense.swift */,
+				25D4B2BB280EC0AF006D2547 /* Expense.swift */,
+				259E4BF828A39AF600F42FD4 /* Income.swift */,
+				961F68EE294DA04A002330A8 /* CalenderHelper.swift */,
+				961090692972961E0074A998 /* AllNotification.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		9657F9EB2ABDD2470012E63A /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				25D4B28D280E9818006D2547 /* ViewController.swift */,
+				966014642A696B0300D9E226 /* TabbarController.swift */,
+				25BB3A8A28991CD800C0D204 /* HomeViewController.swift */,
+				259E4BFA28A3AAF000F42FD4 /* AddExpenseTableViewController.swift */,
+				259E4BFC28A3AB1400F42FD4 /* AddIncomeTableViewController.swift */,
+				9633F9A3295DCE6100FABE77 /* AccountTableViewController.swift */,
+				258778BE283B5CF200E685AF /* ListTableViewController.swift */,
+				257CFC54286EEB6900C34501 /* EditTableViewController.swift */,
+				9654855D299FA4B500BA7AF7 /* ChartViewController.swift */,
+				96B623E929458752004B4187 /* CalenderViewController.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		9657F9EC2ABDD2650012E63A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				2582DE8E284A5EDF00284BAB /* ExpensetypeTableViewCell.swift */,
+				2582DE90284B8F4200284BAB /* ExpenseListTableViewCell.swift */,
+				96320C91294DBEE10067368A /* CalenderTableViewCell.swift */,
+				96320C8F294DA8D00067368A /* CalenderCell.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
