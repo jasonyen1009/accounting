@@ -93,8 +93,14 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // 設定圖的位置設置
-//        position = CGPoint(x: view.frame.width / 2, y: view.frame.height / 2 - 150)
+        // 判斷系統的語言是否為中文，若為中文 months 必須改為下方格式，不改的話 日期格式對不上會閃退
+        if let language = Locale.preferredLanguages.first, language.contains("zh-Hant") {
+            months = ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"]
+            print("目前的系統語言：中文")
+        } else {
+            print("目前的系統語言：英文")
+        }
+        
         
         // 設置 dateformatter 格式
         dateformatter.dateFormat = "yyyy,MMM"
@@ -171,8 +177,7 @@ class ViewController: UIViewController {
     
     // 點選 Done 返回
     @IBAction func unwindToDone(_ unwindSegue: UIStoryboardSegue) {
-        print("get")
-//        let sourceViewController = unwindSegue.source
+        
         if let source = unwindSegue.source as? HomeViewController ,
            let data = source.homedata  {
             print(data)
@@ -297,7 +302,6 @@ class ViewController: UIViewController {
             self.changeDateButton.setTitle(newdate, for: .normal)
             
             // 將 newdate 同步到 now 上
-//            dateformatter.dateFormat = "yyyy,MMM"
             let updatedate = self.dateformatter.date(from: newdate)
             self.now = updatedate!
             
@@ -334,8 +338,6 @@ class ViewController: UIViewController {
     
     // 切換 segmentedcontrol 觸發
     @IBAction func changeUI(_ sender: UISegmentedControl) {
-//        creatcirclePath()
-//        creatpercentageLabel()
         updateUI()
         myTableView.reloadData()
 
@@ -382,14 +384,22 @@ class ViewController: UIViewController {
         switch changetypeSegmentedControl.selectedSegmentIndex {
         case 0:
             // 產生 expense pieChartView
-            createPieChart(dataPoints: expenseLabel, values: everyExpense)
-            
+            // 判斷目前語言是否為英文
+            if let language = Locale.preferredLanguages.first, !language.contains("zh-Hant") {
+                createPieChart(dataPoints: ["personal", "dietary", "shopping", "traffic", "medical", "life"], values: everyExpense)
+            }else {
+                createPieChart(dataPoints: expenseLabel, values: everyExpense)
+            }
         default :
             // 產生 income pieChartView
-            createPieChart(dataPoints: incomeLabel, values: everyIncome)
-
+            // 判斷目前語言是否為英文
+            if let language = Locale.preferredLanguages.first, !language.contains("zh-Hant") {
+                createPieChart(dataPoints: ["salary", "interest", "invest", "rent", "transaction", "play"], values: everyIncome)
+            }else {
+                createPieChart(dataPoints: incomeLabel, values: everyIncome)
+            }
         }
-
+        
         myTableView.reloadData()
         
     }
@@ -448,28 +458,37 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     // 決定表格內容
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "mycell", for: indexPath) as! ExpensetypeTableViewCell
-
+        
+        let enEx = ["personal", "dietary", "shopping", "traffic", "medical", "life"]
+        let exIN = ["salary", "interest", "invest", "rent", "transaction", "play"]
+        
         // 自訂的 cell
         switch changetypeSegmentedControl.selectedSegmentIndex {
         // 支出頁面
         case 0:
-            cell.celltypeLabel.text = "\(expenseLabel[indexPath.row])"
+            // 判斷目前語言是否為英文
+            if let language = Locale.preferredLanguages.first, !language.contains("zh-Hant") {
+                cell.celltypeLabel.text = "\(enEx[indexPath.row])"
+            }else {
+                cell.celltypeLabel.text = "\(expenseLabel[indexPath.row])"
+                cell.celltypeLabel.font = UIFont(name: "", size: 15)
+            }
+            
             cell.cellmoneyLabel.text = "\(moneyString(Int(everyExpense[indexPath.row])))"
             
             cell.circleview.backgroundColor = UIColor(cgColor: colors[indexPath.row])
-            
-            // 判斷 percentage 大於 0 , 才會新增第二 字串
-//            if (everyExpense[indexPath.row] / everyExpense.reduce(0, +)) > 0 {
-//                cell.percentageLabel.text = "\(String(format: "%.2f", (everyExpense[indexPath.row] / everyExpense.reduce(0, +) * 100))) %"
-//            }else {
-//                cell.percentageLabel.text = "0.00 %"
-//            }
+
             // 暫時隱藏
             cell.percentageLabel.text = ""
             
         // 收入頁面
         default :
-            cell.celltypeLabel.text = "\(incomeLabel[indexPath.row])"
+            // 判斷目前語言是否為英文
+            if let language = Locale.preferredLanguages.first, !language.contains("zh-Hant") {
+                cell.celltypeLabel.text = "\(exIN[indexPath.row])"
+            }else {
+                cell.celltypeLabel.text = "\(incomeLabel[indexPath.row])"
+            }
             cell.cellmoneyLabel.text = "\(moneyString(Int(everyIncome[indexPath.row])))"
             
             cell.circleview.backgroundColor = UIColor(cgColor: colors[indexPath.row])
@@ -551,7 +570,13 @@ extension ViewController: ChartViewDelegate {
     // 首先計算 `x` 座標為 `view.frame.midX - 75`，表示將 `PieChartView` 的水平中心位置設定為 `view` 的水平中心減去一半的 `width`。同樣地，`y` 座標為 `view.frame.midY - 75`，表示將 `PieChartView` 的垂直中心位置設定為 `view` 的垂直中心減去一半的 `height`。最後，`width` 和 `height` 都設定為 150，從而讓 `PieChartView` 的大小為 150x150
     // 建立空白的 pieChartView
     func createPieChart(dataPoints: [String], values: [Int]) {
-        pieChartView = PieChartView(frame: CGRect(x: view.frame.midX - (view.frame.width / 2), y: view.frame.midY - 300, width: view.frame.width, height: 300))
+        if view.frame.height < 700 {
+            pieChartView = PieChartView(frame: CGRect(x: view.frame.midX - (view.frame.width / 2), y: view.frame.midY - 250, width: view.frame.width, height: 250))
+        // 配合 SE 大小
+        }else {
+            pieChartView = PieChartView(frame: CGRect(x: view.frame.midX - (view.frame.width / 2), y: view.frame.midY - 300, width: view.frame.width, height: 300))
+        }
+        
         pieChartView.delegate = self
         view.addSubview(pieChartView)
         

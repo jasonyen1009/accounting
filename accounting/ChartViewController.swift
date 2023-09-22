@@ -825,8 +825,15 @@ class ChartViewController: UIViewController {
             // income LineChart
                 setLineChart(values: everyDateIncome, color: .systemGreen, lineChartView: ExandInLineChartView, label: "Income")
             }
-            setBarChart(dataPoints: expenseLabel, values: everyExpense, barChartView: expenseBarChartView)
-            setBarChart(dataPoints: incomeLabel, values: everyIncome, barChartView: incomeBarChartView)
+            // 判斷目前語言是否為英文
+            if let language = Locale.preferredLanguages.first, !language.contains("zh-Hant") {
+                setBarChart(dataPoints: ["personal", "dietary", "shopping", "traffic", "medical", "life"], values: everyExpense, barChartView: expenseBarChartView)
+                setBarChart(dataPoints: ["salary", "interest", "invest", "rent", "transaction", "play"], values: everyIncome, barChartView: incomeBarChartView)
+            }else {
+                setBarChart(dataPoints: expenseLabel, values: everyExpense, barChartView: expenseBarChartView)
+                setBarChart(dataPoints: incomeLabel, values: everyIncome, barChartView: incomeBarChartView)
+            }
+            
             
             // 更新顯示的 expense, income, total label
             expenseUILabel.text = "\(everyExpense.reduce(0, +))"
@@ -841,8 +848,16 @@ class ChartViewController: UIViewController {
                 setLineChart(values: 一週收入(day: dateformatter.string(from: now)), color: .systemGreen, lineChartView: ExandInLineChartView, label: "Income")
             }
             // 直方圖
-            setBarChart(dataPoints: expenseLabel, values: getWeekExpenses(), barChartView: expenseBarChartView)
-            setBarChart(dataPoints: incomeLabel, values: getWeekIncome(), barChartView: incomeBarChartView)
+            // 判斷目前語言是否為英文
+            if let language = Locale.preferredLanguages.first, !language.contains("zh-Hant") {
+                setBarChart(dataPoints: ["personal", "dietary", "shopping", "traffic", "medical", "life"], values: getWeekExpenses(), barChartView: expenseBarChartView)
+                setBarChart(dataPoints: ["salary", "interest", "invest", "rent", "transaction", "play"], values: getWeekIncome(), barChartView: incomeBarChartView)
+            }else {
+                setBarChart(dataPoints: expenseLabel, values: getWeekExpenses(), barChartView: expenseBarChartView)
+                setBarChart(dataPoints: incomeLabel, values: getWeekIncome(), barChartView: incomeBarChartView)
+            }
+//            setBarChart(dataPoints: expenseLabel, values: getWeekExpenses(), barChartView: expenseBarChartView)
+//            setBarChart(dataPoints: incomeLabel, values: getWeekIncome(), barChartView: incomeBarChartView)
             
             // 更新顯示的 expense, income, total label
             expenseUILabel.text = "\(getWeekExpenses().reduce(0, +))"
@@ -857,8 +872,15 @@ class ChartViewController: UIViewController {
                 setLineChart(values: 一年收入(day: dateformatter.string(from: now)), color: .systemGreen, lineChartView: ExandInLineChartView, label: "Income")
             }
             // 直方圖
-            setBarChart(dataPoints: expenseLabel, values: getMonthExpenses(), barChartView: expenseBarChartView)
-            setBarChart(dataPoints: incomeLabel, values: getMonthIncome(), barChartView: incomeBarChartView)
+            // 判斷目前語言是否為英文
+            if let language = Locale.preferredLanguages.first, !language.contains("zh-Hant") {
+                setBarChart(dataPoints: ["personal", "dietary", "shopping", "traffic", "medical", "life"], values: getMonthExpenses(), barChartView: expenseBarChartView)
+                setBarChart(dataPoints: ["salary", "interest", "invest", "rent", "transaction", "play"], values: getMonthIncome(), barChartView: incomeBarChartView)
+            }else {
+                setBarChart(dataPoints: expenseLabel, values: getMonthExpenses(), barChartView: expenseBarChartView)
+                setBarChart(dataPoints: incomeLabel, values: getMonthIncome(), barChartView: incomeBarChartView)
+            }
+            
             
             // 更新顯示的 expense, income, total label
             expenseUILabel.text = "\(getMonthExpenses().reduce(0, +))"

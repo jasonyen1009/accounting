@@ -14,13 +14,11 @@ class AccountTableViewController: UITableViewController {
     var favorite = [
         "favorite": [
         ],
-        
         "banks": [
-            "玉山銀行",
-            "台新銀行",
-            "富邦銀行",
-            "王道銀行",
-            "國泰銀行",
+            NSLocalizedString("玉山銀行", comment: ""),
+            NSLocalizedString("台新銀行", comment: ""),
+            NSLocalizedString("富邦銀行", comment: ""),
+            NSLocalizedString("王道銀行", comment: ""),
             "LINE BANK"
         ]
     ]

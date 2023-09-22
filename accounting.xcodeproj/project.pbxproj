@@ -36,6 +36,7 @@
 		96320C90294DA8D00067368A /* CalenderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96320C8F294DA8D00067368A /* CalenderCell.swift */; };
 		96320C92294DBEE10067368A /* CalenderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96320C91294DBEE10067368A /* CalenderTableViewCell.swift */; };
 		9633F9A4295DCE6100FABE77 /* AccountTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9633F9A3295DCE6100FABE77 /* AccountTableViewController.swift */; };
+		963F063E2ABC7CBF00AB7CA5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 963F06402ABC7CBF00AB7CA5 /* Localizable.strings */; };
 		9654855E299FA4B500BA7AF7 /* ChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9654855D299FA4B500BA7AF7 /* ChartViewController.swift */; };
 		966014652A696B0300D9E226 /* TabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 966014642A696B0300D9E226 /* TabbarController.swift */; };
 		966014672A696B3500D9E226 /* TabBarWithCorners.swift in Sources */ = {isa = PBXBuildFile; fileRef = 966014662A696B3500D9E226 /* TabBarWithCorners.swift */; };
@@ -93,7 +94,12 @@
 		96320C8F294DA8D00067368A /* CalenderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalenderCell.swift; sourceTree = "<group>"; };
 		96320C91294DBEE10067368A /* CalenderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalenderTableViewCell.swift; sourceTree = "<group>"; };
 		9633F9A3295DCE6100FABE77 /* AccountTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountTableViewController.swift; sourceTree = "<group>"; };
+		963F063F2ABC7CBF00AB7CA5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		963F06422ABC7F5500AB7CA5 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		9654855D299FA4B500BA7AF7 /* ChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewController.swift; sourceTree = "<group>"; };
+		965E431B2ABB242F004633F0 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Main.strings"; sourceTree = "<group>"; };
+		965E431C2ABB242F004633F0 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		965E431E2ABB2462004633F0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		966014642A696B0300D9E226 /* TabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarController.swift; sourceTree = "<group>"; };
 		966014662A696B3500D9E226 /* TabBarWithCorners.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarWithCorners.swift; sourceTree = "<group>"; };
 		967061D02AB3FC3C00F4A63A /* MyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyButton.swift; sourceTree = "<group>"; };
@@ -173,6 +179,7 @@
 				25D4B28B280E9818006D2547 /* SceneDelegate.swift */,
 				25D4B289280E9818006D2547 /* AppDelegate.swift */,
 				25D4B28D280E9818006D2547 /* ViewController.swift */,
+				963F06402ABC7CBF00AB7CA5 /* Localizable.strings */,
 				25D4B28F280E9818006D2547 /* Main.storyboard */,
 				966014642A696B0300D9E226 /* TabbarController.swift */,
 				966014662A696B3500D9E226 /* TabBarWithCorners.swift */,
@@ -306,6 +313,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hant",
 			);
 			mainGroup = 25D4B27D280E9818006D2547;
 			packageReferences = (
@@ -327,6 +335,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				963F063E2ABC7CBF00AB7CA5 /* Localizable.strings in Resources */,
 				25D4B296280E981A006D2547 /* LaunchScreen.storyboard in Resources */,
 				25D4B293280E981A006D2547 /* Assets.xcassets in Resources */,
 				25BC680B2823BCEB0051CA86 /* Keyboard.xib in Resources */,
@@ -421,6 +430,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				25D4B290280E9818006D2547 /* Base */,
+				965E431B2ABB242F004633F0 /* zh-Hant */,
+				965E431E2ABB2462004633F0 /* en */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -429,8 +440,18 @@
 			isa = PBXVariantGroup;
 			children = (
 				25D4B295280E981A006D2547 /* Base */,
+				965E431C2ABB242F004633F0 /* zh-Hant */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		963F06402ABC7CBF00AB7CA5 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				963F063F2ABC7CBF00AB7CA5 /* en */,
+				963F06422ABC7F5500AB7CA5 /* zh-Hant */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -440,6 +461,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
@@ -500,6 +522,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
@@ -563,8 +586,8 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -591,8 +614,8 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

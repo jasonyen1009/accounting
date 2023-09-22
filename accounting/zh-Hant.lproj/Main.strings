@@ -1,0 +1,201 @@
+
+/* Class = "UIButton"; configuration.title = "Day"; ObjectID = "0hl-b3-GnV"; */
+"0hl-b3-GnV.configuration.title" = "Day";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "0hl-b3-GnV"; */
+"0hl-b3-GnV.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "1qr-6Z-IC3"; */
+"1qr-6Z-IC3.text" = "Label";
+
+/* Class = "UIButton"; configuration.title = "in"; ObjectID = "2BS-FU-R5a"; */
+"2BS-FU-R5a.configuration.title" = "收入";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "2BS-FU-R5a"; */
+"2BS-FU-R5a.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "2Ik-2V-vTl"; */
+"2Ik-2V-vTl.text" = "Label";
+
+/* Class = "UILabel"; text = "MONDAY"; ObjectID = "2fE-dz-1Cd"; */
+"2fE-dz-1Cd.text" = "MONDAY";
+
+/* Class = "UITextField"; placeholder = "消費金額"; ObjectID = "2n7-TS-YiK"; */
+"2n7-TS-YiK.placeholder" = "消費金額";
+
+/* Class = "UILabel"; text = "Sat"; ObjectID = "3q6-7c-lf5"; */
+"3q6-7c-lf5.text" = "週六";
+
+/* Class = "UITextField"; placeholder = "收入名稱"; ObjectID = "5tk-el-aXe"; */
+"5tk-el-aXe.placeholder" = "收入名稱";
+
+/* Class = "UILabel"; text = "Fri"; ObjectID = "5wL-vV-k2a"; */
+"5wL-vV-k2a.text" = "週五";
+
+/* Class = "UITextField"; placeholder = "消費金額"; ObjectID = "6Fw-J4-jvh"; */
+"6Fw-J4-jvh.placeholder" = "消費金額";
+
+/* Class = "UIButton"; configuration.title = "薪水"; ObjectID = "7db-N7-TUv"; */
+"7db-N7-TUv.configuration.title" = "薪水";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "7db-N7-TUv"; */
+"7db-N7-TUv.normalTitle" = "Button";
+
+/* Class = "UITextField"; placeholder = "消費名稱"; ObjectID = "7xP-9o-nzi"; */
+"7xP-9o-nzi.placeholder" = "消費名稱";
+
+/* Class = "UITextField"; placeholder = "收入名稱"; ObjectID = "8fv-Th-N7t"; */
+"8fv-Th-N7t.placeholder" = "收入名稱";
+
+/* Class = "UILabel"; text = "2023"; ObjectID = "Aai-J8-7ck"; */
+"Aai-J8-7ck.text" = "2023";
+
+/* Class = "UILabel"; text = "75,000"; ObjectID = "BFe-TQ-srY"; */
+"BFe-TQ-srY.text" = "75,000";
+
+/* Class = "UILabel"; text = "income"; ObjectID = "Bka-lX-drT"; */
+"Bka-lX-drT.text" = "收入";
+
+/* Class = "UIButton"; configuration.title = "帳戶"; ObjectID = "Bwf-4l-HpI"; */
+"Bwf-4l-HpI.configuration.title" = "帳戶";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "Bwf-4l-HpI"; */
+"Bwf-4l-HpI.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "total"; ObjectID = "Ede-I3-Dvm"; */
+"Ede-I3-Dvm.text" = "總計";
+
+/* Class = "UILabel"; text = "0.00 %"; ObjectID = "GVg-bV-0By"; */
+"GVg-bV-0By.text" = "0.00 %";
+
+/* Class = "UILabel"; text = "TWD 50.000.00"; ObjectID = "Ibj-hf-6cd"; */
+"Ibj-hf-6cd.text" = "TWD 50.000.00";
+
+/* Class = "UILabel"; text = "January 30"; ObjectID = "L0Z-mN-Zvy"; */
+"L0Z-mN-Zvy.text" = "January 30";
+
+/* Class = "UISegmentedControl"; MnV-gq-kTa.segmentTitles[0] = "支出"; ObjectID = "MnV-gq-kTa"; */
+"MnV-gq-kTa.segmentTitles[0]" = "支出";
+
+/* Class = "UISegmentedControl"; MnV-gq-kTa.segmentTitles[1] = "收入"; ObjectID = "MnV-gq-kTa"; */
+"MnV-gq-kTa.segmentTitles[1]" = "收入";
+
+/* Class = "UIButton"; normalTitle = "2022,Oct"; ObjectID = "Oy0-Lv-QUr"; */
+"Oy0-Lv-QUr.normalTitle" = "2022,Oct";
+
+/* Class = "UILabel"; text = "Wed"; ObjectID = "PFH-OS-sB9"; */
+"PFH-OS-sB9.text" = "週三";
+
+/* Class = "UILabel"; text = "薪水"; ObjectID = "R7C-GS-Kzr"; */
+"R7C-GS-Kzr.text" = "薪水";
+
+/* Class = "UILabel"; text = "Tue"; ObjectID = "SI4-07-H0G"; */
+"SI4-07-H0G.text" = "週二";
+
+/* Class = "UILabel"; text = "Thur"; ObjectID = "UK2-UV-8Ec"; */
+"UK2-UV-8Ec.text" = "週四";
+
+/* Class = "UILabel"; text = "玉山銀行"; ObjectID = "ULe-eb-YQT"; */
+"ULe-eb-YQT.text" = "玉山銀行";
+
+/* Class = "UITextField"; placeholder = "消費名稱"; ObjectID = "VF0-Jm-a84"; */
+"VF0-Jm-a84.placeholder" = "消費名稱";
+
+/* Class = "UIButton"; configuration.title = "個人"; ObjectID = "VNj-yq-x2T"; */
+"VNj-yq-x2T.configuration.title" = "個人";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "VNj-yq-x2T"; */
+"VNj-yq-x2T.normalTitle" = "Button";
+
+/* Class = "UISegmentedControl"; Vvf-kA-rCF.segmentTitles[0] = "Expense"; ObjectID = "Vvf-kA-rCF"; */
+"Vvf-kA-rCF.segmentTitles[0]" = "支出";
+
+/* Class = "UISegmentedControl"; Vvf-kA-rCF.segmentTitles[1] = "Income"; ObjectID = "Vvf-kA-rCF"; */
+"Vvf-kA-rCF.segmentTitles[1]" = "收入";
+
+/* Class = "UIButton"; normalTitle = "1"; ObjectID = "auZ-hR-Fan"; */
+"auZ-hR-Fan.normalTitle" = "1";
+
+/* Class = "UILabel"; text = "......."; ObjectID = "bOo-99-u2w"; */
+"bOo-99-u2w.text" = ".......";
+
+/* Class = "UIButton"; normalTitle = "2022,Oct"; ObjectID = "cOw-bG-Lwv"; */
+"cOw-bG-Lwv.normalTitle" = "2022,Oct";
+
+/* Class = "UILabel"; text = "玉山銀行"; ObjectID = "d8w-Wc-fzS"; */
+"d8w-Wc-fzS.text" = "玉山銀行";
+
+/* Class = "UITextField"; placeholder = "收入金額"; ObjectID = "dgi-DU-PI2"; */
+"dgi-DU-PI2.placeholder" = "收入金額";
+
+/* Class = "UILabel"; text = "."; ObjectID = "fGF-IW-hu0"; */
+"fGF-IW-hu0.text" = ".";
+
+/* Class = "UILabel"; text = "expense"; ObjectID = "gu1-27-xit"; */
+"gu1-27-xit.text" = "支出";
+
+/* Class = "UISegmentedControl"; hek-WX-d75.segmentTitles[0] = "現金"; ObjectID = "hek-WX-d75"; */
+"hek-WX-d75.segmentTitles[0]" = "現金";
+
+/* Class = "UISegmentedControl"; hek-WX-d75.segmentTitles[1] = "信用卡"; ObjectID = "hek-WX-d75"; */
+"hek-WX-d75.segmentTitles[1]" = "信用卡";
+
+/* Class = "UISegmentedControl"; hek-WX-d75.segmentTitles[2] = "帳戶"; ObjectID = "hek-WX-d75"; */
+"hek-WX-d75.segmentTitles[2]" = "帳戶";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "iVz-Xa-7Vg"; */
+"iVz-Xa-7Vg.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "房屋稅"; ObjectID = "ikF-QV-TtR"; */
+"ikF-QV-TtR.text" = "房屋稅";
+
+/* Class = "UILabel"; text = "25,000"; ObjectID = "jCh-Dy-NXS"; */
+"jCh-Dy-NXS.text" = "25,000";
+
+/* Class = "UILabel"; text = "Sun"; ObjectID = "jcj-NK-aNY"; */
+"jcj-NK-aNY.text" = "週日";
+
+/* Class = "UIButton"; configuration.title = "ex"; ObjectID = "kde-LI-1fQ"; */
+"kde-LI-1fQ.configuration.title" = "支出";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "kde-LI-1fQ"; */
+"kde-LI-1fQ.normalTitle" = "Button";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "lzb-5b-TPH"; */
+"lzb-5b-TPH.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "mCu-da-hdf"; */
+"mCu-da-hdf.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "oS1-Fv-Zy3"; */
+"oS1-Fv-Zy3.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "October"; ObjectID = "pAg-x1-rkz"; */
+"pAg-x1-rkz.text" = "October";
+
+/* Class = "UILabel"; text = "TWD 50.000.00"; ObjectID = "qBO-LY-ovr"; */
+"qBO-LY-ovr.text" = "TWD 50.000.00";
+
+/* Class = "UILabel"; text = "100,000"; ObjectID = "sxH-VR-t66"; */
+"sxH-VR-t66.text" = "100,000";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "ugt-XF-W9V"; */
+"ugt-XF-W9V.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "Mon"; ObjectID = "ujw-Y1-F0d"; */
+"ujw-Y1-F0d.text" = "週ㄧ";
+
+/* Class = "UIBarButtonItem"; title = "Sort"; ObjectID = "uzB-UG-F0H"; */
+"uzB-UG-F0H.title" = "Sort";
+
+/* Class = "UITextField"; placeholder = "收入金額"; ObjectID = "xiN-Cr-urz"; */
+"xiN-Cr-urz.placeholder" = "收入金額";
+
+/* Class = "UIBarButtonItem"; title = " "; ObjectID = "xnU-pQ-eHt"; */
+"xnU-pQ-eHt.title" = " ";
+
+/* Class = "UIButton"; configuration.title = "個人"; ObjectID = "z0w-Ra-DpX"; */
+"z0w-Ra-DpX.configuration.title" = "個人";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "z0w-Ra-DpX"; */
+"z0w-Ra-DpX.normalTitle" = "Button";

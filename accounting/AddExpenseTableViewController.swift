@@ -53,6 +53,10 @@ class AddExpenseTableViewController: UITableViewController {
         categoryButton.delegate = self
         
         noteTextView.text = "備忘錄"
+        // 判斷目前語言是否為英文
+        if let language = Locale.preferredLanguages.first, !language.contains("zh-Hant") {
+            noteTextView.text = "Note"
+        }
         noteTextView.textColor = UIColor.lightGray
         
         // custom keyboard
@@ -164,13 +168,23 @@ class AddExpenseTableViewController: UITableViewController {
         
         let sptype = category
         let spname = accountnameTextfield.text ?? ""
-        let pytype = accountSegmentedcontrol.titleForSegment(at: accountSegmentedcontrol.selectedSegmentIndex) ?? ""
+        var pytype: String?
+        // 判斷 segment 的 index
+        switch accountSegmentedcontrol.selectedSegmentIndex {
+        case 0:
+            pytype = "現金"
+        case 1:
+            pytype = "信用卡"
+        default :
+            pytype = "帳戶"
+        }
+        
         let spending = Int(accountTextfield.text!) ?? 0
         let note = noteTextView.text ?? ""
         if spname == "" {
             print("error message")
         }
-        mydata = Expense(date: formatter.date(from: connectdate)!, expensetype: sptype, expensename: spname, paytype: pytype, expense: spending, note: note)
+        mydata = Expense(date: formatter.date(from: connectdate)!, expensetype: sptype, expensename: spname, paytype: pytype!, expense: spending, note: note)
         
         return mydata!
     }
@@ -180,27 +194,51 @@ class AddExpenseTableViewController: UITableViewController {
         button.showsMenuAsPrimaryAction = true
         button.changesSelectionAsPrimaryAction = true
         
-        button.menu = UIMenu(children: [
-            UIAction(title: "個人",  handler: { [self] action in
-                category = "個人"
-            }),
-            UIAction(title: "飲食",  handler: { [self] action in
-                category = "飲食"
-            }),
-            UIAction(title: "購物",  handler: { [self] action in
-                category = "購物"
-            }),
-            UIAction(title: "交通",  handler: { [self] action in
-                category = "交通"
-            }),
-            UIAction(title: "醫療",  handler: { [self] action in
-                category = "醫療"
-            }),
-            UIAction(title: "生活",  handler: { [self] action in
-                category = "生活"
-            })
-            
-        ])
+        // 判斷是否為 英文
+        if let language = Locale.preferredLanguages.first, !language.contains("zh-Hant") {
+            button.menu = UIMenu(children: [
+                UIAction(title: "personal",  handler: { [self] action in
+                    category = "個人"
+                }),
+                UIAction(title: "dietary",  handler: { [self] action in
+                    category = "飲食"
+                }),
+                UIAction(title: "shopping",  handler: { [self] action in
+                    category = "購物"
+                }),
+                UIAction(title: "traffic",  handler: { [self] action in
+                    category = "交通"
+                }),
+                UIAction(title: "medical",  handler: { [self] action in
+                    category = "醫療"
+                }),
+                UIAction(title: "life",  handler: { [self] action in
+                    category = "生活"
+                })
+                
+            ])
+        }else {
+            button.menu = UIMenu(children: [
+                UIAction(title: "個人",  handler: { [self] action in
+                    category = "個人"
+                }),
+                UIAction(title: "飲食",  handler: { [self] action in
+                    category = "飲食"
+                }),
+                UIAction(title: "購物",  handler: { [self] action in
+                    category = "購物"
+                }),
+                UIAction(title: "交通",  handler: { [self] action in
+                    category = "交通"
+                }),
+                UIAction(title: "醫療",  handler: { [self] action in
+                    category = "醫療"
+                }),
+                UIAction(title: "生活",  handler: { [self] action in
+                    category = "生活"
+                })
+            ])
+        }
         
         // 在按下 button 時顯示模糊背景
         button.addTarget(self, action: #selector(showBlurBackground), for: .menuActionTriggered)
@@ -313,6 +351,10 @@ extension AddExpenseTableViewController: UITextViewDelegate {
     func textViewDidEndEditing(_ textView: UITextView) {
         if noteTextView.text.isEmpty {
             noteTextView.text = "備忘錄"
+            // 判斷目前語言是否為英文
+            if let language = Locale.preferredLanguages.first, !language.contains("zh-Hant") {
+                noteTextView.text = "Note"
+            }
             noteTextView.textColor = UIColor.lightGray
         }
     }

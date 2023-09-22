@@ -59,6 +59,10 @@ class AddIncomeTableViewController: UITableViewController {
 
         
         noteTextview.text = "備忘錄"
+        // 判斷目前語言是否為英文
+        if let language = Locale.preferredLanguages.first, !language.contains("zh-Hant") {
+            noteTextview.text = "Note"
+        }
         noteTextview.textColor = UIColor.lightGray
 
         // custom keyboard
@@ -76,8 +80,8 @@ class AddIncomeTableViewController: UITableViewController {
         // 抓取最愛的銀行名稱
         let first = userDefault.array(forKey: "Banks") as? [String]
         // 給定預設最愛的銀行，否則到新裝置會閃退
-        favoritebanks = first?[0] ?? "玉山銀行"
-        selectbank.text = first?[0] ?? "玉山銀行"
+        favoritebanks = first?[0] ?? NSLocalizedString("玉山銀行", comment: "")
+        selectbank.text = first?[0] ?? NSLocalizedString("玉山銀行", comment: "")
         // 接收通知 bank 更新通知
         NotificationCenter.default.addObserver(self, selector: #selector(updatebank(noti: )), name: AllNotification.bankmessage, object: nil)
         
@@ -198,33 +202,66 @@ class AddIncomeTableViewController: UITableViewController {
         button.showsMenuAsPrimaryAction = true
         button.changesSelectionAsPrimaryAction = true
         
-        button.menu = UIMenu(children: [
-            UIAction(title: "薪水",  handler: { [self] action in
-                category = "薪水"
-                accountImagview.image = UIImage(named: "salary")
-            }),
-            UIAction(title: "利息",  handler: { [self] action in
-                category = "利息"
-                accountImagview.image = UIImage(named: "interest")
-            }),
-            UIAction(title: "投資",  handler: { [self] action in
-                category = "投資"
-                accountImagview.image = UIImage(named: "invest")
-            }),
-            UIAction(title: "收租",  handler: { [self] action in
-                category = "收租"
-                accountImagview.image = UIImage(named: "rent")
-            }),
-            UIAction(title: "買賣",  handler: { [self] action in
-                category = "買賣"
-                accountImagview.image = UIImage(named: "transaction")
-            }),
-            UIAction(title: "娛樂",  handler: { [self] action in
-                category = "娛樂"
-                accountImagview.image = UIImage(named: "game")
-            })
-            
-        ])
+        // 判斷是否為 英文
+        if let language = Locale.preferredLanguages.first, !language.contains("zh-Hant") {
+            button.menu = UIMenu(children: [
+                UIAction(title: "salary",  handler: { [self] action in
+                    category = "薪水"
+                    accountImagview.image = UIImage(named: "salary")
+                }),
+                UIAction(title: "interest",  handler: { [self] action in
+                    category = "利息"
+                    accountImagview.image = UIImage(named: "interest")
+                }),
+                UIAction(title: "invest",  handler: { [self] action in
+                    category = "投資"
+                    accountImagview.image = UIImage(named: "invest")
+                }),
+                UIAction(title: "rent",  handler: { [self] action in
+                    category = "收租"
+                    accountImagview.image = UIImage(named: "rent")
+                }),
+                UIAction(title: "transaction",  handler: { [self] action in
+                    category = "買賣"
+                    accountImagview.image = UIImage(named: "transaction")
+                }),
+                UIAction(title: "play",  handler: { [self] action in
+                    category = "娛樂"
+                    accountImagview.image = UIImage(named: "game")
+                })
+                
+            ])
+        }else {
+            button.menu = UIMenu(children: [
+                UIAction(title: "薪水",  handler: { [self] action in
+                    category = "薪水"
+                    accountImagview.image = UIImage(named: "salary")
+                }),
+                UIAction(title: "利息",  handler: { [self] action in
+                    category = "利息"
+                    accountImagview.image = UIImage(named: "interest")
+                }),
+                UIAction(title: "投資",  handler: { [self] action in
+                    category = "投資"
+                    accountImagview.image = UIImage(named: "invest")
+                }),
+                UIAction(title: "收租",  handler: { [self] action in
+                    category = "收租"
+                    accountImagview.image = UIImage(named: "rent")
+                }),
+                UIAction(title: "買賣",  handler: { [self] action in
+                    category = "買賣"
+                    accountImagview.image = UIImage(named: "transaction")
+                }),
+                UIAction(title: "娛樂",  handler: { [self] action in
+                    category = "娛樂"
+                    accountImagview.image = UIImage(named: "game")
+                })
+                
+            ])
+        }
+        
+        
         
         // 在按下 button 時顯示模糊背景
         button.addTarget(self, action: #selector(showBlurBackground), for: .menuActionTriggered)
@@ -327,6 +364,11 @@ extension AddIncomeTableViewController: UITextViewDelegate {
     
     func textViewDidEndEditing(_ textView: UITextView) {
         if noteTextview.text.isEmpty {
+            noteTextview.text = "備忘錄"
+            // 判斷目前語言是否為英文
+            if let language = Locale.preferredLanguages.first, !language.contains("zh-Hant") {
+                noteTextview.text = "Note"
+            }
             noteTextview.textColor = UIColor.lightGray
         }
     }
