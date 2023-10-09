@@ -25,6 +25,9 @@ class HomeViewController: UIViewController {
         // scrollview delegate
         scrollview.delegate = self
         
+        // 隱藏 scro;;view 底下的移動條
+        scrollview.showsHorizontalScrollIndicator = false
+
     }
     
     @IBAction func ChangePage(_ sender: UISegmentedControl) {

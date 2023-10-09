@@ -35,6 +35,7 @@ class TabbarController: UITabBarController {
         // 創建上方線條視圖
         upperLineView = UIView(frame: CGRect(x: tabView.frame.minX + spacing, y: tabView.frame.minY + 0.1, width: tabView.frame.size.width - spacing * 2, height: 4))
         upperLineView.backgroundColor = UIColor(red: 55/255, green: 60/255, blue: 69/255, alpha: 1) // 設定線條視圖的顏色
+//        upperLineView.backgroundColor = UIColor(red: 52/255, green: 73/255, blue: 102/255, alpha: 1) // 設定線條視圖的顏色
         tabBar.addSubview(upperLineView)
     }
     

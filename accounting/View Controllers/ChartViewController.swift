@@ -71,13 +71,22 @@ class ChartViewController: UIViewController {
     var everyIncome: [Int] = []
     
     // 圖表顏色
-    let colors = [
+    let exColors = [
         UIColor(red: 67/255, green: 97/255, blue: 238/255, alpha: 1),
         UIColor(red: 63/255, green: 55/255, blue: 201/255, alpha: 1),
         UIColor(red: 58/255, green: 12/255, blue: 163/255, alpha: 1),
         UIColor(red: 114/255, green: 9/255, blue: 183/255, alpha: 1),
         UIColor(red: 181/255, green: 23/255, blue: 158/255, alpha: 1),
         UIColor(red: 247/255, green: 37/255, blue: 133/255, alpha: 1)
+    ]
+    
+    let inColors = [
+        UIColor(red: 67/255, green: 208/255, blue: 128/255, alpha: 1),
+        UIColor(red: 34/255, green: 167/255, blue: 90/255, alpha: 1),
+        UIColor(red: 29/255, green: 131/255, blue: 64/255, alpha: 1),
+        UIColor(red: 166/255, green: 219/255, blue: 105/255, alpha: 1),
+        UIColor(red: 217/255, green: 182/255, blue: 80/255, alpha: 1),
+        UIColor(red: 247/255, green: 220/255, blue: 111/255, alpha: 1)
     ]
     
     // 控制 LineChart 圖表的顯示類別
@@ -609,7 +618,7 @@ class ChartViewController: UIViewController {
         lineChartDataSet.lineWidth = 2
 
         // 關閉點擊後的十字線
-        lineChartDataSet.highlightEnabled = true
+        lineChartDataSet.highlightEnabled = false
 
         //開啟填充色繪製
         lineChartDataSet.drawFilledEnabled = true
@@ -724,7 +733,7 @@ class ChartViewController: UIViewController {
     }
     
     // BarCharts 設置
-    func setBarChart(dataPoints: [String], values: [Int], barChartView: BarChartView) {
+    func setBarChart(dataPoints: [String], values: [Int], barChartView: BarChartView, colors: [UIColor]) {
         // 產生 barChartEntry
         var dataEntry:[BarChartDataEntry] = []
         
@@ -827,11 +836,11 @@ class ChartViewController: UIViewController {
             }
             // 判斷目前語言是否為英文
             if let language = Locale.preferredLanguages.first, !language.contains("zh-Hant") {
-                setBarChart(dataPoints: ["personal", "dietary", "shopping", "traffic", "medical", "life"], values: everyExpense, barChartView: expenseBarChartView)
-                setBarChart(dataPoints: ["salary", "interest", "invest", "rent", "transaction", "play"], values: everyIncome, barChartView: incomeBarChartView)
+                setBarChart(dataPoints: ["personal", "dietary", "shopping", "traffic", "medical", "life"], values: everyExpense, barChartView: expenseBarChartView, colors: exColors)
+                setBarChart(dataPoints: ["salary", "interest", "invest", "rent", "transaction", "play"], values: everyIncome, barChartView: incomeBarChartView, colors: inColors)
             }else {
-                setBarChart(dataPoints: expenseLabel, values: everyExpense, barChartView: expenseBarChartView)
-                setBarChart(dataPoints: incomeLabel, values: everyIncome, barChartView: incomeBarChartView)
+                setBarChart(dataPoints: expenseLabel, values: everyExpense, barChartView: expenseBarChartView, colors: exColors)
+                setBarChart(dataPoints: incomeLabel, values: everyIncome, barChartView: incomeBarChartView, colors: inColors)
             }
             
             
@@ -850,19 +859,22 @@ class ChartViewController: UIViewController {
             // 直方圖
             // 判斷目前語言是否為英文
             if let language = Locale.preferredLanguages.first, !language.contains("zh-Hant") {
-                setBarChart(dataPoints: ["personal", "dietary", "shopping", "traffic", "medical", "life"], values: getWeekExpenses(), barChartView: expenseBarChartView)
-                setBarChart(dataPoints: ["salary", "interest", "invest", "rent", "transaction", "play"], values: getWeekIncome(), barChartView: incomeBarChartView)
+
+                setBarChart(dataPoints: ["personal", "dietary", "shopping", "traffic", "medical", "life"], values: getWeekExpenses(), barChartView: expenseBarChartView, colors: exColors)
+                setBarChart(dataPoints: ["salary", "interest", "invest", "rent", "transaction", "play"], values: 一週收入(day: dateformatter.string(from: now)), barChartView: incomeBarChartView, colors: inColors)
+                print("這", getWeekIncome())
+                print(一週收入(day: dateformatter.string(from: now)))
             }else {
-                setBarChart(dataPoints: expenseLabel, values: getWeekExpenses(), barChartView: expenseBarChartView)
-                setBarChart(dataPoints: incomeLabel, values: getWeekIncome(), barChartView: incomeBarChartView)
+                setBarChart(dataPoints: expenseLabel, values: getWeekExpenses(), barChartView: expenseBarChartView, colors: exColors)
+                setBarChart(dataPoints: incomeLabel, values: 一週收入(day: dateformatter.string(from: now)), barChartView: incomeBarChartView, colors: inColors)
             }
 //            setBarChart(dataPoints: expenseLabel, values: getWeekExpenses(), barChartView: expenseBarChartView)
 //            setBarChart(dataPoints: incomeLabel, values: getWeekIncome(), barChartView: incomeBarChartView)
             
             // 更新顯示的 expense, income, total label
             expenseUILabel.text = "\(getWeekExpenses().reduce(0, +))"
-            incomeUILabel.text = "\(getWeekIncome().reduce(0, +))"
-            totalLabel.text = "\(getWeekIncome().reduce(0, +) - getWeekExpenses().reduce(0, +))"
+            incomeUILabel.text = "\(一週收入(day: dateformatter.string(from: now)).reduce(0, +))"
+            totalLabel.text = "\(一週收入(day: dateformatter.string(from: now)).reduce(0, +) - getWeekExpenses().reduce(0, +))"
         case "Month":
             // expense LineChart
             if chartDisplayType == "ex" {
@@ -874,11 +886,11 @@ class ChartViewController: UIViewController {
             // 直方圖
             // 判斷目前語言是否為英文
             if let language = Locale.preferredLanguages.first, !language.contains("zh-Hant") {
-                setBarChart(dataPoints: ["personal", "dietary", "shopping", "traffic", "medical", "life"], values: getMonthExpenses(), barChartView: expenseBarChartView)
-                setBarChart(dataPoints: ["salary", "interest", "invest", "rent", "transaction", "play"], values: getMonthIncome(), barChartView: incomeBarChartView)
+                setBarChart(dataPoints: ["personal", "dietary", "shopping", "traffic", "medical", "life"], values: getMonthExpenses(), barChartView: expenseBarChartView, colors: exColors)
+                setBarChart(dataPoints: ["salary", "interest", "invest", "rent", "transaction", "play"], values: getMonthIncome(), barChartView: incomeBarChartView, colors: inColors)
             }else {
-                setBarChart(dataPoints: expenseLabel, values: getMonthExpenses(), barChartView: expenseBarChartView)
-                setBarChart(dataPoints: incomeLabel, values: getMonthIncome(), barChartView: incomeBarChartView)
+                setBarChart(dataPoints: expenseLabel, values: getMonthExpenses(), barChartView: expenseBarChartView, colors: exColors)
+                setBarChart(dataPoints: incomeLabel, values: getMonthIncome(), barChartView: incomeBarChartView, colors: inColors)
             }
             
             
@@ -970,6 +982,7 @@ class ChartViewController: UIViewController {
         // datepicker 顯示樣式
         datepicker.preferredDatePickerStyle = .inline
         datepicker.datePickerMode = .date
+        datepicker.tintColor = UIColor(red: 55/255, green: 60/255, blue: 69/255, alpha: 1)
 
         datepicker.translatesAutoresizingMaskIntoConstraints = false
                 

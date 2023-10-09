@@ -181,9 +181,6 @@ class AddExpenseTableViewController: UITableViewController {
         
         let spending = Int(accountTextfield.text!) ?? 0
         let note = noteTextView.text ?? ""
-        if spname == "" {
-            print("error message")
-        }
         mydata = Expense(date: formatter.date(from: connectdate)!, expensetype: sptype, expensename: spname, paytype: pytype!, expense: spending, note: note)
         
         return mydata!

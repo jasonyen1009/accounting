@@ -291,7 +291,7 @@ class ListTableViewController: UITableViewController {
 
             })
             modifyAction.image = UIImage(named: "delete")
-            modifyAction.backgroundColor = .purple
+            modifyAction.backgroundColor = UIColor(red: 55/255, green: 60/255, blue: 69/255, alpha: 1)
             return UISwipeActionsConfiguration(actions: [modifyAction])
     }
     

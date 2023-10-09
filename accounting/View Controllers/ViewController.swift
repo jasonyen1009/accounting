@@ -61,13 +61,25 @@ class ViewController: UIViewController {
     
     
     // 圖表顏色
-    let colors = [
+    // expense 配色
+    let exColors = [
         UIColor(red: 67/255, green: 97/255, blue: 238/255, alpha: 1).cgColor,
         UIColor(red: 63/255, green: 55/255, blue: 201/255, alpha: 1).cgColor,
         UIColor(red: 58/255, green: 12/255, blue: 163/255, alpha: 1).cgColor,
         UIColor(red: 114/255, green: 9/255, blue: 183/255, alpha: 1).cgColor,
         UIColor(red: 181/255, green: 23/255, blue: 158/255, alpha: 1).cgColor,
         UIColor(red: 247/255, green: 37/255, blue: 133/255, alpha: 1).cgColor
+
+    ]
+    
+    // income 配色
+    let inColors = [
+        UIColor(red: 67/255, green: 208/255, blue: 128/255, alpha: 1).cgColor,
+        UIColor(red: 34/255, green: 167/255, blue: 90/255, alpha: 1).cgColor,
+        UIColor(red: 29/255, green: 131/255, blue: 64/255, alpha: 1).cgColor,
+        UIColor(red: 166/255, green: 219/255, blue: 105/255, alpha: 1).cgColor,
+        UIColor(red: 217/255, green: 182/255, blue: 80/255, alpha: 1).cgColor,
+        UIColor(red: 247/255, green: 220/255, blue: 111/255, alpha: 1).cgColor
     ]
     
     @IBOutlet weak var myTableView: UITableView!
@@ -476,7 +488,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             
             cell.cellmoneyLabel.text = "\(moneyString(Int(everyExpense[indexPath.row])))"
             
-            cell.circleview.backgroundColor = UIColor(cgColor: colors[indexPath.row])
+            cell.circleview.backgroundColor = UIColor(cgColor: exColors[indexPath.row])
 
             // 暫時隱藏
             cell.percentageLabel.text = ""
@@ -491,7 +503,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             }
             cell.cellmoneyLabel.text = "\(moneyString(Int(everyIncome[indexPath.row])))"
             
-            cell.circleview.backgroundColor = UIColor(cgColor: colors[indexPath.row])
+            cell.circleview.backgroundColor = UIColor(cgColor: inColors[indexPath.row])
             // 暫時隱藏
             cell.percentageLabel.text = ""
 
@@ -590,7 +602,13 @@ extension ViewController: ChartViewDelegate {
         // 產生 PieChartDataSet
         let piechartdataset = PieChartDataSet(entries: dataEntries, label: "")
         // 改變 chart 顏色
-        piechartdataset.colors = colors.map { UIColor(cgColor: $0)}
+        // 支出 配色
+        if changetypeSegmentedControl.selectedSegmentIndex == 0 {
+            piechartdataset.colors = exColors.map { UIColor(cgColor: $0)}
+        // 收入 配色
+        }else {
+            piechartdataset.colors = inColors.map { UIColor(cgColor: $0)}
+        }
         // 產生 Data
         let piechartdata = PieChartData(dataSet: piechartdataset)
         // 利用 ChartsView 顯示 BarChartData
