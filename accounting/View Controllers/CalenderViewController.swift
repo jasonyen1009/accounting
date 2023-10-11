@@ -495,7 +495,7 @@ extension CalenderViewController: UITableViewDelegate, UITableViewDataSource {
         if type(of: displaydata[indexPath.row]) == Expense.self {
             let dd = displaydata[indexPath.row] as! Expense
             
-            cell.cellnameLabel.text = "\(dd.expensename)"
+            cell.cellnameLabel.text = NSLocalizedString("\(dd.expensename)", comment: "")
             switch dd.paytype {
             case "帳戶" :
                 cell.cellImageView.image = UIImage(named: "bank")
@@ -510,7 +510,7 @@ extension CalenderViewController: UITableViewDelegate, UITableViewDataSource {
         }else {
             let dd = displaydata[indexPath.row] as! Income
             
-            cell.cellnameLabel.text = "\(dd.incomename)"
+            cell.cellnameLabel.text = NSLocalizedString("\(dd.incomename)", comment: "")
             switch dd.incometype {
             case "薪水" :
                 cell.cellImageView.image = UIImage(named: "salary")

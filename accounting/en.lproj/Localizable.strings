@@ -11,3 +11,19 @@
 "富邦銀行" = "Taipei Fubon Bank";
 "王道銀行" = "O-Bank";
 "國泰銀行" = "Cathay United Bank";
+
+"個人" = "personal";
+"飲食" = "dietary";
+"購物" = "shooping";
+"交通" = "traffic";
+"醫療" = "medical";
+"生活" = "life";
+
+
+
+"薪水" = "salary";
+"利息" = "interest";
+"投資" = "invest";
+"收租" = "rent";
+"買賣" = "transaction";
+"娛樂" = "play";

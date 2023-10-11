@@ -172,11 +172,12 @@ class ListTableViewController: UITableViewController {
         switch selectindex {
         case 0:
             // expense
-            cell.expensenameLabel.text = expensedic[expensekeys[section]]![row].expensename
+            cell.expensenameLabel.text =
+            NSLocalizedString("\(NSLocalizedString("\(expensedic[expensekeys[section]]![row].expensename)", comment: ""))", comment: "")
             cell.expenseLabel.text = moneyString(expensedic[expensekeys[section]]![row].expense)
         default :
             // income
-            cell.expensenameLabel.text = incomedic[incomekeys[section]]![row].incomename
+            cell.expensenameLabel.text = NSLocalizedString("\(incomedic[incomekeys[section]]![row].incomename)", comment: "")
             cell.expenseLabel.text = moneyString(incomedic[incomekeys[section]]![row].income)
         }
         
