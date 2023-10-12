@@ -27,3 +27,7 @@
 "收租" = "rent";
 "買賣" = "transaction";
 "娛樂" = "play";
+
+"帳戶" = "Bank";
+"現金" = "Cash";
+"信用卡" = "Credit";

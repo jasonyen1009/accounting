@@ -77,19 +77,19 @@ class EditTableViewController: UITableViewController {
     func updateUI() {
         
         if let data = Expensedata {
-            ExorInnameTextfield.text = data.expensename
+            ExorInnameTextfield.text = NSLocalizedString("\(data.expensename)", comment: "")
             accountTextfield.text = "\(data.expense)"
-            BankorPayButton.setTitle("\(data.paytype)", for: .normal)
-            categoryButton.setTitle("\(data.expensetype)", for: .normal)
+            BankorPayButton.setTitle(NSLocalizedString("\(data.paytype)", comment: ""), for: .normal)
+            categoryButton.setTitle(NSLocalizedString("\(data.expensetype)", comment: ""), for: .normal)
             noteTextView.text = "\(data.note)"
             
         }
         
         if let data = Incomedata {
-            ExorInnameTextfield.text = data.incomename
+            ExorInnameTextfield.text = NSLocalizedString("\(data.incomename)", comment: "")
             accountTextfield.text = "\(data.income)"
-            BankorPayButton.setTitle("\(data.accounts)", for: .normal)
-            categoryButton.setTitle("\(data.incometype)", for: .normal)
+            BankorPayButton.setTitle(NSLocalizedString("\(data.accounts)", comment: ""), for: .normal)
+            categoryButton.setTitle(NSLocalizedString("\(data.incometype)", comment: ""), for: .normal)
             noteTextView.text = "\(data.note)"
 
         }
